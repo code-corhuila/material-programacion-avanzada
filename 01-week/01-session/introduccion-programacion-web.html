@@ -1,0 +1,1476 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Introducción a la Programación Web | Ingeniería de Sistemas y/o Mecatrónica</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-color: #1e3c72;
+    --secondary-color: #2a5298;
+    --accent-color: #ff6b6b;
+    --light-bg: #f8f9fa;
+    --dark-text: #2c3e50;
+    --border-color: #e0e0e0;
+    --success-color: #27ae60;
+    --warning-color: #f39c12;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.6;
+    color: var(--dark-text);
+    background-color: #fff;
+}
+
+/* Header */
+.main-header {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    color: white;
+    padding: 0;
+}
+
+.top-bar {
+    background-color: rgba(0, 0, 0, 0.1);
+    padding: 20px 0;
+    text-align: center;
+}
+
+.brand-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.brand-name {
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    margin: 5px 0;
+}
+
+.main-nav {
+    background-color: rgba(0, 0, 0, 0.2);
+    padding: 15px 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.main-nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0;
+}
+
+.main-nav a {
+    color: white;
+    text-decoration: none;
+    padding: 12px 20px;
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background-color 0.3s;
+    border-bottom: 3px solid transparent;
+}
+
+.main-nav a:hover,
+.main-nav a.active {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-bottom-color: var(--accent-color);
+}
+
+/* Container */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Main Content */
+.main-content {
+    padding: 50px 0;
+}
+
+section {
+    margin-bottom: 40px;
+}
+
+h1 {
+    color: var(--primary-color);
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+h2 {
+    color: var(--secondary-color);
+    font-size: 2em;
+    margin-bottom: 25px;
+    border-left: 5px solid var(--accent-color);
+    padding-left: 15px;
+}
+
+h3 {
+    color: var(--primary-color);
+    font-size: 1.5em;
+    margin-top: 25px;
+    margin-bottom: 15px;
+}
+
+h4 {
+    color: var(--secondary-color);
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+
+/* Hero Section */
+.hero-section {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    color: white;
+    padding: 60px 40px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.hero-section h1 {
+    color: white;
+    margin-bottom: 20px;
+}
+
+.lead {
+    font-size: 1.2em;
+    line-height: 1.8;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Divider */
+.divider {
+    border: none;
+    border-top: 2px solid var(--border-color);
+    margin: 40px 0;
+}
+
+.divider-thick {
+    border: none;
+    border-top: 3px solid var(--accent-color);
+    margin: 50px 0;
+}
+
+/* Definition Box */
+.definition-box {
+    background-color: #e8f4f8;
+    border-left: 5px solid var(--secondary-color);
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 5px;
+    font-size: 1.05em;
+}
+
+/* Reflection Box */
+.reflection-box {
+    background-color: #fff3cd;
+    border-left: 5px solid var(--warning-color);
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 5px;
+}
+
+.reflection-box h4 {
+    color: #856404;
+    margin-bottom: 10px;
+}
+
+.reflection-box p {
+    color: #856404;
+    line-height: 1.7;
+}
+
+.reflection-box ul {
+    margin-left: 20px;
+    color: #856404;
+}
+
+/* Comparison Cards */
+.comparison-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin: 30px 0;
+}
+
+.card {
+    background: white;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.card h3,
+.card h4 {
+    color: var(--secondary-color);
+    margin-top: 0;
+}
+
+.qa-card,
+.qc-card {
+    border-top: 4px solid;
+}
+
+.qa-card {
+    border-top-color: var(--success-color);
+}
+
+.qc-card {
+    border-top-color: var(--accent-color);
+}
+
+/* Strategy Grid */
+.strategy-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    margin: 30px 0;
+}
+
+.strategy-box {
+    background-color: var(--light-bg);
+    padding: 20px;
+    border-radius: 8px;
+    border-left: 4px solid var(--secondary-color);
+}
+
+.strategy-box h5 {
+    color: var(--secondary-color);
+    margin-bottom: 15px;
+}
+
+.strategy-box ul {
+    list-style-position: inside;
+    margin-left: 10px;
+}
+
+.strategy-box li {
+    margin-bottom: 8px;
+}
+
+/* Tables */
+.table-responsive {
+    overflow-x: auto;
+    margin: 30px 0;
+}
+
+.styled-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.styled-table thead tr {
+    background-color: var(--secondary-color);
+    color: white;
+    text-align: left;
+    font-weight: 500;
+}
+
+.styled-table th,
+.styled-table td {
+    padding: 15px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.styled-table tbody tr:hover {
+    background-color: var(--light-bg);
+}
+
+.styled-table tbody tr:nth-child(odd) {
+    background-color: #fafafa;
+}
+
+/* Tags */
+.tag {
+    display: inline-block;
+    padding: 5px 12px;
+    margin: 5px 5px 5px 0;
+    border-radius: 20px;
+    font-size: 0.9em;
+    font-weight: 500;
+}
+
+.tag-frontend {
+    background-color: #e7f3ff;
+    color: #004085;
+}
+
+.tag-backend {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.tag-scrum {
+    background-color: #e2f5e2;
+    color: #155724;
+}
+
+/* Code Blocks */
+pre {
+    background-color: #2d2d2d;
+    color: #f8f8f2;
+    padding: 20px;
+    border-radius: 8px;
+    overflow-x: auto;
+    margin: 20px 0;
+    font-family: 'Courier New', monospace;
+    font-size: 0.95em;
+    line-height: 1.5;
+}
+
+code {
+    font-family: 'Courier New', monospace;
+    background-color: #f4f4f4;
+    padding: 2px 6px;
+    border-radius: 3px;
+    color: var(--primary-color);
+}
+
+pre code {
+    background-color: transparent;
+    color: #f8f8f2;
+    padding: 0;
+}
+
+/* Case Study Section */
+.case-study-section {
+    background-color: var(--light-bg);
+    padding: 40px;
+    border-radius: 10px;
+    margin: 40px 0;
+}
+
+.case-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.case-header h2 {
+    border-left: none;
+    padding-left: 0;
+    margin-bottom: 10px;
+}
+
+.case-header h3 {
+    color: var(--accent-color);
+    font-size: 1.3em;
+}
+
+.scenario-box {
+    background: white;
+    border-left: 4px solid var(--accent-color);
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 5px;
+}
+
+.scenario-box h4 {
+    color: var(--secondary-color);
+    margin-top: 0;
+}
+
+/* Footer */
+.main-footer {
+    background: var(--primary-color);
+    color: white;
+    text-align: center;
+    padding: 40px 0;
+    margin-top: 50px;
+}
+
+.main-footer p {
+    margin: 8px 0;
+    font-size: 0.95em;
+}
+
+.main-footer ul {
+    list-style: none;
+    margin-top: 20px;
+}
+
+.main-footer li {
+    margin: 8px 0;
+}
+
+.main-footer a {
+    color: #fff9e6;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.main-footer a:hover {
+    color: var(--accent-color);
+}
+
+/* Scroll to Top Button */
+#scrollTopBtn {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: var(--secondary-color);
+    color: white;
+    border: none;
+    padding: 15px 20px;
+    font-size: 18px;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    z-index: 99;
+    transition: background-color 0.3s;
+}
+
+#scrollTopBtn:hover {
+    background-color: var(--accent-color);
+}
+
+/* Lists */
+ul, ol {
+    margin: 15px 0;
+    margin-left: 30px;
+}
+
+li {
+    margin: 8px 0;
+    line-height: 1.7;
+}
+
+/* Links */
+a {
+    color: var(--secondary-color);
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+a:hover {
+    color: var(--accent-color);
+    text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 1.8em;
+    }
+    
+    h2 {
+        font-size: 1.5em;
+    }
+    
+    .hero-section {
+        padding: 40px 20px;
+    }
+    
+    .main-nav ul {
+        flex-direction: column;
+    }
+    
+    .main-nav a {
+        padding: 10px 15px;
+        font-size: 13px;
+    }
+    
+    .comparison-cards {
+        grid-template-columns: 1fr;
+    }
+    
+    .strategy-grid {
+        grid-template-columns: 1fr;
+    }
+}
+    </style>
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="top-bar">
+            <div class="container brand-container">
+                <img src="https://raw.githubusercontent.com/code-corhuila/material-mineria-datos/b3725d694125ab35294ddfe415a327bc1445d32c/01-week/01-session/LOGO%20CORHUILA%20BLANCO%20PNG%20(2).png" alt="Logo Corhuila" class="logo-corhuila" style="max-width: 120px; height: auto; margin-bottom: 15px;">
+                <h1 class="brand-name" style="color: white;">Programación Web</h1>
+                <p style="color: white;">Ingeniería de Sistemas y/o Mecatrónica</p>
+            </div>
+        </div>
+        <nav class="main-nav">
+            <div class="container">
+                <ul>
+                    <li><a href="#introduccion-web">Introducción</a></li>
+                    <li><a href="#ciclo-vida">Ciclo de Vida</a></li>
+                    <li><a href="#frontend">Frontend</a></li>
+                    <li><a href="#backend">Backend</a></li>
+                    <li><a href="#arquitectura">Arquitectura</a></li>
+                    <li><a href="#scrum">SCRUM</a></li>
+                    <li><a href="#herramientas">Herramientas</a></li>
+                    <li><a href="#primeros-pasos">Primeros Pasos</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container main-content">
+
+        <section id="introduccion-web" class="hero-section">
+            <h1>Introducción a la Programación Web</h1>
+            <p class="lead">Aprende los fundamentos de desarrollo web moderno: desde el ciclo de vida del software, pasando por frontend y backend, hasta metodologías de trabajo colaborativo como SCRUM. Domina HTML, CSS y JavaScript para construir aplicaciones web profesionales.</p>
+        </section>
+
+        <hr class="divider">
+
+        <section id="que-es-web">
+            <h2>1. ¿Qué es la Programación Web?</h2>
+            <p>La programación web es el proceso de crear aplicaciones que funcionan a través de internet. Estas aplicaciones se ejecutan en navegadores o servidores y permiten a usuarios interactuar desde cualquier lugar del mundo.</p>
+            
+            <blockquote class="definition-box">
+                <strong>Programación Web:</strong> Desarrollo de software que corre en navegadores (cliente) o servidores (backend), permitiendo interacción entre usuarios a través de internet.
+            </blockquote>
+
+            <h3>Características Clave</h3>
+            <ul>
+                <li><strong>Accesibilidad:</strong> Funciona desde cualquier navegador sin instalación</li>
+                <li><strong>Escalabilidad:</strong> Puede crecer para soportar millones de usuarios</li>
+                <li><strong>Mantenibilidad:</strong> Actualizaciones sin afectar al usuario final</li>
+                <li><strong>Interactividad:</strong> Experiencia dinámica en tiempo real</li>
+                <li><strong>Integración:</strong> Comunica con bases de datos, APIs y servicios externos</li>
+            </ul>
+
+            <h3>Tipos de Aplicaciones Web</h3>
+            <div class="comparison-cards">
+                <div class="card">
+                    <h4>Sitios Estáticos</h4>
+                    <p>Contenido fijo, actualización manual. Ejemplo: blogs, portafolios.</p>
+                </div>
+                <div class="card">
+                    <h4>Aplicaciones Web Dinámicas</h4>
+                    <p>Contenido generado según usuario. Ejemplo: Gmail, Instagram.</p>
+                </div>
+                <div class="card">
+                    <h4>Aplicaciones Web Progresivas (PWA)</h4>
+                    <p>Funcionan offline y se instalan como apps. Ejemplo: Spotify Web.</p>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <section id="ciclo-vida">
+            <h2>2. Ciclo de Vida del Software</h2>
+            <p>El ciclo de vida del software es el proceso que sigue un proyecto desde su concepción hasta su mantenimiento. Existen varias metodologías para gestionar este ciclo.</p>
+
+            <h3>Modelos Principales</h3>
+            <div class="comparison-cards">
+                <div class="card">
+                    <h4>Waterfall (Cascada)</h4>
+                    <ul>
+                        <li>Fases secuenciales</li>
+                        <li>Cada fase depende de la anterior</li>
+                        <li>Cambios tardíos son costosos</li>
+                        <li>Mejor para proyectos predecibles</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h4>Agile (Ágil)</h4>
+                    <ul>
+                        <li>Iteraciones cortas (sprints)</li>
+                        <li>Feedback continuo</li>
+                        <li>Cambios esperados y bienvenidos</li>
+                        <li>Mejor para proyectos dinámicos</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h4>DevOps</h4>
+                    <ul>
+                        <li>Desarrollo y operaciones integrados</li>
+                        <li>Automatización continua</li>
+                        <li>Deploy frecuente</li>
+                        <li>Mejor para aplicaciones críticas</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>Fases Generales</h3>
+            <div class="table-responsive">
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th>Fase</th>
+                            <th>Descripción</th>
+                            <th>Entregables</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>1. Análisis</strong></td>
+                            <td>Entender requisitos y necesidades</td>
+                            <td>Documento de requisitos</td>
+                        </tr>
+                        <tr>
+                            <td><strong>2. Diseño</strong></td>
+                            <td>Planificar arquitectura y UI/UX</td>
+                            <td>Mockups, diagramas, arquitectura</td>
+                        </tr>
+                        <tr>
+                            <td><strong>3. Desarrollo</strong></td>
+                            <td>Escribir código según diseño</td>
+                            <td>Código fuente, repositorio Git</td>
+                        </tr>
+                        <tr>
+                            <td><strong>4. Testing</strong></td>
+                            <td>Verificar funcionamiento correcto</td>
+                            <td>Reporte de bugs, casos de prueba</td>
+                        </tr>
+                        <tr>
+                            <td><strong>5. Deploy</strong></td>
+                            <td>Llevar a producción</td>
+                            <td>App en servidor live</td>
+                        </tr>
+                        <tr>
+                            <td><strong>6. Mantenimiento</strong></td>
+                            <td>Soporte y mejoras continuas</td>
+                            <td>Parches, actualizaciones</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="reflection-box">
+                <h4>💡 Punto Importante</h4>
+                <p>Actualmente, la mayoría de equipos usan metodologías ágiles. El ciclo no es secuencial sino iterativo: desarrollo → testing → feedback → iteración.</p>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <section id="frontend">
+            <h2>3. Frontend: La Cara Visible de tu Aplicación</h2>
+            <p>Frontend es todo lo que el usuario ve e interactúa en su navegador. Es la experiencia del usuario (UX) hecha código.</p>
+
+            <blockquote class="definition-box">
+                <strong>Frontend:</strong> Interfaz de usuario desarrollada con HTML (estructura), CSS (estilos) y JavaScript (interactividad). Corre en el navegador del usuario.
+            </blockquote>
+
+            <h3>Tecnologías Frontend</h3>
+            <div class="strategy-grid">
+                <div class="strategy-box">
+                    <h5>HTML (HyperText Markup Language)</h5>
+                    <p><strong>¿Qué hace?</strong> Define la estructura y contenido de la página.</p>
+                    <p><strong>Ejemplo:</strong> Títulos, párrafos, formularios, imágenes.</p>
+                </div>
+                <div class="strategy-box">
+                    <h5>CSS (Cascading Style Sheets)</h5>
+                    <p><strong>¿Qué hace?</strong> Define cómo se ven los elementos (colores, tamaños, disposición).</p>
+                    <p><strong>Ejemplo:</strong> Estilos, animaciones, responsive design.</p>
+                </div>
+                <div class="strategy-box">
+                    <h5>JavaScript (JS)</h5>
+                    <p><strong>¿Qué hace?</strong> Añade interactividad y lógica al navegador.</p>
+                    <p><strong>Ejemplo:</strong> Validar formularios, efectos, consultas AJAX.</p>
+                </div>
+            </div>
+
+            <h3>Frameworks Frontend Populares</h3>
+            <div class="table-responsive">
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th>Framework</th>
+                            <th>Lenguaje</th>
+                            <th>Características</th>
+                            <th>Casos de Uso</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>React</strong></td>
+                            <td>JavaScript</td>
+                            <td>Componentes reutilizables, virtual DOM</td>
+                            <td>Apps complejas y escalables</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Vue.js</strong></td>
+                            <td>JavaScript</td>
+                            <td>Curva de aprendizaje baja, reactivo</td>
+                            <td>Startups, MVPs rápidos</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Angular</strong></td>
+                            <td>TypeScript</td>
+                            <td>Framework completo, robusto</td>
+                            <td>Empresas grandes, apps escalables</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Vanilla JS</strong></td>
+                            <td>JavaScript puro</td>
+                            <td>Sin dependencias, ligero</td>
+                            <td>Sitios simples, aprendizaje</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>Responsivo (Mobile-First)</h3>
+            <pre><code>/* CSS Responsive - Adaptarse a diferentes pantallas */
+@media (max-width: 768px) {
+    .contenedor {
+        width: 100%;
+        padding: 10px;
+    }
+    
+    .sidebar {
+        display: none;
+    }
+}
+
+/* Mobile-first approach */
+.button {
+    width: 100%; /* Mobile primero */
+}
+
+@media (min-width: 768px) {
+    .button {
+        width: auto; /* Desktop */
+    }
+}</code></pre>
+
+            <div class="reflection-box">
+                <h4>📱 Responsivo es Obligatorio</h4>
+                <p>Más del 70% del tráfico web viene de móviles. Tu aplicación DEBE verse bien en todos los dispositivos. Esto no es opcional.</p>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <section id="backend">
+            <h2>4. Backend: La Inteligencia Detrás de la Escenas</h2>
+            <p>Backend es la lógica que procesa datos, autentica usuarios, consulta bases de datos y comunica con servicios externos. El usuario no lo ve, pero lo necesita.</p>
+
+            <blockquote class="definition-box">
+                <strong>Backend:</strong> Servidores y bases de datos que procesan solicitudes del cliente, ejecutan lógica de negocio y almacenan datos. Comunica con el frontend mediante APIs.
+            </blockquote>
+
+            <h3>Componentes Backend</h3>
+            <div class="strategy-grid">
+                <div class="strategy-box">
+                    <h5>Servidor Web</h5>
+                    <p>Recibe solicitudes HTTP, ejecuta código y envía respuestas.</p>
+                    <p><strong>Ejemplos:</strong> Node.js, Django, Flask, Java Spring.</p>
+                </div>
+                <div class="strategy-box">
+                    <h5>Base de Datos</h5>
+                    <p>Almacena datos persistentemente. Estructura: tablas, documentos o grafos.</p>
+                    <p><strong>Ejemplos:</strong> PostgreSQL, MongoDB, MySQL, Firebase.</p>
+                </div>
+                <div class="strategy-box">
+                    <h5>APIs REST</h5>
+                    <p>Interfaz que permite comunicación cliente-servidor.</p>
+                    <p><strong>Métodos:</strong> GET, POST, PUT, DELETE.</p>
+                </div>
+            </div>
+
+            <h3>Lenguajes Backend Populares</h3>
+            <div class="table-responsive">
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th>Lenguaje</th>
+                            <th>Framework Popular</th>
+                            <th>Fortalezas</th>
+                            <th>Empresas</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>JavaScript (Node.js)</strong></td>
+                            <td>Express, NestJS</td>
+                            <td>Mismo lenguaje client/server, escalable</td>
+                            <td>Netflix, LinkedIn, Uber</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Python</strong></td>
+                            <td>Django, Flask</td>
+                            <td>Sintaxis simple, IA/ML integrado</td>
+                            <td>Instagram, Spotify, Dropbox</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Java</strong></td>
+                            <td>Spring Boot</td>
+                            <td>Robusto, escalable, empresarial</td>
+                            <td>Twitter, Airbnb, eBay</td>
+                        </tr>
+                        <tr>
+                            <td><strong>PHP</strong></td>
+                            <td>Laravel, Symfony</td>
+                            <td>Fácil deploy, hosting económico</td>
+                            <td>WordPress, Facebook (inicio)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>Ejemplo Simple de API REST</h3>
+            <pre><code>// Node.js + Express
+const express = require('express');
+const app = express();
+
+// GET - Obtener usuarios
+app.get('/api/usuarios', (req, res) => {
+    const usuarios = [
+        { id: 1, nombre: 'Juan' },
+        { id: 2, nombre: 'María' }
+    ];
+    res.json(usuarios);
+});
+
+// POST - Crear usuario
+app.post('/api/usuarios', (req, res) => {
+    const nuevoUsuario = {
+        id: 3,
+        nombre: req.body.nombre
+    };
+    res.status(201).json(nuevoUsuario);
+});
+
+app.listen(3000, () => {
+    console.log('Servidor corriendo en puerto 3000');
+});</code></pre>
+
+            <div class="reflection-box">
+                <h4>🔐 Seguridad es Crítica</h4>
+                <p>El backend debe validar TODAS las entradas, proteger contraseñas, evitar inyecciones SQL y asegurar autenticación. Una brecha aquí afecta a millones de usuarios.</p>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <section id="arquitectura">
+            <h2>5. Arquitectura Cliente-Servidor</h2>
+            <p>Las aplicaciones web funcionan con un modelo cliente-servidor donde el navegador (cliente) comunica con un servidor para obtener/enviar datos.</p>
+
+            <h3>Flujo de una Solicitud Web</h3>
+            <pre><code>
+1. USUARIO → Escribe URL o hace clic en navegador
+                ↓
+2. NAVEGADOR → Envía solicitud HTTP al servidor
+                ↓
+3. SERVIDOR → Procesa solicitud y consulta BD
+                ↓
+4. SERVIDOR → Responde con datos (JSON o HTML)
+                ↓
+5. NAVEGADOR → Renderiza HTML y ejecuta JS
+                ↓
+6. USUARIO → Ve resultado en pantalla
+            </code></pre>
+
+            <h3>Arquitectura de 3 Capas</h3>
+            <div class="comparison-cards">
+                <div class="card">
+                    <h4>Presentación (Frontend)</h4>
+                    <p>HTML, CSS, JavaScript en el navegador. Interfaz visual.</p>
+                </div>
+                <div class="card">
+                    <h4>Lógica de Negocio (Backend)</h4>
+                    <p>Servidor procesa solicitudes y ejecuta reglas del negocio.</p>
+                </div>
+                <div class="card">
+                    <h4>Datos (Base de Datos)</h4>
+                    <p>Almacena información de forma persistente y segura.</p>
+                </div>
+            </div>
+
+            <div class="reflection-box">
+                <h4>💡 Separación de Responsabilidades</h4>
+                <p>Mantener estas capas separadas permite que equipos diferentes trabajen en paralelo, facilita testing y mejora la mantenibilidad.</p>
+            </div>
+        </section>
+
+        <hr class="divider-thick">
+
+        <section id="scrum" class="case-study-section">
+            <div class="case-header">
+                <h2>6. Metodología SCRUM</h2>
+                <h3>Trabajando en Equipos Ágiles</h3>
+            </div>
+
+            <p>SCRUM es un framework ágil que organiza el trabajo en iteraciones cortas llamadas sprints. Permite equipos responder rápidamente a cambios y mantener comunicación constante.</p>
+
+            <blockquote class="definition-box">
+                <strong>SCRUM:</strong> Framework ágil basado en sprints (1-4 semanas) donde equipos auto-organizados entregan incrementos de producto de forma iterativa y con feedback continuo.
+            </blockquote>
+
+            <h3>Roles en SCRUM</h3>
+            <div class="strategy-grid">
+                <div class="strategy-box">
+                    <h5>Product Owner (PO)</h5>
+                    <p><strong>Responsabilidad:</strong> Definir qué construir, prioridades y requisitos.</p>
+                    <p><strong>Tareas:</strong> Mantener backlog, aceptar historias completadas.</p>
+                </div>
+                <div class="strategy-box">
+                    <h5>Scrum Master (SM)</h5>
+                    <p><strong>Responsabilidad:</strong> Facilitar proceso SCRUM, remover impedimentos.</p>
+                    <p><strong>Tareas:</strong> Liderar dailys, proteger al equipo de distracciones.</p>
+                </div>
+                <div class="strategy-box">
+                    <h5>Development Team</h5>
+                    <p><strong>Responsabilidad:</strong> Construir el producto de forma auto-organizada.</p>
+                    <p><strong>Tareas:</strong> Desarrollar, testear, entregar incrementos cada sprint.</p>
+                </div>
+            </div>
+
+            <h3>Artefactos SCRUM</h3>
+            <div class="table-responsive">
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th>Artefacto</th>
+                            <th>Descripción</th>
+                            <th>Mantenido por</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Product Backlog</strong></td>
+                            <td>Lista priorizada de todos los requisitos/features</td>
+                            <td>Product Owner</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Sprint Backlog</strong></td>
+                            <td>Historias seleccionadas para el sprint actual</td>
+                            <td>Development Team</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Increment</strong></td>
+                            <td>Producto potencialmente entregable al final del sprint</td>
+                            <td>Development Team</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Velocity</strong></td>
+                            <td>Puntos completados por sprint (métrica de velocidad)</td>
+                            <td>Scrum Master/Team</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>Ceremonias SCRUM (Eventos)</h3>
+            <div class="comparison-cards">
+                <div class="card">
+                    <h4>Sprint Planning</h4>
+                    <p><strong>Cuándo:</strong> Inicio del sprint</p>
+                    <p><strong>Duración:</strong> 2-4 horas</p>
+                    <p><strong>Qué:</strong> Seleccionar historias del backlog para el sprint</p>
+                </div>
+                <div class="card">
+                    <h4>Daily Standup</h4>
+                    <p><strong>Cuándo:</strong> Todos los días</p>
+                    <p><strong>Duración:</strong> 15 minutos</p>
+                    <p><strong>Qué:</strong> Sincronizar equipo (qué hiciste, qué harás, bloqueadores)</p>
+                </div>
+                <div class="card">
+                    <h4>Sprint Review</h4>
+                    <p><strong>Cuándo:</strong> Final del sprint</p>
+                    <p><strong>Duración:</strong> 1-2 horas</p>
+                    <p><strong>Qué:</strong> Demostrar increment completado al PO</p>
+                </div>
+                <div class="card">
+                    <h4>Retrospectiva</h4>
+                    <p><strong>Cuándo:</strong> Final del sprint</p>
+                    <p><strong>Duración:</strong> 1 hora</p>
+                    <p><strong>Qué:</strong> Equipo reflexiona sobre mejoras (lecciones aprendidas)</p>
+                </div>
+            </div>
+
+            <h3>User Story: Unidad Básica de Trabajo</h3>
+            <pre><code>// Formato: As a [Role], I want [Feature], so that [Benefit]
+
+USER STORY:
+-----------
+As a usuario registrado,
+I want poder resetear mi contraseña,
+so that puedo recuperar acceso si la olvido.
+
+CRITERIOS DE ACEPTACIÓN:
+- El usuario ve enlace "Olvidé mi contraseña"
+- Ingresa email y recibe enlace por email
+- El enlace expira en 24 horas
+- Puede establecer nueva contraseña
+
+PUNTOS DE HISTORIA: 5 (estimación relativa de complejidad)</code></pre>
+
+            <div class="reflection-box">
+                <h4>🎯 Ventajas de SCRUM</h4>
+                <ul>
+                    <li>✅ Entregas frecuentes → feedback real rápido</li>
+                    <li>✅ Adaptación a cambios → flexibilidad</li>
+                    <li>✅ Visibilidad → todos saben estado del proyecto</li>
+                    <li>✅ Motivación → equipos auto-organizados</li>
+                    <li>✅ Riesgos tempranos → problemas detectados pronto</li>
+                </ul>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <section id="herramientas">
+            <h2>7. Herramientas Esenciales para Programador Web</h2>
+            <p>Para desarrollar aplicaciones web profesionales, necesitas un conjunto de herramientas bien configuradas.</p>
+
+            <h3>Editor de Código</h3>
+            <div class="card" style="margin: 20px 0;">
+                <h4>Visual Studio Code (Recomendado)</h4>
+                <p><strong>¿Por qué?</strong> Ligero, poderoso, extensible y usado por millones de devs.</p>
+                <p><strong>Descargar:</strong> <a href="https://code.visualstudio.com/" target="_blank">https://code.visualstudio.com/</a></p>
+                <p><strong>Extensiones recomendadas:</strong></p>
+                <ul style="margin-left: 20px;">
+                    <li>Live Server (servir archivos localmente)</li>
+                    <li>Prettier (formater de código)</li>
+                    <li>ESLint (linter JavaScript)</li>
+                    <li>Thunder Client o REST Client (probar APIs)</li>
+                    <li>GitLens (integración Git avanzada)</li>
+                </ul>
+            </div>
+
+            <h3>Control de Versiones</h3>
+            <div class="card" style="margin: 20px 0;">
+                <h4>Git + GitHub</h4>
+                <p><strong>¿Qué es?</strong> Sistema de control de versiones para colaborar y resguardar código.</p>
+                <p><strong>Instalación:</strong> <a href="https://git-scm.com/" target="_blank">https://git-scm.com/</a></p>
+                <p><strong>Comandos básicos:</strong></p>
+                <pre><code>git init                    # Inicializar repositorio
+git add .                   # Preparar cambios
+git commit -m "mensaje"     # Guardar cambios
+git push origin main        # Enviar a GitHub
+git pull                    # Traer cambios remotos
+git branch feature-nueva    # Crear rama</code></pre>
+            </div>
+
+            <h3>Ambiente Local (Node.js y npm)</h3>
+            <div class="card" style="margin: 20px 0;">
+                <h4>Node.js y npm</h4>
+                <p><strong>¿Qué es?</strong> Node.js permite ejecutar JavaScript en servidor. npm es su gestor de paquetes.</p>
+                <p><strong>Descargar:</strong> <a href="https://nodejs.org/" target="_blank">https://nodejs.org/</a> (versión LTS recomendada)</p>
+                <p><strong>Verificar instalación:</strong></p>
+                <pre><code>node --version    # v18.x.x o superior
+npm --version     # 9.x.x o superior</code></pre>
+                <p><strong>Crear proyecto:</strong></p>
+                <pre><code>npm init -y                 # Crear package.json
+npm install express         # Instalar dependencias
+npm start                   # Ejecutar proyecto</code></pre>
+            </div>
+
+            <h3>Navegadores Modernos para Testing</h3>
+            <div class="table-responsive">
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th>Navegador</th>
+                            <th>Descargar</th>
+                            <th>DevTools</th>
+                            <th>Recomendado para</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Chrome</strong></td>
+                            <td><a href="https://google.com/chrome" target="_blank">google.com/chrome</a></td>
+                            <td>Excelentes DevTools</td>
+                            <td>Testing general</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Firefox</strong></td>
+                            <td><a href="https://firefox.com" target="_blank">firefox.com</a></td>
+                            <td>DevTools potentes</td>
+                            <td>Debugging, accesibilidad</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Edge</strong></td>
+                            <td>Pre-instalado Windows</td>
+                            <td>Basado en Chromium</td>
+                            <td>Testing en Windows</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>Herramientas Complementarias</h3>
+            <div class="strategy-grid">
+                <div class="strategy-box">
+                    <h5>Postman</h5>
+                    <p>Probar APIs REST sin escribir código. Interfaz gráfica amigable.</p>
+                    <p><a href="https://www.postman.com/" target="_blank">postman.com</a></p>
+                </div>
+                <div class="strategy-box">
+                    <h5>Figma</h5>
+                    <p>Diseño colaborativo de interfaces. Prototipado y mockups.</p>
+                    <p><a href="https://figma.com" target="_blank">figma.com</a></p>
+                </div>
+                <div class="strategy-box">
+                    <h5>Trello / Jira</h5>
+                    <p>Gestión de tareas y sprints SCRUM. Colaboración visual.</p>
+                    <p><a href="https://trello.com" target="_blank">trello.com</a>, <a href="https://jira.atlassian.com/" target="_blank">jira.atlassian.com</a></p>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <section id="primeros-pasos">
+            <h2>8. Primeros Pasos: Hola Mundo en HTML, CSS y JavaScript</h2>
+            <p>Comencemos creando tu primera página web interactiva.</p>
+
+            <h3>Paso 1: Estructura HTML básica</h3>
+            <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="es"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;Mi Primera Página Web&lt;/title&gt;
+    &lt;link rel="stylesheet" href="style.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;header&gt;
+        &lt;h1&gt;¡Hola Mundo!&lt;/h1&gt;
+    &lt;/header&gt;
+    
+    &lt;main&gt;
+        &lt;p id="mensaje"&gt;Esta es mi primera página web&lt;/p&gt;
+        &lt;button id="boton"&gt;Haz clic aquí&lt;/button&gt;
+    &lt;/main&gt;
+    
+    &lt;script src="script.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+            <h3>Paso 2: Estilos CSS</h3>
+            <pre><code>/* style.css */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+header {
+    text-align: center;
+    color: white;
+    margin-bottom: 30px;
+}
+
+h1 {
+    font-size: 3em;
+    margin-bottom: 10px;
+}
+
+#mensaje {
+    font-size: 1.2em;
+    color: white;
+    margin-bottom: 20px;
+}
+
+#boton {
+    padding: 12px 30px;
+    font-size: 1em;
+    background-color: #ff6b6b;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#boton:hover {
+    background-color: #ff5252;
+}</code></pre>
+
+            <h3>Paso 3: Interactividad con JavaScript</h3>
+            <pre><code>// script.js
+document.addEventListener('DOMContentLoaded', function() {
+    const boton = document.getElementById('boton');
+    const mensaje = document.getElementById('mensaje');
+    
+    let contador = 0;
+    
+    boton.addEventListener('click', function() {
+        contador++;
+        mensaje.textContent = `¡Hiciste clic ${contador} veces!`;
+        
+        // Cambiar color aleatorio
+        const colores = ['#667eea', '#764ba2', '#f093fb', '#4facfe'];
+        const colorAleatorio = colores[Math.floor(Math.random() * colores.length)];
+        document.body.style.background = colorAleatorio;
+    });
+});</code></pre>
+
+            <h3>Paso 4: Proyecto Local</h3>
+            <pre><code># Crear carpeta del proyecto
+mkdir mi-primer-proyecto
+cd mi-primer-proyecto
+
+# Crear archivos
+touch index.html style.css script.js
+
+# Abrir en VS Code
+code .
+
+# Instalar extensión Live Server
+# Clic derecho en index.html → Open with Live Server</code></pre>
+
+            <div class="reflection-box">
+                <h4>🎉 ¡Felicidades!</h4>
+                <p>Has creado tu primer proyecto web. Ahora puedes:</p>
+                <ul>
+                    <li>Agregar más elementos HTML</li>
+                    <li>Experimentar con CSS (colores, fuentes, layouts)</li>
+                    <li>Crear funciones JavaScript más complejas</li>
+                    <li>Conectar con una API backend</li>
+                </ul>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <section id="proximo-pasos">
+            <h2>9. Próximos Pasos en tu Carrera de Programador Web</h2>
+            <p>Dominar programación web es un viaje continuo. Aquí está el camino recomendado:</p>
+
+            <h3>Ruta de Aprendizaje Sugerida</h3>
+            <div class="table-responsive">
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th>Fase</th>
+                            <th>Tiempo</th>
+                            <th>Temas</th>
+                            <th>Proyecto</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Fundamentos</strong></td>
+                            <td>2-4 semanas</td>
+                            <td>HTML, CSS, JS básico</td>
+                            <td>Portafolio personal</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Frontend Intermedio</strong></td>
+                            <td>4-6 semanas</td>
+                            <td>DOM, eventos, async/await</td>
+                            <td>App de tareas interactiva</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Framework Frontend</strong></td>
+                            <td>6-8 semanas</td>
+                            <td>React/Vue.js, componentes</td>
+                            <td>App con estado complejo</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Backend Básico</strong></td>
+                            <td>4-6 semanas</td>
+                            <td>Node.js, Express, BD</td>
+                            <td>API REST funcional</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Full Stack</strong></td>
+                            <td>8-12 semanas</td>
+                            <td>Frontend + Backend integrados</td>
+                            <td>Aplicación completa</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>Recursos Recomendados para Continuar</h3>
+            <div class="comparison-cards">
+                <div class="card">
+                    <h4>Plataformas de Aprendizaje</h4>
+                    <ul>
+                        <li><a href="https://www.freecodecamp.org/" target="_blank">FreeCodeCamp</a> - Cursos gratuitos</li>
+                        <li><a href="https://www.udemy.com/" target="_blank">Udemy</a> - Cursos pagos</li>
+                        <li><a href="https://www.coursera.org/" target="_blank">Coursera</a> - Certificaciones</li>
+                        <li><a href="https://www.codecademy.com/" target="_blank">Codecademy</a> - Interactivo</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h4>Documentación Oficial</h4>
+                    <ul>
+                        <li><a href="https://developer.mozilla.org/" target="_blank">MDN Web Docs</a> - La mejor referencia</li>
+                        <li><a href="https://react.dev/" target="_blank">React Docs</a></li>
+                        <li><a href="https://vuejs.org/" target="_blank">Vue.js Docs</a></li>
+                        <li><a href="https://nodejs.org/docs/" target="_blank">Node.js Docs</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="reflection-box">
+                <h4>🚀 Último Consejo</h4>
+                <p><strong>Aprende haciendo proyectos reales.</strong> La teoría es importante, pero construir aplicaciones es lo que te hará experto. Publica tu código en GitHub, mantén un portafolio, y contribuye a proyectos open source.</p>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="main-footer">
+        <div class="container">
+            <h3>Introducción a la Programación Web - Ingeniería de Sistemas y/o Mecatrónica</h3>
+            <p><strong>Creado por:</strong> Ing. Julian Quimbayo Castro</p>
+            <p>Última actualización: Enero 2026</p>
+            <p>Este material es de uso educativo. Para más información, consulta la documentación oficial de tecnologías web.</p>
+            <ul>
+                <li><a href="https://developer.mozilla.org/" target="_blank">MDN Web Docs</a></li>
+                <li><a href="https://www.w3.org/" target="_blank">W3C</a></li>
+                <li><a href="https://github.com/" target="_blank">GitHub</a></li>
+                <li><a href="https://scrum.org/" target="_blank">Scrum.org</a></li>
+            </ul>
+            <p style="margin-top: 20px; font-size: 0.9em; opacity: 0.9;">© Corporación Universitaria de Huila - Corhuila</p>
+        </div>
+    </footer>
+
+    <button id="scrollTopBtn" title="Volver arriba">↑</button>
+
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+    setupScrollButton();
+    setupNavigation();
+    setupSmoothScroll();
+    highlightActiveSection();
+});
+
+// Scroll to Top Button
+function setupScrollButton() {
+    const scrollBtn = document.getElementById('scrollTopBtn');
+
+    window.addEventListener('scroll', function() {
+        if (document.documentElement.scrollTop > 300 || document.body.scrollTop > 300) {
+            scrollBtn.style.display = 'block';
+        } else {
+            scrollBtn.style.display = 'none';
+        }
+    });
+
+    scrollBtn.addEventListener('click', function() {
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
+    });
+}
+
+// Smooth Scroll
+function setupSmoothScroll() {
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+}
+
+// Active Navigation Highlight
+function setupNavigation() {
+    const navLinks = document.querySelectorAll('.main-nav a');
+
+    window.addEventListener('scroll', highlightActiveSection);
+}
+
+function highlightActiveSection() {
+    const navLinks = document.querySelectorAll('.main-nav a');
+    let current = '';
+
+    const sections = document.querySelectorAll('section');
+    sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        if (pageYOffset >= sectionTop - 200) {
+            current = section.getAttribute('id');
+        }
+    });
+
+    navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === `#${current}`) {
+            link.classList.add('active');
+        }
+    });
+}
+
+// Copy Code to Clipboard
+document.querySelectorAll('pre').forEach(pre => {
+    const button = document.createElement('button');
+    button.textContent = '📋 Copiar';
+    button.style.cssText = `
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        padding: 8px 12px;
+        background-color: #27ae60;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 12px;
+        opacity: 0;
+        transition: opacity 0.3s;
+        z-index: 10;
+    `;
+
+    pre.style.position = 'relative';
+    pre.appendChild(button);
+
+    pre.addEventListener('mouseenter', () => {
+        button.style.opacity = '1';
+    });
+
+    pre.addEventListener('mouseleave', () => {
+        button.style.opacity = '0';
+    });
+
+    button.addEventListener('click', () => {
+        const code = pre.innerText;
+        navigator.clipboard.writeText(code).then(() => {
+            const originalText = button.textContent;
+            button.textContent = '✅ Copiado!';
+            setTimeout(() => {
+                button.textContent = originalText;
+            }, 2000);
+        });
+    });
+});
+    </script>
+</body>
+</html>
