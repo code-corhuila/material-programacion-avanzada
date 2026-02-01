@@ -8,7 +8,7 @@
 
 | 📌 **Aspecto**       | 📝 **Detalle**                          |
 |----------------------|-----------------------------------------|
-| 🎓 **Programa**      | Ingeniería de Sistemas                  |
+| 🎓 **Programa**      | Ingeniería Mecatrónica                  |
 | 📚 **Asignatura**    | Desarrollo Web Full Stack               |
 | 🔢 **Créditos**      | 4                                       |
 | 📅 **Semestre**      | IV                                      |
