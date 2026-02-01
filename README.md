@@ -1,4 +1,4 @@
-# 🌐 Desarrollo Web Full Stack
+# 🌐 Programación Avanzada
 
 > *"La web es el medio más democrático para compartir conocimiento e ideas"* — Tim Berners-Lee
 
