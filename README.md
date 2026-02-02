@@ -1,4 +1,4 @@
-# 🌐 Desarrollo Web Full Stack
+# 🌐 Programación Avanzada
 
 > *"La web es el medio más democrático para compartir conocimiento e ideas"* — Tim Berners-Lee
 
@@ -8,7 +8,7 @@
 
 | 📌 **Aspecto**       | 📝 **Detalle**                          |
 |----------------------|-----------------------------------------|
-| 🎓 **Programa**      | Ingeniería de Sistemas                  |
+| 🎓 **Programa**      | Ingeniería Mecatrónica                  |
 | 📚 **Asignatura**    | Desarrollo Web Full Stack               |
 | 🔢 **Créditos**      | 4                                       |
 | 📅 **Semestre**      | IV                                      |
