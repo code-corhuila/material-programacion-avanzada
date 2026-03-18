@@ -1,0 +1,2114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proyectos Full-Stack: Nest + Next + PostgreSQL | Programación Avanzada</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+    <style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-color: #1e3c72;
+    --secondary-color: #2a5298;
+    --accent-color: #ff6b6b;
+    --light-bg: #f8f9fa;
+    --dark-text: #2c3e50;
+    --border-color: #e0e0e0;
+    --success-color: #27ae60;
+    --warning-color: #f39c12;
+    --info-color: #3498db;
+    --nest-color: #e0234e;
+    --next-color: #000000;
+    --postgres-color: #336791;
+    --docker-color: #2496ed;
+    --prisma-color: #2d3748;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.6;
+    color: var(--dark-text);
+    background-color: #fff;
+}
+
+/* Header */
+.main-header {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    color: white;
+    padding: 0;
+}
+
+.top-bar {
+    background-color: rgba(0, 0, 0, 0.1);
+    padding: 20px 0;
+    text-align: center;
+}
+
+.brand-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.brand-name {
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin: 10px 0;
+}
+
+.brand-subtitle {
+    font-size: 14px;
+    font-weight: 300;
+    opacity: 0.9;
+}
+
+.main-nav {
+    background-color: rgba(0, 0, 0, 0.2);
+    padding: 15px 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.main-nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.main-nav a {
+    color: white;
+    text-decoration: none;
+    padding: 12px 20px;
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background-color 0.3s;
+    border-bottom: 3px solid transparent;
+}
+
+.main-nav a:hover,
+.main-nav a.active {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-bottom-color: var(--accent-color);
+}
+
+/* Container */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Main Content */
+.main-content {
+    min-height: 100vh;
+    padding: 40px 0;
+}
+
+.section {
+    margin: 60px 0;
+    padding: 40px 0;
+    border-top: 1px solid var(--border-color);
+}
+
+.section:first-child {
+    border-top: none;
+}
+
+.section-title {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 30px;
+    color: var(--primary-color);
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.section-title i {
+    font-size: 36px;
+    color: var(--accent-color);
+}
+
+.subsection-title {
+    font-size: 20px;
+    font-weight: 600;
+    margin-top: 30px;
+    margin-bottom: 15px;
+    color: var(--secondary-color);
+}
+
+/* Cards */
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    margin: 30px 0;
+}
+
+.card {
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 25px;
+    background: #fff;
+    transition: transform 0.3s, box-shadow 0.3s;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.card-icon {
+    font-size: 40px;
+    color: var(--accent-color);
+    margin-bottom: 15px;
+}
+
+.card-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: var(--dark-text);
+}
+
+/* Tech Stack Badges */
+.tech-stack {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin: 15px 0;
+}
+
+.tech-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    color: white;
+}
+
+.tech-badge.nest { background-color: var(--nest-color); }
+.tech-badge.next { background-color: var(--next-color); }
+.tech-badge.postgres { background-color: var(--postgres-color); }
+.tech-badge.docker { background-color: var(--docker-color); }
+.tech-badge.prisma { background-color: var(--prisma-color); }
+
+/* Project Cards */
+.project-card {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    margin-bottom: 40px;
+    border-left: 5px solid var(--primary-color);
+}
+
+.project-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+
+.project-header {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    color: white;
+    padding: 25px 30px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.project-number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 55px;
+    height: 55px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    font-size: 24px;
+    font-weight: 700;
+    flex-shrink: 0;
+    border: 2px solid rgba(255, 255, 255, 0.4);
+}
+
+.project-header-info h3 {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.project-header-info p {
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+.project-header-info .team-members {
+    font-size: 12px;
+    opacity: 0.85;
+    margin-top: 6px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.project-header-info .team-members .member-name {
+    background-color: rgba(255, 255, 255, 0.15);
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-weight: 400;
+}
+
+.project-header-info .team-members.empty {
+    opacity: 0.6;
+    font-style: italic;
+}
+
+.project-body {
+    padding: 30px;
+}
+
+.project-context {
+    margin-bottom: 25px;
+}
+
+.project-context h4 {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--primary-color);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.project-context p {
+    color: #555;
+    line-height: 1.8;
+}
+
+/* Use Cases */
+.use-cases {
+    margin-top: 20px;
+}
+
+.use-cases h4 {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--primary-color);
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.use-case-list {
+    list-style: none;
+    padding: 0;
+}
+
+.use-case-list li {
+    padding: 10px 15px;
+    margin-bottom: 8px;
+    background-color: var(--light-bg);
+    border-radius: 6px;
+    border-left: 3px solid var(--accent-color);
+    font-size: 14px;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.use-case-list li i {
+    color: var(--accent-color);
+    margin-top: 3px;
+    flex-shrink: 0;
+}
+
+.use-case-list li strong {
+    color: var(--primary-color);
+}
+
+/* Entities */
+.entities-section {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #f0f4f8;
+    border-radius: 8px;
+}
+
+.entities-section h4 {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--primary-color);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.entities-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.entity-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: white;
+    border: 1px solid var(--border-color);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--dark-text);
+}
+
+.entity-tag i {
+    color: var(--info-color);
+    font-size: 12px;
+}
+
+/* Code Block */
+.code-block {
+    background: linear-gradient(135deg, #1e1e1e 0%, #2d2d2d 100%);
+    border-left: 5px solid var(--accent-color);
+    border-radius: 8px;
+    padding: 24px;
+    margin: 25px 0;
+    overflow-x: auto;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.code-block code {
+    font-family: 'Fira Code', 'Courier New', monospace;
+    font-size: 13px;
+    color: #e0e0e0;
+    line-height: 1.7;
+    white-space: pre;
+    white-space: pre-wrap;
+    word-break: break-word;
+    display: block;
+    letter-spacing: 0.5px;
+}
+
+/* Content List */
+.content-list {
+    margin: 20px 0 20px 40px;
+}
+
+.content-list li {
+    margin: 10px 0;
+    padding-left: 10px;
+}
+
+.content-list strong {
+    color: var(--primary-color);
+}
+
+/* Steps */
+.steps-container {
+    margin: 40px 0;
+}
+
+.step {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 30px;
+    padding: 20px;
+    background-color: var(--light-bg);
+    border-radius: 8px;
+    border-left: 4px solid var(--primary-color);
+}
+
+.step-number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    background-color: var(--primary-color);
+    color: white;
+    border-radius: 50%;
+    font-size: 24px;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+.step-content h3 {
+    color: var(--primary-color);
+    margin-bottom: 10px;
+}
+
+.step-content p {
+    color: var(--dark-text);
+    margin-bottom: 10px;
+}
+
+/* Difficulty Badge */
+.difficulty {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    margin-left: 10px;
+}
+
+.difficulty.easy {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.difficulty.medium {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.difficulty.hard {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+/* Btn */
+.btn {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: var(--primary-color);
+    color: white;
+    text-decoration: none;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: background-color 0.3s;
+}
+
+.btn:hover {
+    background-color: var(--secondary-color);
+}
+
+/* Footer */
+.footer {
+    background-color: var(--dark-text);
+    color: white;
+    padding: 40px 0;
+    margin-top: 60px;
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 40px;
+}
+
+.footer-section h3 {
+    margin-bottom: 15px;
+    color: var(--accent-color);
+}
+
+.footer-section ul {
+    list-style: none;
+}
+
+.footer-section ul li {
+    margin: 8px 0;
+}
+
+.footer-section a {
+    color: #ccc;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.footer-section a:hover {
+    color: white;
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin-top: 30px;
+}
+
+/* Info Box */
+.info-box {
+    padding: 20px 25px;
+    border-radius: 8px;
+    margin: 20px 0;
+}
+
+.info-box.warning {
+    background-color: #fff3cd;
+    border-left: 4px solid var(--warning-color);
+}
+
+.info-box.success {
+    background-color: #d4edda;
+    border-left: 4px solid var(--success-color);
+}
+
+.info-box.info {
+    background-color: #d1ecf1;
+    border-left: 4px solid var(--info-color);
+}
+
+.info-box h4 {
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .section-title {
+        font-size: 24px;
+    }
+
+    .main-nav ul {
+        flex-direction: column;
+    }
+
+    .main-nav a {
+        padding: 10px 15px;
+    }
+
+    .cards-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .step {
+        flex-direction: column;
+    }
+
+    .step-number {
+        align-self: flex-start;
+    }
+
+    .project-header {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="main-header">
+        <div class="top-bar">
+            <div class="container">
+                <div class="brand-container">
+                    <img src="https://raw.githubusercontent.com/code-corhuila/material-mineria-datos/b3725d694125ab35294ddfe415a327bc1445d32c/01-week/01-session/LOGO%20CORHUILA%20BLANCO%20PNG%20(2).png" alt="Logo Corhuila" class="logo-corhuila" style="max-width: 120px; height: auto; margin-bottom: 15px;">
+                    <h1 class="brand-name">
+                        <i class="fas fa-project-diagram"></i> Proyectos Full-Stack — Programación Avanzada
+                    </h1>
+                    <p class="brand-subtitle">NestJS + Next.js + PostgreSQL + Docker + Prisma ORM</p>
+                </div>
+            </div>
+        </div>
+
+        <nav class="main-nav">
+            <ul>
+                <li><a href="#introduccion" class="nav-link">Introducción</a></li>
+                <li><a href="#stack" class="nav-link">Stack Tecnológico</a></li>
+                <li><a href="#metodologia" class="nav-link">Metodología</a></li>
+                <li><a href="#proyectos" class="nav-link">Proyectos</a></li>
+                <li><a href="#entrega" class="nav-link">Entrega</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+
+            <!-- Introducción -->
+            <section id="introduccion" class="section">
+                <h2 class="section-title">
+                    <i class="fas fa-rocket"></i> Introducción
+                </h2>
+
+                <p>En esta sección trabajarás en un proyecto full-stack real utilizando tecnologías modernas de la industria. A cada equipo se le asignará uno de los 15 proyectos disponibles y lo desarrollará de principio a fin, cubriendo backend (API REST), frontend (interfaz de usuario) y base de datos, todo orquestado con Docker.</p>
+
+                <div class="info-box info">
+                    <h4><i class="fas fa-info-circle"></i> Objetivo General</h4>
+                    <p>Desarrollar una aplicación web full-stack funcional aplicando principios de arquitectura limpia, buenas prácticas de desarrollo, control de versiones con Git/GitHub e integración de servicios mediante contenedores Docker.</p>
+                </div>
+
+                <h3 class="subsection-title">Stack Tecnológico del Proyecto</h3>
+
+                <div class="cards-grid">
+                    <div class="card">
+                        <div class="card-icon" style="color: var(--nest-color);"><i class="fas fa-server"></i></div>
+                        <h4 class="card-title">NestJS (Backend)</h4>
+                        <p>Framework progresivo de Node.js para construir APIs REST escalables y eficientes con TypeScript, arquitectura modular e inyección de dependencias.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon" style="color: var(--next-color);"><i class="fas fa-desktop"></i></div>
+                        <h4 class="card-title">Next.js (Frontend)</h4>
+                        <p>Framework de React para producción con renderizado del lado del servidor (SSR), generación estática (SSG) y rutas API integradas.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon" style="color: var(--postgres-color);"><i class="fas fa-database"></i></div>
+                        <h4 class="card-title">PostgreSQL (Base de Datos)</h4>
+                        <p>Sistema de gestión de bases de datos relacional robusto, confiable y de código abierto con soporte avanzado para consultas complejas.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon" style="color: var(--docker-color);"><i class="fab fa-docker"></i></div>
+                        <h4 class="card-title">Docker (Contenedores)</h4>
+                        <p>Plataforma de contenedores que permite empaquetar, distribuir y ejecutar aplicaciones en entornos aislados y reproducibles.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon" style="color: var(--prisma-color);"><i class="fas fa-link"></i></div>
+                        <h4 class="card-title">Prisma (ORM)</h4>
+                        <p>ORM de nueva generación para Node.js y TypeScript que facilita el acceso a la base de datos con un esquema declarativo y migraciones automáticas.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon" style="color: var(--dark-text);"><i class="fab fa-github"></i></div>
+                        <h4 class="card-title">GitHub (Versionamiento)</h4>
+                        <p>Plataforma de control de versiones para gestionar el código fuente, ramas, pull requests y colaboración en equipo.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Stack Tecnológico -->
+            <section id="stack" class="section">
+                <h2 class="section-title">
+                    <i class="fas fa-layer-group"></i> Arquitectura del Proyecto
+                </h2>
+
+                <p>Todos los proyectos siguen una arquitectura en capas con <strong>desacople de responsabilidades</strong>, orquestada con Docker Compose. Cada capa tiene una función específica y no debe conocer los detalles internos de las demás.</p>
+
+                <div class="info-box info">
+                    <h4><i class="fas fa-layer-group"></i> Principio de Separación de Responsabilidades</h4>
+                    <p><strong>Controller</strong> (recibe la petición HTTP) → <strong>Service</strong> (lógica de negocio) → <strong>Repository</strong> (acceso a datos vía Prisma). Cada capa se comunica solo con la siguiente, nunca se salta niveles. Los DTOs validan la entrada, las Entities representan el dominio y los Mappers transforman datos entre capas.</p>
+                </div>
+
+                <div class="code-block">
+                    <code>proyecto/
+├── docker-compose.yml              # Orquestación de servicios
+├── .env                            # Variables de entorno (NO subir a Git)
+├── .env.example                    # Plantilla de variables de entorno
+├── .gitignore
+├── backend/                        # API REST con NestJS
+│   ├── Dockerfile
+│   ├── .env                        # Variables del backend
+│   ├── src/
+│   │   ├── main.ts                 # Bootstrap de la aplicación
+│   │   ├── app.module.ts           # Módulo raíz
+│   │   │
+│   │   ├── common/                 # Módulo compartido (cross-cutting)
+│   │   │   ├── filters/            # Filtros de excepción globales
+│   │   │   │   └── http-exception.filter.ts
+│   │   │   ├── interceptors/       # Interceptores (logging, transformación)
+│   │   │   │   └── response.interceptor.ts
+│   │   │   ├── pipes/              # Pipes de validación
+│   │   │   │   └── validation.pipe.ts
+│   │   │   ├── guards/             # Guards de autenticación/autorización
+│   │   │   │   └── api-key.guard.ts
+│   │   │   └── decorators/         # Decoradores personalizados
+│   │   │
+│   │   ├── config/                 # Configuración centralizada
+│   │   │   └── env.config.ts       # Validación de variables de entorno
+│   │   │
+│   │   ├── prisma/                 # Módulo Prisma (acceso a BD)
+│   │   │   ├── prisma.module.ts
+│   │   │   └── prisma.service.ts
+│   │   │
+│   │   └── modules/                # Módulos de dominio (uno por entidad)
+│   │       └── [entidad]/
+│   │           ├── [entidad].module.ts       # Declaración del módulo
+│   │           ├── controller/
+│   │           │   └── [entidad].controller.ts  # Solo manejo HTTP
+│   │           ├── service/
+│   │           │   └── [entidad].service.ts     # Lógica de negocio
+│   │           ├── repository/
+│   │           │   └── [entidad].repository.ts  # Acceso a datos (Prisma)
+│   │           ├── dto/
+│   │           │   ├── create-[entidad].dto.ts   # Validación de entrada
+│   │           │   └── update-[entidad].dto.ts   # Validación de edición
+│   │           └── entities/
+│   │               └── [entidad].entity.ts       # Representación del dominio
+│   │
+│   ├── prisma/
+│   │   ├── schema.prisma           # Esquema de base de datos
+│   │   └── migrations/             # Migraciones generadas
+│   └── test/                       # Pruebas unitarias e integración
+│
+├── frontend/                       # Interfaz con Next.js
+│   ├── Dockerfile
+│   ├── .env.local                  # Variables del frontend
+│   ├── src/
+│   │   ├── app/                    # App Router (Next 14+)
+│   │   │   ├── layout.tsx
+│   │   │   ├── page.tsx
+│   │   │   └── [entidad]/          # Páginas por entidad
+│   │   │       ├── page.tsx        # Listado
+│   │   │       ├── [id]/page.tsx   # Detalle
+│   │   │       └── new/page.tsx    # Formulario de creación
+│   │   ├── components/             # Componentes reutilizables
+│   │   │   ├── ui/                 # Componentes de interfaz (botones, modales)
+│   │   │   └── forms/              # Componentes de formulario
+│   │   ├── services/               # Capa de acceso a la API
+│   │   │   └── [entidad].service.ts
+│   │   ├── interfaces/             # Tipos e interfaces TypeScript
+│   │   │   └── [entidad].interface.ts
+│   │   └── lib/                    # Utilidades (fetch wrapper, constantes)
+│   │       └── api.ts              # Cliente HTTP centralizado
+│   └── package.json
+│
+└── README.md</code>
+                </div>
+
+                <h3 class="subsection-title"><i class="fas fa-project-diagram"></i> Flujo de Responsabilidades (Backend)</h3>
+                <div style="background-color: var(--light-bg); padding: 25px; border-radius: 8px; margin: 20px 0;">
+                    <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px; font-size: 14px; font-weight: 600;">
+                        <div style="background: var(--info-color); color: white; padding: 12px 18px; border-radius: 8px; text-align: center;">Cliente HTTP<br><small style="font-weight:400;">Request</small></div>
+                        <div style="color: var(--accent-color); font-size: 24px;">→</div>
+                        <div style="background: var(--nest-color); color: white; padding: 12px 18px; border-radius: 8px; text-align: center;">Controller<br><small style="font-weight:400;">Valida DTO + ruta</small></div>
+                        <div style="color: var(--accent-color); font-size: 24px;">→</div>
+                        <div style="background: var(--warning-color); color: white; padding: 12px 18px; border-radius: 8px; text-align: center;">Service<br><small style="font-weight:400;">Lógica de negocio</small></div>
+                        <div style="color: var(--accent-color); font-size: 24px;">→</div>
+                        <div style="background: var(--prisma-color); color: white; padding: 12px 18px; border-radius: 8px; text-align: center;">Repository<br><small style="font-weight:400;">Acceso a datos</small></div>
+                        <div style="color: var(--accent-color); font-size: 24px;">→</div>
+                        <div style="background: var(--postgres-color); color: white; padding: 12px 18px; border-radius: 8px; text-align: center;">Prisma / BD<br><small style="font-weight:400;">PostgreSQL</small></div>
+                    </div>
+                </div>
+
+                <div class="cards-grid">
+                    <div class="card">
+                        <div class="card-icon" style="color: var(--nest-color);"><i class="fas fa-exchange-alt"></i></div>
+                        <h4 class="card-title">Controller</h4>
+                        <p>Recibe peticiones HTTP, valida los datos de entrada con DTOs (class-validator) y delega al Service. <strong>No contiene lógica de negocio.</strong></p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon" style="color: var(--warning-color);"><i class="fas fa-cogs"></i></div>
+                        <h4 class="card-title">Service</h4>
+                        <p>Implementa la lógica de negocio, reglas de validación y orquestación. Llama al Repository para obtener o persistir datos. <strong>No conoce HTTP ni Prisma directamente.</strong></p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon" style="color: var(--prisma-color);"><i class="fas fa-database"></i></div>
+                        <h4 class="card-title">Repository</h4>
+                        <p>Encapsula el acceso a datos usando Prisma Client. Traduce operaciones del dominio a queries de base de datos. <strong>No contiene lógica de negocio.</strong></p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon" style="color: var(--accent-color);"><i class="fas fa-shield-alt"></i></div>
+                        <h4 class="card-title">DTOs, Pipes & Guards</h4>
+                        <p>Los DTOs validan la forma de los datos. Los Pipes transforman valores. Los Guards controlan el acceso. Los Filters capturan excepciones globalmente.</p>
+                    </div>
+                </div>
+
+                <h3 class="subsection-title">Docker Compose Base</h3>
+                <div class="code-block">
+                    <code># docker-compose.yml
+services:
+  db:
+    image: postgres:16-alpine
+    env_file: .env
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build: ./backend
+    ports:
+      - "3001:3001"
+    env_file: .env
+    environment:
+      DATABASE_URL: "postgresql://${DB_USER}:${DB_PASSWORD}@db:5432/${DB_NAME}"
+    depends_on:
+      db:
+        condition: service_healthy
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    environment:
+      NEXT_PUBLIC_API_URL: "http://localhost:3001"
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:</code>
+                </div>
+
+                <h3 class="subsection-title">.env.example</h3>
+                <div class="code-block">
+                    <code># .env.example — Copiar a .env y ajustar valores
+DB_USER=admin
+DB_PASSWORD=admin123
+DB_NAME=proyecto_db</code>
+                </div>
+
+                <div class="info-box warning">
+                    <h4><i class="fas fa-exclamation-triangle"></i> Seguridad</h4>
+                    <p>Nunca subas el archivo <strong>.env</strong> al repositorio. Agrega <code>.env</code> al <strong>.gitignore</strong>. Incluye siempre un <strong>.env.example</strong> como plantilla con valores de ejemplo.</p>
+                </div>
+
+                <h3 class="subsection-title">Ejemplo de Módulo con Separación de Capas (NestJS)</h3>
+                <p>Cada entidad del proyecto debe seguir este patrón de capas dentro de su módulo:</p>
+
+                <div class="code-block">
+                    <code>// ──────────────────────────────────────
+// dto/create-mascota.dto.ts — Validación de entrada
+// ──────────────────────────────────────
+import { IsString, IsInt, IsNotEmpty, Min } from 'class-validator';
+
+export class CreateMascotaDto {
+  @IsString()
+  @IsNotEmpty()
+  nombre: string;
+
+  @IsString()
+  @IsNotEmpty()
+  especie: string;
+
+  @IsString()
+  raza?: string;
+
+  @IsInt()
+  @Min(0)
+  peso: number;
+}</code>
+                </div>
+
+                <div class="code-block">
+                    <code>// ──────────────────────────────────────
+// repository/mascota.repository.ts — Solo acceso a datos
+// ──────────────────────────────────────
+import { Injectable } from '@nestjs/common';
+import { PrismaService } from '../../prisma/prisma.service';
+import { CreateMascotaDto } from '../dto/create-mascota.dto';
+
+@Injectable()
+export class MascotaRepository {
+  constructor(private readonly prisma: PrismaService) {}
+
+  async findAll() {
+    return this.prisma.mascota.findMany({
+      include: { propietario: true },
+    });
+  }
+
+  async findById(id: number) {
+    return this.prisma.mascota.findUnique({ where: { id } });
+  }
+
+  async create(data: CreateMascotaDto) {
+    return this.prisma.mascota.create({ data });
+  }
+
+  async update(id: number, data: Partial&lt;CreateMascotaDto&gt;) {
+    return this.prisma.mascota.update({ where: { id }, data });
+  }
+
+  async delete(id: number) {
+    return this.prisma.mascota.delete({ where: { id } });
+  }
+}</code>
+                </div>
+
+                <div class="code-block">
+                    <code>// ──────────────────────────────────────
+// service/mascota.service.ts — Lógica de negocio
+// ──────────────────────────────────────
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { MascotaRepository } from '../repository/mascota.repository';
+import { CreateMascotaDto } from '../dto/create-mascota.dto';
+
+@Injectable()
+export class MascotaService {
+  constructor(private readonly mascotaRepository: MascotaRepository) {}
+
+  async findAll() {
+    return this.mascotaRepository.findAll();
+  }
+
+  async findById(id: number) {
+    const mascota = await this.mascotaRepository.findById(id);
+    if (!mascota) {
+      throw new NotFoundException(`Mascota con ID ${id} no encontrada`);
+    }
+    return mascota;
+  }
+
+  async create(dto: CreateMascotaDto) {
+    return this.mascotaRepository.create(dto);
+  }
+
+  async update(id: number, dto: Partial&lt;CreateMascotaDto&gt;) {
+    await this.findById(id); // Verifica existencia
+    return this.mascotaRepository.update(id, dto);
+  }
+
+  async delete(id: number) {
+    await this.findById(id);
+    return this.mascotaRepository.delete(id);
+  }
+}</code>
+                </div>
+
+                <div class="code-block">
+                    <code>// ──────────────────────────────────────
+// controller/mascota.controller.ts — Solo manejo HTTP
+// ──────────────────────────────────────
+import { Controller, Get, Post, Put, Delete, Param, Body, ParseIntPipe } from '@nestjs/common';
+import { MascotaService } from '../service/mascota.service';
+import { CreateMascotaDto } from '../dto/create-mascota.dto';
+
+@Controller('mascotas')
+export class MascotaController {
+  constructor(private readonly mascotaService: MascotaService) {}
+
+  @Get()
+  findAll() {
+    return this.mascotaService.findAll();
+  }
+
+  @Get(':id')
+  findById(@Param('id', ParseIntPipe) id: number) {
+    return this.mascotaService.findById(id);
+  }
+
+  @Post()
+  create(@Body() dto: CreateMascotaDto) {
+    return this.mascotaService.create(dto);
+  }
+
+  @Put(':id')
+  update(@Param('id', ParseIntPipe) id: number, @Body() dto: CreateMascotaDto) {
+    return this.mascotaService.update(id, dto);
+  }
+
+  @Delete(':id')
+  delete(@Param('id', ParseIntPipe) id: number) {
+    return this.mascotaService.delete(id);
+  }
+}</code>
+                </div>
+
+                <div class="code-block">
+                    <code>// ──────────────────────────────────────
+// mascota.module.ts — Ensamblaje del módulo
+// ──────────────────────────────────────
+import { Module } from '@nestjs/common';
+import { MascotaController } from './controller/mascota.controller';
+import { MascotaService } from './service/mascota.service';
+import { MascotaRepository } from './repository/mascota.repository';
+import { PrismaModule } from '../../prisma/prisma.module';
+
+@Module({
+  imports: [PrismaModule],
+  controllers: [MascotaController],
+  providers: [MascotaService, MascotaRepository],
+  exports: [MascotaService],
+})
+export class MascotaModule {}</code>
+                </div>
+            </section>
+
+            <!-- Metodología -->
+            <section id="metodologia" class="section">
+                <h2 class="section-title">
+                    <i class="fas fa-clipboard-list"></i> Metodología de Trabajo
+                </h2>
+
+                <p>Cada equipo debe seguir los siguientes pasos para organizar y desarrollar su proyecto:</p>
+
+                <div class="steps-container">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h3>Asignación del Proyecto</h3>
+                            <p>A cada equipo se le asignará uno de los 15 proyectos disponibles. No se repiten proyectos entre equipos.</p>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h3>Crear Repositorio en GitHub</h3>
+                            <p>Crear un repositorio público o privado en GitHub con la estructura del proyecto. Incluir README.md con la descripción, integrantes y tecnologías.</p>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h3>Redactar Historias de Usuario (UH)</h3>
+                            <p>A partir de los casos de uso del proyecto, generar Historias de Usuario con el formato: <strong>"Como [rol], quiero [acción] para [beneficio]"</strong>. Documentarlas como Issues en GitHub.</p>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h3>Configurar el Entorno con Docker</h3>
+                            <p>Crear los archivos <strong>Dockerfile</strong> y <strong>docker-compose.yml</strong> para levantar los tres servicios (PostgreSQL, NestJS, Next.js).</p>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">5</div>
+                        <div class="step-content">
+                            <h3>Diseñar el Esquema de BD con Prisma</h3>
+                            <p>Definir las entidades del modelo de datos en <strong>schema.prisma</strong>, ejecutar las migraciones y generar el cliente Prisma.</p>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">6</div>
+                        <div class="step-content">
+                            <h3>Desarrollar el API REST (NestJS) con Capas Desacopladas</h3>
+                            <p>Para cada entidad, crear un módulo con tres capas separadas siguiendo el principio de responsabilidad única:</p>
+                            <ul class="content-list" style="margin-top: 10px;">
+                                <li><strong>Controller:</strong> Solo recibe peticiones HTTP, valida DTOs y delega al Service.</li>
+                                <li><strong>Service:</strong> Contiene la lógica de negocio, validaciones y reglas. Llama al Repository.</li>
+                                <li><strong>Repository:</strong> Encapsula las operaciones de Prisma Client. Es la única capa que accede a la BD.</li>
+                                <li><strong>DTOs:</strong> Clases con decoradores de <code>class-validator</code> para validar datos de entrada.</li>
+                                <li><strong>Common:</strong> Filters, Interceptors, Pipes y Guards compartidos entre módulos.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">7</div>
+                        <div class="step-content">
+                            <h3>Desarrollar el Frontend (Next.js)</h3>
+                            <p>Crear las páginas, componentes y formularios que consuman la API. Implementar navegación, listados, formularios y manejo de estado.</p>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">8</div>
+                        <div class="step-content">
+                            <h3>Integración y Pruebas</h3>
+                            <p>Verificar la comunicación entre frontend, backend y base de datos. Realizar pruebas funcionales de los flujos principales.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Proyectos -->
+            <section id="proyectos" class="section">
+                <h2 class="section-title">
+                    <i class="fas fa-folder-open"></i> Catálogo de Proyectos
+                </h2>
+
+                <p>A continuación se presentan los 15 proyectos disponibles. Cada uno incluye el contexto del negocio, los casos de uso principales y las entidades sugeridas para el modelo de datos.</p>
+
+                <div class="tech-stack" style="margin: 20px 0;">
+                    <span class="tech-badge nest"><i class="fas fa-server"></i> NestJS</span>
+                    <span class="tech-badge next"><i class="fas fa-desktop"></i> Next.js</span>
+                    <span class="tech-badge postgres"><i class="fas fa-database"></i> PostgreSQL</span>
+                    <span class="tech-badge docker"><i class="fab fa-docker"></i> Docker</span>
+                    <span class="tech-badge prisma"><i class="fas fa-link"></i> Prisma</span>
+                </div>
+
+                <!-- ===================== PROYECTO 1 ===================== -->
+                <div class="project-card" id="proyecto-1">
+                    <div class="project-header">
+                        <div class="project-number">01</div>
+                        <div class="project-header-info">
+                            <h3>Sistema de Gestión de Gimnasio <span class="difficulty medium"><i class="fas fa-signal"></i> Intermedio</span></h3>
+                            <p><i class="fas fa-dumbbell"></i> Control de membresías, rutinas y entrenadores</p>
+                            <p class="team-members"><i class="fas fa-users"></i> <span class="member-name">Simón Enrique Zapata Claros</span></p>
+                        </div>
+                    </div>
+                    <div class="project-body">
+                        <div class="project-context">
+                            <h4><i class="fas fa-file-alt"></i> Contexto del Proyecto</h4>
+                            <p>Un gimnasio local con crecimiento constante necesita digitalizar la gestión de sus operaciones. Actualmente el registro de miembros, los pagos de membresías y las rutinas de entrenamiento se manejan en cuadernos y hojas de cálculo, lo que produce pérdida de información y dificultades para los entrenadores al asignar rutinas personalizadas. Se requiere un sistema web que permita gestionar miembros, planes de membresía, entrenadores, rutinas de ejercicios y el seguimiento del progreso físico de cada cliente.</p>
+                        </div>
+
+                        <div class="use-cases">
+                            <h4><i class="fas fa-tasks"></i> Casos de Uso</h4>
+                            <ul class="use-case-list">
+                                <li><i class="fas fa-check-circle"></i> <strong>CU-01:</strong> Registrar miembro con datos personales, plan de membresía y fecha de inicio.</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>CU-02:</strong> Gestionar planes de membresía (mensual, trimestral, anual) con precio y beneficios.</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>CU-03:</strong> Registrar entrenadores con especialidad y horario de disponibilidad.</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>CU-04:</strong> Crear rutinas de ejercicios personalizadas asignadas a un miembro por un entrenador.</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>CU-05:</strong> Registrar medidas corporales periódicas del miembro (peso, talla, porcentaje de grasa).</li>
+                            </ul>
+                        </div>
+
+                        <div class="entities-section">
+                            <h4><i class="fas fa-sitemap"></i> Entidades Sugeridas (Prisma)</h4>
+                            <div class="entities-grid">
+                                <span class="entity-tag"><i class="fas fa-circle"></i> Miembro</span>
+                                <span class="entity-tag"><i class="fas fa-circle"></i> PlanMembresia</span>
+                                <span class="entity-tag"><i class="fas fa-circle"></i> Entrenador</span>
+                                <span class="entity-tag"><i class="fas fa-circle"></i> Rutina</span>
+                                <span class="entity-tag"><i class="fas fa-circle"></i> Ejercicio</span>
+                                <span class="entity-tag"><i class="fas fa-circle"></i> MedidaCorporal</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ===================== PROYECTO 2 ===================== -->
+                <div class="project-card" id="proyecto-2">
+                    <div class="project-header">
+                        <div class="project-number">02</div>
+                        <div class="project-header-info">
+                            <h3>Plataforma de Pedidos de Comida a Domicilio <span class="difficulty medium"><i class="fas fa-signal"></i> Intermedio</span></h3>
+                            <p><i class="fas fa-motorcycle"></i> Gestión de restaurantes, menús y entregas</p>
+                            <p class="team-members"><i class="fas fa-users"></i> <span class="member-name">Wendy Carolina Gómez Suache</span> <span class="member-name">Ana Sofía Jiménez Ostos</span></p>
+                        </div>
+                    </div>
+                    <div class="project-body">
+                        <div class="project-context">
+                            <h4><i class="fas fa-file-alt"></i> Contexto del Proyecto</h4>
+                            <p>Una empresa local de delivery desea crear su propia plataforma web para conectar restaurantes con clientes. Actualmente reciben pedidos por WhatsApp y llamadas, lo que genera errores en las órdenes y tiempos de respuesta lentos. Se necesita un sistema donde los restaurantes publiquen sus menús, los clientes realicen pedidos en línea, y los administradores gestionen los repartidores y el estado de cada entrega en tiempo real.</p>
+                        </div>
+
+                        <div class="use-cases">
+                            <h4><i class="fas fa-tasks"></i> Casos de Uso</h4>
+                            <ul class="use-case-list">
+                                <li><i class="fas fa-check-circle"></i> <strong>CU-01:</strong> Registrar restaurante con nombre, dirección, categoría de cocina y horario de atención.</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>CU-02:</strong> Gestionar menú del restaurante con productos, precios y disponibilidad.</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>CU-03:</strong> Crear pedido seleccionando restaurante, productos y dirección de entrega.</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>CU-04:</strong> Asignar repartidor a un pedido y actualizar estado (preparando, en camino, entregado).</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>CU-05:</strong> Consultar historial de pedidos de un cliente con detalle y total pagado.</li>
+                            </ul>
+                        </div>
+
+                        <div class="entities-section">
+                            <h4><i class="fas fa-sitemap"></i> Entidades Sugeridas (Prisma)</h4>
+                            <div class="entities-grid">
+                                <span class="entity-tag"><i class="fas fa-circle"></i> Restaurante</span>
+                                <span class="entity-tag"><i class="fas fa-circle"></i> Producto</span>
+                                <span class="entity-tag"><i class="fas fa-circle"></i> Cliente</span>
+                                <span class="entity-tag"><i class="fas fa-circle"></i> Pedido</span>
+                                <span class="entity-tag"><i class="fas fa-circle"></i> DetallePedido</span>
+                                <span class="entity-tag"><i class="fas fa-circle"></i> Repartidor</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ===================== PROYECTO 3 ===================== -->
+                <div class="project-card" id="proyecto-3">
+                    <div class="project-header">
+                        <div class="project-number">03</div>
+                        <div class="project-header-info">
+                            <h3>Sistema de Gestión de Parqueadero <span class="difficulty easy"><i class="fas fa-signal"></i> Básico</span></h3>
+                            <p><i class="fas fa-parking"></i> Control de vehículos, tarifas y espacios</p>
+                            <p class="team-members"><i class="fas fa-users"></i> <span class="member-name">Juan David Calderón Gutiérrez</span> <span class="member-name">Zara Melisa Monroy Vera</span></p>
+                        </div>
+                    </div>
+                    <div class="project-body">
+                        <div class="project-context">
+                            <h4><i class="fas fa-file-alt"></i> Contexto del Proyecto</h4>
+                            <p>Un parqueadero con capacidad para 150 vehículos necesita un sistema digital para registrar el ingreso y salida de vehículos, calcular tarifas automáticamente y visualizar la ocupación en tiempo real. Actualmente usan tiquetes en papel que se pierden con frecuencia y el cobro se hace de forma manual, lo que genera errores y pérdida de ingresos. La plataforma debe permitir gestionar tipos de vehículos, tarifas por hora y abonados mensuales.</p>
+                        </div>
+
+                        <div class="use-cases">
+                            <h4><i class="fas fa-tasks"></i> Casos de Uso</h4>
+                            <ul class="use-case-list">
+                                <li><i class="fas fa-check-circle"></i> <strong>CU-01:</strong> Registrar ingreso de vehículo con placa, tipo (carro, moto, bicicleta) y hora de entrada.</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>CU-02:</strong> Registrar salida de vehículo y calcular tarifa según tiempo de permanencia.</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>CU-03:</strong> Gestionar tarifas por tipo de vehículo (hora, fracción, tarifa plana).</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>CU-04:</strong> Registrar clientes abonados con plan mensual y vehículo asociado.</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>CU-05:</strong> Visualizar ocupación actual del parqueadero con espacios disponibles por tipo.</li>
+                            </ul>
+                        </div>
+
+                        <div class="entities-section">
+                            <h4><i class="fas fa-sitemap"></i> Entidades Sugeridas (Prisma)</h4>
+                            <div class="entities-grid">
+                                <span class="entity-tag"><i class="fas fa-circle"></i> Vehiculo</span>
+                                <span class="entity-tag"><i class="fas fa-circle"></i> TipoVehiculo</span>
+                                <span class="entity-tag"><i class="fas fa-circle"></i> RegistroParqueo</span>
+                                <span class="entity-tag"><i class="fas fa-circle"></i> Tarifa</span>
+                                <span class="entity-tag"><i class="fas fa-circle"></i> Abonado</span>
+                                <span class="entity-tag"><i class="fas fa-circle"></i> Espacio</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ===================== PROYECTO 4 ===================== -->
+                <div class="project-card" id="proyecto-4">
+                    <div class="project-header">
+                        <div class="project-number">04</div>
+                        <div class="project-header-info">
+                            <h3>Plataforma de Cursos en Línea <span class="difficulty medium"><i class="fas fa-signal"></i> Intermedio</span></h3>
+                            <p><i class="fas fa-graduation-cap"></i> Gestión de cursos, lecciones e inscripciones</p>
+                            <p class="team-members"><i class="fas fa-users"></i> <span class="member-name">Juan David Celly</span> <span class="member-name">Juan Pablo Ortega Vargas</span></p>
+                        </div>
+                    </div>
+                    <div class="project-body">
+                        <div class="project-context">
+                            <h4><i class="fas fa-file-alt"></i> Contexto del Proyecto</h4>
+                            <p>Un instituto de formación quiere lanzar su plataforma de cursos en línea para ampliar su alcance. Necesitan un sistema donde los instructores puedan crear cursos con módulos y lecciones, los estudiantes se inscriban, accedan al contenido y donde se pueda hacer seguimiento del progreso de cada alumno. Actualmente el material se comparte por correo y no hay forma de medir el avance real de los participantes.</p>
+                        </div>
+
+                        <div class="use-cases">
+                            <h4><i class="fas fa-tasks"></i> Casos de Uso</h4>
+                            <ul class="use-case-list">
+                                <li><i class="fas fa-check-circle"></i> <strong>CU-01:</strong> Registrar instructor con perfil profesional, biografía y especialidad.</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>CU-02:</strong> Crear curso con título, descripción, categoría, nivel de dificultad y precio.</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>CU-03:</strong> Agregar módulos y lecciones al curso con contenido y orden secuencial.</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>CU-04:</strong> Inscribir estudiante en un curso y registrar progreso por lección completada.</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>CU-05:</strong> Consultar cursos disponibles filtrados por categoría, nivel o instructor.</li>
+                            </ul>
+                        </div>
+
+                        <div class="entities-section">
+                            <h4><i class="fas fa-sitemap"></i> Entidades Sugeridas (Prisma)</h4>
+                            <div class="entities-grid">
+                                <span class="entity-tag"><i class="fas fa-circle"></i> Instructor</span>
+                                <span class="entity-tag"><i class="fas fa-circle"></i> Curso</span>
+                                <span class="entity-tag"><i class="fas fa-circle"></i> Modulo</span>
+                                <span class="entity-tag"><i class="fas fa-circle"></i> Leccion</span>
+                                <span class="entity-tag"><i class="fas fa-circle"></i> Estudiante</span>
+                                <span class="entity-tag"><i class="fas fa-circle"></i> Inscripcion</span>
+                                <span class="entity-tag"><i class="fas fa-circle"></i> Progreso</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ===================== PROYECTO 5 ===================== -->
+                <div class="project-card" id="proyecto-5">
+                    <div class="project-header">
+                        <div class="project-number">05</div>
+                        <div class="project-header-info">
+                            <h3>Sistema de Gestión de Alquiler de Vehículos <span class="difficulty medium"><i class="fas fa-signal"></i> Intermedio</span></h3>
+                            <p><i class="fas fa-car"></i> Flota vehicular, reservas y contratos</p>
+                            <p class="team-members"><i class="fas fa-users"></i> <span class="member-name">Cristhian Gaitán Guzmán</span> <span class="member-name">Yilver Isnardo Medina Urrea</span></p>
+                        </div>
+                    </div>
+                    <div class="project-body">
+                        <div class="project-context">
+                            <h4><i class="fas fa-file-alt"></i> Contexto del Proyecto</h4>
+                            <p>Una empresa de alquiler de vehículos con una flota de 80 unidades necesita sistematizar sus procesos de reserva, entrega y devolución. El registro actual en papel genera doble reservación de vehículos, falta de control sobre el estado mecánico de la flota y dificultades para generar facturas. Se requiere una plataforma web que permita gestionar la flota, realizar reservas, generar contratos de alquiler y llevar el historial de mantenimiento de cada vehículo.</p>
+                        </div>
+
+                        <div class="use-cases">
+                            <h4><i class="fas fa-tasks"></i> Casos de Uso</h4>
+                            <ul class="use-case-list">
+                                <li><i class="fas fa-check-circle"></i> <strong>CU-01:</strong> Registrar vehículo con marca, modelo, año, placa, tipo (sedán, SUV, camioneta) y estado.</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>CU-02:</strong> Registrar cliente con datos personales, licencia de conducción y contacto.</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>CU-03:</strong> Crear reserva seleccionando vehículo, fecha de inicio, fecha de fin y verificando disponibilidad.</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>CU-04:</strong> Generar contrato de alquiler al entregar el vehículo con condiciones y valor total.</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>CU-05:</strong> Registrar devolución del vehículo con revisión de estado y cálculo de cargos adicionales.</li>
+                            </ul>
+                        </div>
+
+                        <div class="entities-section">
+                            <h4><i class="fas fa-sitemap"></i> Entidades Sugeridas (Prisma)</h4>
+                            <div class="entities-grid">
+                                <span class="entity-tag"><i class="fas fa-circle"></i> Vehiculo</span>
+                                <span class="entity-tag"><i class="fas fa-circle"></i> TipoVehiculo</span>
+                                <span class="entity-tag"><i class="fas fa-circle"></i> Cliente</span>
+                                <span class="entity-tag"><i class="fas fa-circle"></i> Reserva</span>
+                                <span class="entity-tag"><i class="fas fa-circle"></i> Contrato</span>
+                                <span class="entity-tag"><i class="fas fa-circle"></i> Devolucion</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ===================== PROYECTO 6 ===================== -->
+                <div class="project-card" id="proyecto-6">
+                    <div class="project-header">
+                        <div class="project-number">06</div>
+                        <div class="project-header-info">
+                            <h3>Sistema de Control de Mascotas Perdidas <span class="difficulty easy"><i class="fas fa-signal"></i> Básico</span></h3>
+                            <p><i class="fas fa-search-location"></i> Reportes de extravío y avistamientos</p>
+                            <p class="team-members"><i class="fas fa-users"></i> <span class="member-name">Iker Yulian Santiago Castro</span> <span class="member-name">Cristian Camilo Vargas Narváez</span></p>
+                        </div>
+                    </div>
+                    <div class="project-body">
+                        <div class="project-context">
+                            <h4><i class="fas fa-file-alt"></i> Contexto del Proyecto</h4>
+                            <p>Una asociación protectora de animales quiere crear una plataforma comunitaria donde las personas puedan reportar mascotas perdidas y encontradas. Actualmente usan grupos de redes sociales, pero las publicaciones se pierden rápidamente y no hay forma organizada de cruzar reportes. Se necesita un sistema donde los dueños publiquen reportes de extravío con foto y ubicación, donde cualquier persona pueda reportar avistamientos y donde se facilite el proceso de reunión entre mascota y dueño.</p>
+                        </div>
+
+                        <div class="use-cases">
+                            <h4><i class="fas fa-tasks"></i> Casos de Uso</h4>
+                            <ul class="use-case-list">
+                                <li><i class="fas fa-check-circle"></i> <strong>CU-01:</strong> Registrar usuario (dueño o colaborador) con datos de contacto y zona de residencia.</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>CU-02:</strong> Crear reporte de mascota perdida con descripción, foto, fecha y ubicación del extravío.</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>CU-03:</strong> Registrar avistamiento de mascota con ubicación, fecha y observaciones.</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>CU-04:</strong> Buscar reportes activos filtrados por zona, especie o fecha.</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>CU-05:</strong> Marcar reporte como resuelto cuando la mascota es encontrada.</li>
+                            </ul>
+                        </div>
+
+                        <div class="entities-section">
+                            <h4><i class="fas fa-sitemap"></i> Entidades Sugeridas (Prisma)</h4>
+                            <div class="entities-grid">
+                                <span class="entity-tag"><i class="fas fa-circle"></i> Usuario</span>
+                                <span class="entity-tag"><i class="fas fa-circle"></i> ReportePerdida</span>
+                                <span class="entity-tag"><i class="fas fa-circle"></i> Avistamiento</span>
+                                <span class="entity-tag"><i class="fas fa-circle"></i> Mascota</span>
+                                <span class="entity-tag"><i class="fas fa-circle"></i> Zona</span>
+                                <span class="entity-tag"><i class="fas fa-circle"></i> Especie</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ===================== PROYECTO 7 ===================== -->
+                <div class="project-card" id="proyecto-7">
+                    <div class="project-header">
+                        <div class="project-number">07</div>
+                        <div class="project-header-info">
+                            <h3>Sistema de Reservas para Hotel <span class="difficulty medium"><i class="fas fa-signal"></i> Intermedio</span></h3>
+                            <p><i class="fas fa-hotel"></i> Habitaciones, huéspedes y servicios</p>
+                            <p class="team-members"><i class="fas fa-users"></i> <span class="member-name">Álvaro Augusto Andrade Quesada</span> <span class="member-name">José Julián Briñez Garzón</span></p>
+                        </div>
+                    </div>
+                    <div class="project-body">
+                        <div class="project-context">
+                            <h4><i class="fas fa-file-alt"></i> Contexto del Proyecto</h4>
+                            <p>Un hotel boutique con 40 habitaciones necesita un sistema web para gestionar las reservas, los huéspedes y los servicios adicionales (spa, restaurante, lavandería). Actualmente manejan las reservas por teléfono y un cuaderno, lo que genera overbooking y falta de control sobre la disponibilidad. Se requiere una plataforma donde los recepcionistas registren reservas, gestionen el check-in/check-out, controlen los tipos de habitación y registren los servicios consumidos por cada huésped.</p>
+                        </div>
+
+                        <div class="use-cases">
+                            <h4><i class="fas fa-tasks"></i> Casos de Uso</h4>
+                            <ul class="use-case-list">
+                                <li><i class="fas fa-check-circle"></i> <strong>CU-01:</strong> Gestionar habitaciones con número, tipo (sencilla, doble, suite), capacidad y tarifa por noche.</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>CU-02:</strong> Registrar huésped con datos personales, documento de identidad y contacto.</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>CU-03:</strong> Crear reserva seleccionando habitación, fecha de entrada, fecha de salida y verificando disponibilidad.</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>CU-04:</strong> Realizar check-in y check-out actualizando el estado de la habitación.</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>CU-05:</strong> Registrar servicios adicionales consumidos por el huésped durante la estadía.</li>
+                            </ul>
+                        </div>
+
+                        <div class="entities-section">
+                            <h4><i class="fas fa-sitemap"></i> Entidades Sugeridas (Prisma)</h4>
+                            <div class="entities-grid">
+                                <span class="entity-tag"><i class="fas fa-circle"></i> Habitacion</span>
+                                <span class="entity-tag"><i class="fas fa-circle"></i> TipoHabitacion</span>
+                                <span class="entity-tag"><i class="fas fa-circle"></i> Huesped</span>
+                                <span class="entity-tag"><i class="fas fa-circle"></i> Reserva</span>
+                                <span class="entity-tag"><i class="fas fa-circle"></i> Servicio</span>
+                                <span class="entity-tag"><i class="fas fa-circle"></i> ConsumoServicio</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ===================== PROYECTO 8 ===================== -->
+                <div class="project-card" id="proyecto-8">
+                    <div class="project-header">
+                        <div class="project-number">08</div>
+                        <div class="project-header-info">
+                            <h3>Sistema de Gestión de Taller Mecánico <span class="difficulty medium"><i class="fas fa-signal"></i> Intermedio</span></h3>
+                            <p><i class="fas fa-wrench"></i> Órdenes de trabajo, repuestos y clientes</p>
+                            <p class="team-members"><i class="fas fa-users"></i> <span class="member-name">Herney Camilo Sarria Perdomo</span> <span class="member-name">Robinson Esteban Zambrano Ibagos</span></p>
+                        </div>
+                    </div>
+                    <div class="project-body">
+                        <div class="project-context">
+                            <h4><i class="fas fa-file-alt"></i> Contexto del Proyecto</h4>
+                            <p>Un taller mecánico automotriz necesita digitalizar el registro de sus órdenes de trabajo, clientes y repuestos utilizados. Actualmente los mecánicos anotan los trabajos en papel y el dueño del taller no tiene visibilidad sobre los repuestos consumidos ni los costos reales de cada reparación. Se requiere un sistema web que permita crear órdenes de servicio, asignar mecánicos, registrar repuestos utilizados, calcular costos y consultar el historial de reparaciones por vehículo.</p>
+                        </div>
+
+                        <div class="use-cases">
+                            <h4><i class="fas fa-tasks"></i> Casos de Uso</h4>
+                            <ul class="use-case-list">
+                                <li><i class="fas fa-check-circle"></i> <strong>CU-01:</strong> Registrar cliente con datos personales y vehículos asociados (placa, marca, modelo, año).</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>CU-02:</strong> Crear orden de servicio indicando vehículo, descripción del problema y mecánico asignado.</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>CU-03:</strong> Registrar repuestos utilizados en una orden con cantidad y precio unitario.</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>CU-04:</strong> Actualizar estado de la orden (recibido, en reparación, listo, entregado) y calcular costo total.</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>CU-05:</strong> Consultar historial de reparaciones de un vehículo por placa.</li>
+                            </ul>
+                        </div>
+
+                        <div class="entities-section">
+                            <h4><i class="fas fa-sitemap"></i> Entidades Sugeridas (Prisma)</h4>
+                            <div class="entities-grid">
+                                <span class="entity-tag"><i class="fas fa-circle"></i> Cliente</span>
+                                <span class="entity-tag"><i class="fas fa-circle"></i> Vehiculo</span>
+                                <span class="entity-tag"><i class="fas fa-circle"></i> Mecanico</span>
+                                <span class="entity-tag"><i class="fas fa-circle"></i> OrdenServicio</span>
+                                <span class="entity-tag"><i class="fas fa-circle"></i> Repuesto</span>
+                                <span class="entity-tag"><i class="fas fa-circle"></i> DetalleRepuesto</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ===================== PROYECTO 9 ===================== -->
+                <div class="project-card" id="proyecto-9">
+                    <div class="project-header">
+                        <div class="project-number">09</div>
+                        <div class="project-header-info">
+                            <h3>Plataforma de Gestión de Torneos Deportivos <span class="difficulty medium"><i class="fas fa-signal"></i> Intermedio</span></h3>
+                            <p><i class="fas fa-trophy"></i> Equipos, partidos y tabla de posiciones</p>
+                            <p class="team-members"><i class="fas fa-users"></i> <span class="member-name">Paula Ximena Romero Villegas</span> <span class="member-name">Angélica Vargas Zambrano</span></p>
+                        </div>
+                    </div>
+                    <div class="project-body">
+                        <div class="project-context">
+                            <h4><i class="fas fa-file-alt"></i> Contexto del Proyecto</h4>
+                            <p>Una liga deportiva barrial organiza torneos de fútbol, baloncesto y voleibol cada semestre, pero el registro de equipos, la programación de partidos y la tabla de posiciones se manejan en hojas de cálculo que frecuentemente se desactualizan. Se necesita una plataforma web donde los organizadores gestionen torneos, registren equipos y jugadores, programen los encuentros y donde la tabla de posiciones se actualice automáticamente al registrar los resultados de cada partido.</p>
+                        </div>
+
+                        <div class="use-cases">
+                            <h4><i class="fas fa-tasks"></i> Casos de Uso</h4>
+                            <ul class="use-case-list">
+                                <li><i class="fas fa-check-circle"></i> <strong>CU-01:</strong> Crear torneo con nombre, deporte, fecha de inicio, fecha de fin y formato (liga, eliminación).</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>CU-02:</strong> Registrar equipos con nombre, escudo, director técnico y lista de jugadores.</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>CU-03:</strong> Programar partidos con equipos enfrentados, fecha, hora y cancha asignada.</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>CU-04:</strong> Registrar resultado de un partido con marcador y goleadores.</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>CU-05:</strong> Consultar tabla de posiciones del torneo con puntos, goles a favor y en contra.</li>
+                            </ul>
+                        </div>
+
+                        <div class="entities-section">
+                            <h4><i class="fas fa-sitemap"></i> Entidades Sugeridas (Prisma)</h4>
+                            <div class="entities-grid">
+                                <span class="entity-tag"><i class="fas fa-circle"></i> Torneo</span>
+                                <span class="entity-tag"><i class="fas fa-circle"></i> Equipo</span>
+                                <span class="entity-tag"><i class="fas fa-circle"></i> Jugador</span>
+                                <span class="entity-tag"><i class="fas fa-circle"></i> Partido</span>
+                                <span class="entity-tag"><i class="fas fa-circle"></i> Resultado</span>
+                                <span class="entity-tag"><i class="fas fa-circle"></i> Cancha</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ===================== PROYECTO 10 ===================== -->
+                <div class="project-card" id="proyecto-10">
+                    <div class="project-header">
+                        <div class="project-number">10</div>
+                        <div class="project-header-info">
+                            <h3>Sistema de Inventario para Ferretería <span class="difficulty easy"><i class="fas fa-signal"></i> Básico</span></h3>
+                            <p><i class="fas fa-tools"></i> Productos, proveedores y ventas</p>
+                            <p class="team-members"><i class="fas fa-users"></i> <span class="member-name">Isabella Ramos Betancourt</span> <span class="member-name">Julián Andrés Solano Ledesma</span></p>
+                        </div>
+                    </div>
+                    <div class="project-body">
+                        <div class="project-context">
+                            <h4><i class="fas fa-file-alt"></i> Contexto del Proyecto</h4>
+                            <p>Una ferretería con amplio catálogo de productos necesita un sistema para controlar su inventario, gestionar proveedores y registrar las ventas diarias. Actualmente el inventario se maneja de memoria y en cuadernos, lo que genera desabastecimiento de productos populares y sobre-stock de artículos de baja rotación. Se requiere una plataforma web que permita registrar productos por categoría, controlar existencias, gestionar compras a proveedores y registrar ventas al público.</p>
+                        </div>
+
+                        <div class="use-cases">
+                            <h4><i class="fas fa-tasks"></i> Casos de Uso</h4>
+                            <ul class="use-case-list">
+                                <li><i class="fas fa-check-circle"></i> <strong>CU-01:</strong> Registrar producto con nombre, código, categoría, precio de compra, precio de venta y stock.</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>CU-02:</strong> Gestionar proveedores con datos de contacto y productos que suministran.</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>CU-03:</strong> Registrar compra a proveedor con detalle de productos y actualizar stock automáticamente.</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>CU-04:</strong> Registrar venta al público con detalle de productos, cantidades y total.</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>CU-05:</strong> Consultar productos con stock bajo el mínimo y generar alerta de reabastecimiento.</li>
+                            </ul>
+                        </div>
+
+                        <div class="entities-section">
+                            <h4><i class="fas fa-sitemap"></i> Entidades Sugeridas (Prisma)</h4>
+                            <div class="entities-grid">
+                                <span class="entity-tag"><i class="fas fa-circle"></i> Producto</span>
+                                <span class="entity-tag"><i class="fas fa-circle"></i> Categoria</span>
+                                <span class="entity-tag"><i class="fas fa-circle"></i> Proveedor</span>
+                                <span class="entity-tag"><i class="fas fa-circle"></i> Compra</span>
+                                <span class="entity-tag"><i class="fas fa-circle"></i> Venta</span>
+                                <span class="entity-tag"><i class="fas fa-circle"></i> DetalleVenta</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ===================== PROYECTO 11 ===================== -->
+                <div class="project-card" id="proyecto-11">
+                    <div class="project-header">
+                        <div class="project-number">11</div>
+                        <div class="project-header-info">
+                            <h3>Sistema de Gestión de Consultorio Odontológico <span class="difficulty medium"><i class="fas fa-signal"></i> Intermedio</span></h3>
+                            <p><i class="fas fa-tooth"></i> Pacientes, tratamientos y citas</p>
+                            <p class="team-members"><i class="fas fa-users"></i> <span class="member-name">Santiago Tovar Monje</span></p>
+                        </div>
+                    </div>
+                    <div class="project-body">
+                        <div class="project-context">
+                            <h4><i class="fas fa-file-alt"></i> Contexto del Proyecto</h4>
+                            <p>Un consultorio odontológico con tres especialistas necesita un sistema para gestionar sus pacientes, agendar citas y registrar los tratamientos realizados. Actualmente las citas se anotan en una agenda física y las historias clínicas están en carpetas de papel, lo que dificulta el acceso rápido a la información del paciente durante la consulta. Se requiere una plataforma web que permita gestionar pacientes, agendar citas por odontólogo, registrar tratamientos con costos y consultar el historial odontológico.</p>
+                        </div>
+
+                        <div class="use-cases">
+                            <h4><i class="fas fa-tasks"></i> Casos de Uso</h4>
+                            <ul class="use-case-list">
+                                <li><i class="fas fa-check-circle"></i> <strong>CU-01:</strong> Registrar paciente con datos personales, antecedentes médicos y alergias.</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>CU-02:</strong> Gestionar odontólogos con especialidad (ortodoncia, endodoncia, general) y horario.</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>CU-03:</strong> Agendar cita seleccionando paciente, odontólogo, fecha, hora y motivo de consulta.</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>CU-04:</strong> Registrar tratamiento realizado con diagnóstico, procedimiento, pieza dental y costo.</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>CU-05:</strong> Consultar historial odontológico completo de un paciente con tratamientos y costos.</li>
+                            </ul>
+                        </div>
+
+                        <div class="entities-section">
+                            <h4><i class="fas fa-sitemap"></i> Entidades Sugeridas (Prisma)</h4>
+                            <div class="entities-grid">
+                                <span class="entity-tag"><i class="fas fa-circle"></i> Paciente</span>
+                                <span class="entity-tag"><i class="fas fa-circle"></i> Odontologo</span>
+                                <span class="entity-tag"><i class="fas fa-circle"></i> Especialidad</span>
+                                <span class="entity-tag"><i class="fas fa-circle"></i> Cita</span>
+                                <span class="entity-tag"><i class="fas fa-circle"></i> Tratamiento</span>
+                                <span class="entity-tag"><i class="fas fa-circle"></i> PiezaDental</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ===================== PROYECTO 12 ===================== -->
+                <div class="project-card" id="proyecto-12">
+                    <div class="project-header">
+                        <div class="project-number">12</div>
+                        <div class="project-header-info">
+                            <h3>Plataforma de Gestión de Biblioteca Comunitaria <span class="difficulty easy"><i class="fas fa-signal"></i> Básico</span></h3>
+                            <p><i class="fas fa-book-reader"></i> Libros, préstamos y socios</p>
+                            <p class="team-members"><i class="fas fa-users"></i> <span class="member-name">Orlando José Parga Barrera</span> <span class="member-name">Santiago José Villabón Medina</span></p>
+                        </div>
+                    </div>
+                    <div class="project-body">
+                        <div class="project-context">
+                            <h4><i class="fas fa-file-alt"></i> Contexto del Proyecto</h4>
+                            <p>Una biblioteca comunitaria de barrio con más de 3.000 libros donados necesita organizar su catálogo y controlar los préstamos a los vecinos del sector. Actualmente llevan un cuaderno donde anotan quién se lleva cada libro, pero muchos no son devueltos y no hay forma de saber qué libros están disponibles. Se requiere un sistema web que permita catalogar los libros, registrar socios, realizar préstamos con fecha límite y generar alertas de devolución.</p>
+                        </div>
+
+                        <div class="use-cases">
+                            <h4><i class="fas fa-tasks"></i> Casos de Uso</h4>
+                            <ul class="use-case-list">
+                                <li><i class="fas fa-check-circle"></i> <strong>CU-01:</strong> Registrar libro con título, autor, género, ISBN y cantidad de ejemplares.</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>CU-02:</strong> Registrar socio con datos personales y tipo (adulto, joven, infantil).</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>CU-03:</strong> Realizar préstamo de libro verificando disponibilidad y asignando fecha de devolución.</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>CU-04:</strong> Registrar devolución de libro y actualizar disponibilidad automáticamente.</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>CU-05:</strong> Consultar libros con préstamos vencidos y socios con devoluciones pendientes.</li>
+                            </ul>
+                        </div>
+
+                        <div class="entities-section">
+                            <h4><i class="fas fa-sitemap"></i> Entidades Sugeridas (Prisma)</h4>
+                            <div class="entities-grid">
+                                <span class="entity-tag"><i class="fas fa-circle"></i> Libro</span>
+                                <span class="entity-tag"><i class="fas fa-circle"></i> Autor</span>
+                                <span class="entity-tag"><i class="fas fa-circle"></i> Genero</span>
+                                <span class="entity-tag"><i class="fas fa-circle"></i> Socio</span>
+                                <span class="entity-tag"><i class="fas fa-circle"></i> Prestamo</span>
+                                <span class="entity-tag"><i class="fas fa-circle"></i> Ejemplar</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ===================== PROYECTO 13 ===================== -->
+                <div class="project-card" id="proyecto-13">
+                    <div class="project-header">
+                        <div class="project-number">13</div>
+                        <div class="project-header-info">
+                            <h3>Sistema de Gestión de Peluquería y Spa <span class="difficulty easy"><i class="fas fa-signal"></i> Básico</span></h3>
+                            <p><i class="fas fa-cut"></i> Citas, servicios y estilistas</p>
+                            <p class="team-members"><i class="fas fa-users"></i> <span class="member-name">Cristian Camilo Morea Camacho</span></p>
+                        </div>
+                    </div>
+                    <div class="project-body">
+                        <div class="project-context">
+                            <h4><i class="fas fa-file-alt"></i> Contexto del Proyecto</h4>
+                            <p>Una peluquería-spa con cinco estilistas necesita un sistema para organizar las citas de sus clientes y llevar control de los servicios ofrecidos. Actualmente las citas se agendan por llamada o mensaje y frecuentemente se producen cruces de horarios. Los clientes no tienen visibilidad de la disponibilidad de los estilistas. Se requiere una plataforma web donde los clientes vean los servicios disponibles con precios, reserven cita con un estilista específico y donde el administrador pueda gestionar la agenda diaria y el catálogo de servicios.</p>
+                        </div>
+
+                        <div class="use-cases">
+                            <h4><i class="fas fa-tasks"></i> Casos de Uso</h4>
+                            <ul class="use-case-list">
+                                <li><i class="fas fa-check-circle"></i> <strong>CU-01:</strong> Gestionar catálogo de servicios con nombre, descripción, duración estimada y precio.</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>CU-02:</strong> Registrar estilistas con nombre, especialidad y horario de disponibilidad.</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>CU-03:</strong> Registrar cliente con datos personales y preferencias de servicio.</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>CU-04:</strong> Reservar cita seleccionando servicio, estilista, fecha y hora disponible.</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>CU-05:</strong> Consultar agenda diaria de un estilista con citas programadas y disponibilidad.</li>
+                            </ul>
+                        </div>
+
+                        <div class="entities-section">
+                            <h4><i class="fas fa-sitemap"></i> Entidades Sugeridas (Prisma)</h4>
+                            <div class="entities-grid">
+                                <span class="entity-tag"><i class="fas fa-circle"></i> Servicio</span>
+                                <span class="entity-tag"><i class="fas fa-circle"></i> Estilista</span>
+                                <span class="entity-tag"><i class="fas fa-circle"></i> Cliente</span>
+                                <span class="entity-tag"><i class="fas fa-circle"></i> Cita</span>
+                                <span class="entity-tag"><i class="fas fa-circle"></i> HorarioDisponible</span>
+                                <span class="entity-tag"><i class="fas fa-circle"></i> CategoriaServicio</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ===================== PROYECTO 14 ===================== -->
+                <div class="project-card" id="proyecto-14">
+                    <div class="project-header">
+                        <div class="project-number">14</div>
+                        <div class="project-header-info">
+                            <h3>Sistema de Control de Gastos Personales <span class="difficulty easy"><i class="fas fa-signal"></i> Básico</span></h3>
+                            <p><i class="fas fa-wallet"></i> Ingresos, egresos y presupuestos</p>
+                            <p class="team-members"><i class="fas fa-users"></i> <span class="member-name">Camila Alejandra Salas Gracia</span></p>
+                        </div>
+                    </div>
+                    <div class="project-body">
+                        <div class="project-context">
+                            <h4><i class="fas fa-file-alt"></i> Contexto del Proyecto</h4>
+                            <p>Una cooperativa de ahorro quiere ofrecer a sus asociados una herramienta digital para registrar y controlar sus finanzas personales. Muchas personas no llevan un control de sus ingresos y gastos, lo que dificulta el ahorro y genera endeudamiento. Se requiere un sistema web donde los usuarios registren sus ingresos y gastos por categoría, definan presupuestos mensuales, visualicen resúmenes de su situación financiera y reciban alertas cuando estén por superar el presupuesto de una categoría.</p>
+                        </div>
+
+                        <div class="use-cases">
+                            <h4><i class="fas fa-tasks"></i> Casos de Uso</h4>
+                            <ul class="use-case-list">
+                                <li><i class="fas fa-check-circle"></i> <strong>CU-01:</strong> Registrar usuario con datos personales y moneda preferida.</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>CU-02:</strong> Gestionar categorías de gasto (alimentación, transporte, entretenimiento, salud, educación).</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>CU-03:</strong> Registrar transacción (ingreso o egreso) con monto, categoría, fecha y descripción.</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>CU-04:</strong> Definir presupuesto mensual por categoría y comparar con gastos reales.</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>CU-05:</strong> Consultar resumen mensual con total de ingresos, gastos y balance.</li>
+                            </ul>
+                        </div>
+
+                        <div class="entities-section">
+                            <h4><i class="fas fa-sitemap"></i> Entidades Sugeridas (Prisma)</h4>
+                            <div class="entities-grid">
+                                <span class="entity-tag"><i class="fas fa-circle"></i> Usuario</span>
+                                <span class="entity-tag"><i class="fas fa-circle"></i> Categoria</span>
+                                <span class="entity-tag"><i class="fas fa-circle"></i> Transaccion</span>
+                                <span class="entity-tag"><i class="fas fa-circle"></i> Presupuesto</span>
+                                <span class="entity-tag"><i class="fas fa-circle"></i> TipoTransaccion</span>
+                                <span class="entity-tag"><i class="fas fa-circle"></i> Periodo</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ===================== PROYECTO 15 ===================== -->
+                <div class="project-card" id="proyecto-15">
+                    <div class="project-header">
+                        <div class="project-number">15</div>
+                        <div class="project-header-info">
+                            <h3>Sistema de Gestión de Finca Agrícola <span class="difficulty medium"><i class="fas fa-signal"></i> Intermedio</span></h3>
+                            <p><i class="fas fa-seedling"></i> Cultivos, parcelas y cosechas</p>
+                            <p class="team-members"><i class="fas fa-users"></i> <span class="member-name">Luis Ángel García Guarín</span></p>
+                        </div>
+                    </div>
+                    <div class="project-body">
+                        <div class="project-context">
+                            <h4><i class="fas fa-file-alt"></i> Contexto del Proyecto</h4>
+                            <p>Un pequeño agricultor con varias parcelas de cultivo necesita un sistema para registrar y hacer seguimiento de sus siembras, aplicaciones de insumos agrícolas y cosechas. Actualmente toda la información está en la memoria del agricultor o anotada en cuadernos que se pierden con el tiempo. Se requiere una plataforma web que permita registrar parcelas, planificar cultivos, registrar aplicaciones de fertilizantes y pesticidas, y llevar el control de las cosechas con rendimiento por parcela.</p>
+                        </div>
+
+                        <div class="use-cases">
+                            <h4><i class="fas fa-tasks"></i> Casos de Uso</h4>
+                            <ul class="use-case-list">
+                                <li><i class="fas fa-check-circle"></i> <strong>CU-01:</strong> Registrar parcelas con nombre, ubicación, área en hectáreas y tipo de suelo.</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>CU-02:</strong> Registrar cultivo en una parcela con tipo de producto, fecha de siembra y fecha estimada de cosecha.</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>CU-03:</strong> Registrar aplicación de insumo agrícola (fertilizante, pesticida) con producto, dosis y fecha.</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>CU-04:</strong> Registrar cosecha con cantidad obtenida, calidad y fecha de recolección.</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>CU-05:</strong> Consultar historial de cultivos y rendimientos por parcela en diferentes temporadas.</li>
+                            </ul>
+                        </div>
+
+                        <div class="entities-section">
+                            <h4><i class="fas fa-sitemap"></i> Entidades Sugeridas (Prisma)</h4>
+                            <div class="entities-grid">
+                                <span class="entity-tag"><i class="fas fa-circle"></i> Parcela</span>
+                                <span class="entity-tag"><i class="fas fa-circle"></i> Cultivo</span>
+                                <span class="entity-tag"><i class="fas fa-circle"></i> TipoCultivo</span>
+                                <span class="entity-tag"><i class="fas fa-circle"></i> InsumoAgricola</span>
+                                <span class="entity-tag"><i class="fas fa-circle"></i> AplicacionInsumo</span>
+                                <span class="entity-tag"><i class="fas fa-circle"></i> Cosecha</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ===================== PROYECTO 16 — GUIADO POR EL DOCENTE ===================== -->
+                <div class="project-card" id="proyecto-16" style="border-left: 5px solid var(--accent-color);">
+                    <div class="project-header" style="background: linear-gradient(135deg, var(--accent-color) 0%, #c0392b 100%);">
+                        <div class="project-number" style="border-color: rgba(255,255,255,0.6); background-color: rgba(255,255,255,0.25);">16</div>
+                        <div class="project-header-info">
+                            <h3><i class="fas fa-chalkboard-teacher"></i> Sistema de Gestión Académica <span class="difficulty medium" style="background-color: rgba(255,255,255,0.2); color: white;"><i class="fas fa-graduation-cap"></i> Guiado por el Docente</span></h3>
+                            <p><i class="fas fa-university"></i> Proyecto demostrativo — Desarrollo paso a paso en clase</p>
+                            <p class="team-members"><i class="fas fa-chalkboard-teacher"></i> Guiado por el docente</p>
+                        </div>
+                    </div>
+                    <div class="project-body">
+                        <div class="info-box info" style="margin-bottom: 25px;">
+                            <h4><i class="fas fa-chalkboard-teacher"></i> Proyecto Demostrativo</h4>
+                            <p>Este proyecto será desarrollado <strong>paso a paso por el docente en clase</strong> como material de referencia. Los estudiantes seguirán la construcción completa del sistema desde cero: configuración de Docker, esquema Prisma, API REST con NestJS (Controller → Service → Repository) y frontend con Next.js. Servirá como guía práctica para que cada equipo luego aplique los mismos patrones en su proyecto asignado.</p>
+                        </div>
+
+                        <div class="project-context">
+                            <h4><i class="fas fa-file-alt"></i> Contexto del Proyecto</h4>
+                            <p>Una institución educativa necesita un sistema integral para gestionar su información académica. Actualmente, el registro de docentes, asignaturas, períodos académicos y la asignación de notas se realiza en hojas de cálculo dispersas, lo que genera inconsistencias, pérdida de información y dificultades para generar reportes de rendimiento. Se requiere una plataforma web que permita registrar estudiantes y docentes, configurar períodos y asignaturas, matricular estudiantes, registrar calificaciones y consultar el historial académico de forma centralizada y confiable.</p>
+                        </div>
+
+                        <div class="use-cases">
+                            <h4><i class="fas fa-tasks"></i> Casos de Uso</h4>
+                            <ul class="use-case-list">
+                                <li><i class="fas fa-check-circle"></i> <strong>CU-01:</strong> Registrar estudiante con datos personales, código estudiantil, correo institucional y programa académico.</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>CU-02:</strong> Registrar docente con datos personales, título profesional, especialidad y correo institucional.</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>CU-03:</strong> Gestionar programas académicos (Ingeniería de Sistemas, Contaduría, Administración, etc.).</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>CU-04:</strong> Crear asignaturas con nombre, código, número de créditos y programa al que pertenece.</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>CU-05:</strong> Configurar período académico (2026-A, 2026-B) con fecha de inicio y fin.</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>CU-06:</strong> Asignar docente a una asignatura en un período académico específico.</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>CU-07:</strong> Matricular estudiante en una asignatura de un período verificando que no exista duplicidad.</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>CU-08:</strong> Registrar calificaciones (nota 1, nota 2, nota 3, nota definitiva) de un estudiante en una matrícula.</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>CU-09:</strong> Consultar historial académico de un estudiante con todas sus asignaturas y notas por período.</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>CU-10:</strong> Generar reporte de estudiantes matriculados por asignatura y período, con promedio general.</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>CU-11:</strong> Listar asignaturas asignadas a un docente en el período actual.</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>CU-12:</strong> Calcular promedio acumulado del estudiante a partir de sus notas definitivas y créditos.</li>
+                            </ul>
+                        </div>
+
+                        <div class="entities-section">
+                            <h4><i class="fas fa-sitemap"></i> Entidades Sugeridas (Prisma)</h4>
+                            <div class="entities-grid">
+                                <span class="entity-tag"><i class="fas fa-circle"></i> Estudiante</span>
+                                <span class="entity-tag"><i class="fas fa-circle"></i> Docente</span>
+                                <span class="entity-tag"><i class="fas fa-circle"></i> ProgramaAcademico</span>
+                                <span class="entity-tag"><i class="fas fa-circle"></i> Asignatura</span>
+                                <span class="entity-tag"><i class="fas fa-circle"></i> PeriodoAcademico</span>
+                                <span class="entity-tag"><i class="fas fa-circle"></i> AsignacionDocente</span>
+                                <span class="entity-tag"><i class="fas fa-circle"></i> Matricula</span>
+                                <span class="entity-tag"><i class="fas fa-circle"></i> Calificacion</span>
+                            </div>
+                        </div>
+
+                        <h4 style="margin-top: 25px; font-size: 17px; font-weight: 600; color: var(--primary-color); display: flex; align-items: center; gap: 8px;">
+                            <i class="fas fa-route"></i> Hoja de Ruta — Sesiones de Clase
+                        </h4>
+                        <div class="steps-container" style="margin-top: 15px;">
+                            <div class="step" style="border-left-color: var(--accent-color);">
+                                <div class="step-number" style="background-color: var(--accent-color);">1</div>
+                                <div class="step-content">
+                                    <h3>Configuración del Entorno</h3>
+                                    <p>Crear repositorio en GitHub, configurar <strong>docker-compose.yml</strong> con PostgreSQL, servicio de backend (NestJS) y frontend (Next.js). Levantar los contenedores y verificar comunicación entre servicios.</p>
+                                </div>
+                            </div>
+                            <div class="step" style="border-left-color: var(--accent-color);">
+                                <div class="step-number" style="background-color: var(--accent-color);">2</div>
+                                <div class="step-content">
+                                    <h3>Modelo de Datos con Prisma</h3>
+                                    <p>Definir el <strong>schema.prisma</strong> con las entidades, relaciones (1:N, N:M), tipos de datos y restricciones. Ejecutar migraciones y generar el Prisma Client. Configurar el <strong>PrismaModule</strong> en NestJS.</p>
+                                </div>
+                            </div>
+                            <div class="step" style="border-left-color: var(--accent-color);">
+                                <div class="step-number" style="background-color: var(--accent-color);">3</div>
+                                <div class="step-content">
+                                    <h3>Primer Módulo CRUD — Estudiante</h3>
+                                    <p>Implementar el módulo completo con capas desacopladas: <strong>CreateEstudianteDto</strong> (validación), <strong>EstudianteRepository</strong> (acceso a datos), <strong>EstudianteService</strong> (lógica de negocio) y <strong>EstudianteController</strong> (endpoints REST). Probar con herramientas como Postman o Thunder Client.</p>
+                                </div>
+                            </div>
+                            <div class="step" style="border-left-color: var(--accent-color);">
+                                <div class="step-number" style="background-color: var(--accent-color);">4</div>
+                                <div class="step-content">
+                                    <h3>Módulos con Relaciones — Asignatura y Matrícula</h3>
+                                    <p>Crear los módulos de <strong>ProgramaAcademico</strong>, <strong>Asignatura</strong> y <strong>Matricula</strong> aplicando relaciones entre entidades. Implementar validaciones de negocio (no duplicar matrícula, verificar existencia de referencias).</p>
+                                </div>
+                            </div>
+                            <div class="step" style="border-left-color: var(--accent-color);">
+                                <div class="step-number" style="background-color: var(--accent-color);">5</div>
+                                <div class="step-content">
+                                    <h3>Módulos Complementarios — Docente, Período y Calificaciones</h3>
+                                    <p>Completar los módulos restantes: <strong>Docente</strong>, <strong>PeriodoAcademico</strong>, <strong>AsignacionDocente</strong> y <strong>Calificacion</strong>. Implementar cálculo de nota definitiva y promedio acumulado.</p>
+                                </div>
+                            </div>
+                            <div class="step" style="border-left-color: var(--accent-color);">
+                                <div class="step-number" style="background-color: var(--accent-color);">6</div>
+                                <div class="step-content">
+                                    <h3>Common Module — Filtros, Interceptores y Pipes</h3>
+                                    <p>Implementar el módulo <strong>common/</strong>: <strong>HttpExceptionFilter</strong> para respuestas de error consistentes, <strong>ResponseInterceptor</strong> para formato uniforme de respuestas y <strong>ValidationPipe</strong> global con class-validator.</p>
+                                </div>
+                            </div>
+                            <div class="step" style="border-left-color: var(--accent-color);">
+                                <div class="step-number" style="background-color: var(--accent-color);">7</div>
+                                <div class="step-content">
+                                    <h3>Frontend — Estructura y Listados</h3>
+                                    <p>Configurar el proyecto Next.js con App Router. Crear el <strong>cliente HTTP centralizado</strong> (lib/api.ts), los <strong>services</strong> de cada entidad y las páginas de listado con componentes reutilizables.</p>
+                                </div>
+                            </div>
+                            <div class="step" style="border-left-color: var(--accent-color);">
+                                <div class="step-number" style="background-color: var(--accent-color);">8</div>
+                                <div class="step-content">
+                                    <h3>Frontend — Formularios y Detalle</h3>
+                                    <p>Implementar formularios de creación y edición con validación del lado del cliente. Crear páginas de detalle, navegación entre vistas y manejo de estados de carga y error.</p>
+                                </div>
+                            </div>
+                            <div class="step" style="border-left-color: var(--accent-color);">
+                                <div class="step-number" style="background-color: var(--accent-color);">9</div>
+                                <div class="step-content">
+                                    <h3>Integración Final y Despliegue</h3>
+                                    <p>Pruebas de integración de flujos completos (matricular → calificar → consultar historial). Verificar que todo funcione con <code>docker compose up</code>. Revisión de código y buenas prácticas.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+
+            <!-- Entrega -->
+            <section id="entrega" class="section">
+                <h2 class="section-title">
+                    <i class="fas fa-flag-checkered"></i> Criterios de Entrega
+                </h2>
+
+                <div class="info-box success">
+                    <h4><i class="fas fa-check-circle"></i> Entregables del Proyecto</h4>
+                    <ul class="content-list">
+                        <li><strong>Repositorio GitHub:</strong> Código fuente organizado con commits descriptivos y ramas de trabajo.</li>
+                        <li><strong>README.md:</strong> Descripción del proyecto, integrantes, tecnologías, instrucciones de instalación y ejecución.</li>
+                        <li><strong>Historias de Usuario:</strong> Documentadas como Issues en GitHub con formato estándar.</li>
+                        <li><strong>Docker Compose funcional:</strong> Levantar los 3 servicios con un solo comando (<code>docker compose up</code>).</li>
+                        <li><strong>Esquema Prisma:</strong> Modelo de datos con relaciones, migraciones ejecutadas.</li>
+                        <li><strong>API REST (NestJS):</strong> Endpoints CRUD con arquitectura en capas (Controller → Service → Repository), DTOs con class-validator, filtros de excepción y manejo de errores.</li>
+                        <li><strong>Frontend (Next.js):</strong> Interfaz funcional que consuma la API con formularios y listados.</li>
+                    </ul>
+                </div>
+
+                <h3 class="subsection-title">Criterios de Evaluación</h3>
+
+                <div style="background-color: var(--light-bg); padding: 30px; border-radius: 8px; margin: 20px 0;">
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <thead>
+                            <tr style="background-color: var(--primary-color); color: white;">
+                                <th style="padding: 12px 15px; text-align: left; border-radius: 6px 0 0 0;">Criterio</th>
+                                <th style="padding: 12px 15px; text-align: center;">Porcentaje</th>
+                                <th style="padding: 12px 15px; text-align: left; border-radius: 0 6px 0 0;">Descripción</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="border-bottom: 1px solid var(--border-color);">
+                                <td style="padding: 12px 15px; font-weight: 600;">Historias de Usuario</td>
+                                <td style="padding: 12px 15px; text-align: center;">5%</td>
+                                <td style="padding: 12px 15px;">Redacción correcta, cobertura de los casos de uso, documentadas en GitHub Issues.</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--border-color); background-color: white;">
+                                <td style="padding: 12px 15px; font-weight: 600;">Docker & Infraestructura</td>
+                                <td style="padding: 12px 15px; text-align: center;">5%</td>
+                                <td style="padding: 12px 15px;">Docker Compose funcional, Dockerfiles correctos, servicios comunicándose entre sí.</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--border-color);">
+                                <td style="padding: 12px 15px; font-weight: 600;">Modelo de Datos (Prisma)</td>
+                                <td style="padding: 12px 15px; text-align: center;">10%</td>
+                                <td style="padding: 12px 15px;">Esquema bien diseñado, relaciones correctas, migraciones aplicadas.</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--border-color); background-color: white;">
+                                <td style="padding: 12px 15px; font-weight: 600;">API REST (NestJS)</td>
+                                <td style="padding: 12px 15px; text-align: center;">15%</td>
+                                <td style="padding: 12px 15px;">Separación en capas (Controller → Service → Repository), DTOs con class-validator, Pipes, Exception Filters, manejo de errores con HttpException, inyección de dependencias correcta.</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--border-color);">
+                                <td style="padding: 12px 15px; font-weight: 600;">Frontend (Next.js)</td>
+                                <td style="padding: 12px 15px; text-align: center;">15%</td>
+                                <td style="padding: 12px 15px;">Páginas funcionales, consumo del API, formularios con validación, diseño responsivo.</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--border-color); background-color: white;">
+                                <td style="padding: 12px 15px; font-weight: 600;">GitHub & Colaboración</td>
+                                <td style="padding: 12px 15px; text-align: center;">5%</td>
+                                <td style="padding: 12px 15px;">Uso de ramas, commits descriptivos, pull requests, README completo.</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--border-color);">
+                                <td style="padding: 12px 15px; font-weight: 600;">Integración & Pruebas</td>
+                                <td style="padding: 12px 15px; text-align: center;">10%</td>
+                                <td style="padding: 12px 15px;">Comunicación correcta entre frontend, backend y base de datos. Pruebas funcionales de los flujos principales.</td>
+                            </tr>
+                            <tr style="background-color: #fff8e1;">
+                                <td style="padding: 12px 15px; font-weight: 600;">Sustentación</td>
+                                <td style="padding: 12px 15px; text-align: center; font-weight: 700; color: var(--accent-color);">35%</td>
+                                <td style="padding: 12px 15px;">Cada integrante debe demostrar dominio del proyecto: explicar la arquitectura, el flujo de datos entre capas, decisiones técnicas tomadas y responder preguntas del docente sobre su código.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="info-box warning">
+                    <h4><i class="fas fa-exclamation-triangle"></i> Importante</h4>
+                    <ul class="content-list">
+                        <li>A cada equipo se le asignará <strong>un único proyecto</strong> de los 15 disponibles. No se permiten repeticiones.</li>
+                        <li>El proyecto debe ejecutarse completamente con <strong>docker compose up</strong>.</li>
+                        <li>Se evaluará la participación individual mediante el historial de commits en GitHub.</li>
+                        <li>Las Historias de Usuario deben derivarse de los casos de uso listados para cada proyecto.</li>
+                    </ul>
+                </div>
+
+                <h3 class="subsection-title">Recursos Recomendados</h3>
+
+                <div class="cards-grid">
+                    <div class="card">
+                        <div class="card-icon" style="color: var(--nest-color);"><i class="fas fa-server"></i></div>
+                        <h4 class="card-title">NestJS</h4>
+                        <ul class="content-list" style="margin-left: 20px; font-size: 14px;">
+                            <li><a href="https://docs.nestjs.com/" target="_blank" rel="noopener noreferrer">Documentación Oficial</a></li>
+                            <li><a href="https://docs.nestjs.com/recipes/prisma" target="_blank" rel="noopener noreferrer">NestJS + Prisma</a></li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon" style="color: var(--next-color);"><i class="fas fa-desktop"></i></div>
+                        <h4 class="card-title">Next.js</h4>
+                        <ul class="content-list" style="margin-left: 20px; font-size: 14px;">
+                            <li><a href="https://nextjs.org/docs" target="_blank" rel="noopener noreferrer">Documentación Oficial</a></li>
+                            <li><a href="https://nextjs.org/learn" target="_blank" rel="noopener noreferrer">Tutorial Interactivo</a></li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon" style="color: var(--prisma-color);"><i class="fas fa-link"></i></div>
+                        <h4 class="card-title">Prisma ORM</h4>
+                        <ul class="content-list" style="margin-left: 20px; font-size: 14px;">
+                            <li><a href="https://www.prisma.io/docs" target="_blank" rel="noopener noreferrer">Documentación Oficial</a></li>
+                            <li><a href="https://www.prisma.io/docs/getting-started/quickstart" target="_blank" rel="noopener noreferrer">Quick Start</a></li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon" style="color: var(--docker-color);"><i class="fab fa-docker"></i></div>
+                        <h4 class="card-title">Docker</h4>
+                        <ul class="content-list" style="margin-left: 20px; font-size: 14px;">
+                            <li><a href="https://docs.docker.com/compose/" target="_blank" rel="noopener noreferrer">Docker Compose</a></li>
+                            <li><a href="https://docs.docker.com/get-started/" target="_blank" rel="noopener noreferrer">Getting Started</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3><i class="fas fa-project-diagram"></i> Sobre Este Material</h3>
+                    <p>Guía de proyectos full-stack para el curso de Programación Avanzada. Cada proyecto integra NestJS, Next.js, PostgreSQL, Docker y Prisma ORM.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Tecnologías</h3>
+                    <ul>
+                        <li><a href="https://nestjs.com/" target="_blank" rel="noopener noreferrer">NestJS</a></li>
+                        <li><a href="https://nextjs.org/" target="_blank" rel="noopener noreferrer">Next.js</a></li>
+                        <li><a href="https://www.postgresql.org/" target="_blank" rel="noopener noreferrer">PostgreSQL</a></li>
+                        <li><a href="https://www.prisma.io/" target="_blank" rel="noopener noreferrer">Prisma ORM</a></li>
+                        <li><a href="https://www.docker.com/" target="_blank" rel="noopener noreferrer">Docker</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Secciones</h3>
+                    <ul>
+                        <li><a href="#introduccion">Introducción</a></li>
+                        <li><a href="#stack">Arquitectura</a></li>
+                        <li><a href="#metodologia">Metodología</a></li>
+                        <li><a href="#proyectos">Proyectos</a></li>
+                        <li><a href="#entrega">Entrega</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Programación Avanzada - Ingeniería de Sistemas. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Navegación suave
+            document.querySelectorAll('.nav-link').forEach(function(link) {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    var href = this.getAttribute('href');
+                    var target = document.querySelector(href);
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                });
+            });
+
+            // Marcar enlace activo en navegación
+            window.addEventListener('scroll', function() {
+                var sections = document.querySelectorAll('section[id]');
+                var navLinks = document.querySelectorAll('.nav-link');
+                var current = '';
+
+                sections.forEach(function(section) {
+                    var sectionTop = section.offsetTop;
+                    if (window.pageYOffset >= sectionTop - 200) {
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                navLinks.forEach(function(link) {
+                    link.classList.remove('active');
+                    var href = link.getAttribute('href');
+                    if (href && href.slice(1) === current) {
+                        link.classList.add('active');
+                    }
+                });
+            });
+
+            // Animar project cards al entrar en vista
+            var observer = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.project-card').forEach(function(card) {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(card);
+            });
+
+            document.querySelectorAll('.step').forEach(function(step) {
+                step.style.opacity = '0';
+                step.style.transform = 'translateY(20px)';
+                step.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(step);
+            });
+
+            console.log('Proyectos Full-Stack — Programación Avanzada cargado correctamente');
+        });
+    </script>
+</body>
+</html>
