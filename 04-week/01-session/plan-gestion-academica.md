@@ -336,16 +336,16 @@ Cada Historia de Usuario se considera **terminada** cuando cumple **todos** los 
 
 ## Entidades del Modelo de Datos (Prisma)
 
-```
-Estudiante          1 ──── N  Matricula
-Docente             1 ──── N  AsignacionDocente
-ProgramaAcademico   1 ──── N  Estudiante
-ProgramaAcademico   1 ──── N  Asignatura
-Asignatura          1 ──── N  AsignacionDocente
-PeriodoAcademico    1 ──── N  AsignacionDocente
-AsignacionDocente   1 ──── N  Matricula
-Matricula           1 ──── 1  Calificacion
-```
+| Entidad Origen | Cardinalidad | Entidad Destino |
+|---|---|---|
+| **Estudiante** | 1 → N | Matricula |
+| **Docente** | 1 → N | AsignacionDocente |
+| **ProgramaAcademico** | 1 → N | Estudiante |
+| **ProgramaAcademico** | 1 → N | Asignatura |
+| **Asignatura** | 1 → N | AsignacionDocente |
+| **PeriodoAcademico** | 1 → N | AsignacionDocente |
+| **AsignacionDocente** | 1 → N | Matricula |
+| **Matricula** | 1 → 1 | Calificacion |
 
 ### Resumen de Entidades
 
@@ -364,39 +364,20 @@ Matricula           1 ──── 1  Calificacion
 
 ## Cronograma de Releases
 
-```
-┌──────────────────────────────────────────────────────────────────────────────┐
-│                    SEGUNDO CORTE (Release 1) — Cierre: 17 Abr 2026          │
-│                          Backend + Frontend Base                            │
-├─────────────────────┬─────────────────────┬──────────────────────────────────┤
-│  Sprint 1           │    Sprint 2         │         Sprint 3                 │
-│  Mar 16 → Mar 29    │  Mar 30 → Abr 10    │   Abr 13 → Abr 17              │
-│                     │                     │                                  │
-│ • Docker            │ • Asignatura        │ • Matrícula                      │
-│ • Prisma            │ • Período           │ • Calificación                   │
-│ • Estudiante        │ • Asignación Doc    │ • Common Module                  │
-│ • Docente           │ • Filters/Pipes     │ • Frontend: listados y forms     │
-│ • Programa          │                     │                                  │
-│                     │ 🚫 Abr 2-3         │                                  │
-│ 🚫 Mar 23          │   (Semana Santa)    │                                  │
-│   (San José)        │                     │                                  │
-├─────────────────────┴─────────────────────┴──────────────────────────────────┤
-│                    TERCER CORTE (Release 2) — Cierre: 22 May 2026           │
-│                          Integración + Despliegue                           │
-├────────────────────────────────────┬─────────────────────────────────────────┤
-│        Sprint 4                    │          Sprint 5                       │
-│        Abr 20 → May 8             │          May 11 → May 22               │
-│                                    │                                        │
-│ • Frontend matrículas              │ • Integración de flujos                 │
-│ • Frontend calificaciones          │ • Pruebas de integración                │
-│ • Navegación y layout              │ • Docker compose validación final       │
-│ • Selects dinámicos                │ • README y documentación                │
-│                                    │                                        │
-│ 🚫 May 1                          │                                        │
-│   (Día del Trabajo)               │ 🚫 May 18                              │
-│                                    │   (Día de la Ascensión)                │
-└────────────────────────────────────┴─────────────────────────────────────────┘
-```
+### Release 1 — Segundo Corte (Cierre: 17 Abr 2026) — Backend + Frontend Base
+
+| Sprint | Período | Alcance | Festivos |
+|---|---|---|---|
+| **Sprint 1** | Mar 16 → Mar 29 | Docker, Prisma, Estudiante, Docente, Programa | Mar 23 (San José) |
+| **Sprint 2** | Mar 30 → Abr 10 | Asignatura, Período, Asignación Doc, Filters/Pipes | Abr 2-3 (Semana Santa) |
+| **Sprint 3** | Abr 13 → Abr 17 | Matrícula, Calificación, Common Module, Frontend: listados y forms | — |
+
+### Release 2 — Tercer Corte (Cierre: 22 May 2026) — Integración + Despliegue
+
+| Sprint | Período | Alcance | Festivos |
+|---|---|---|---|
+| **Sprint 4** | Abr 20 → May 8 | Frontend matrículas, Frontend calificaciones, Navegación y layout, Selects dinámicos | May 1 (Día del Trabajo) |
+| **Sprint 5** | May 11 → May 22 | Integración de flujos, Pruebas de integración, Docker compose validación final, README y documentación | May 18 (Día de la Ascensión) |
 
 ### Festivos Colombianos 2026 (Marzo — Mayo)
 
