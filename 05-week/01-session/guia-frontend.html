@@ -1,0 +1,1782 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía: Crear Frontend Next.js 16 + Tailwind + Servicios desde Cero | Programación Avanzada</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+    <style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-color: #1e3c72;
+    --secondary-color: #2a5298;
+    --accent-color: #ff6b6b;
+    --light-bg: #f8f9fa;
+    --dark-text: #2c3e50;
+    --border-color: #e0e0e0;
+    --success-color: #27ae60;
+    --warning-color: #f39c12;
+    --info-color: #3498db;
+    --github-color: #24292e;
+    --cli-color: #0d1117;
+    --visual-color: #6f42c1;
+    --nextjs-color: #000000;
+    --react-color: #61dafb;
+    --tailwind-color: #06b6d4;
+    --docker-color: #2496ed;
+    --ts-color: #3178c6;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.6;
+    color: var(--dark-text);
+    background-color: #fff;
+}
+
+/* Header */
+.main-header {
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, var(--primary-color) 100%);
+    color: white;
+    padding: 0;
+}
+
+.top-bar {
+    background-color: rgba(0,0,0,0.1);
+    padding: 20px 0;
+    text-align: center;
+}
+
+.brand-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.brand-name {
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin: 10px 0;
+}
+
+.brand-subtitle {
+    font-size: 14px;
+    font-weight: 300;
+    opacity: 0.9;
+}
+
+.main-nav {
+    background-color: rgba(0,0,0,0.3);
+    padding: 15px 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.main-nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.main-nav a {
+    color: white;
+    text-decoration: none;
+    padding: 12px 16px;
+    display: block;
+    font-size: 12px;
+    font-weight: 500;
+    transition: background-color 0.3s;
+    border-bottom: 3px solid transparent;
+}
+
+.main-nav a:hover,
+.main-nav a.active {
+    background-color: rgba(255,255,255,0.1);
+    border-bottom-color: var(--react-color);
+}
+
+/* Container */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Main Content */
+.main-content {
+    min-height: 100vh;
+    padding: 40px 0;
+}
+
+.section {
+    margin: 60px 0;
+    padding: 40px 0;
+    border-top: 1px solid var(--border-color);
+}
+
+.section:first-child {
+    border-top: none;
+}
+
+.section-title {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 30px;
+    color: var(--primary-color);
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.section-title i {
+    font-size: 36px;
+    color: var(--accent-color);
+}
+
+.subsection-title {
+    font-size: 20px;
+    font-weight: 600;
+    margin-top: 30px;
+    margin-bottom: 15px;
+    color: var(--secondary-color);
+}
+
+/* Cards */
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 20px;
+    margin: 30px 0;
+}
+
+.card {
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 25px;
+    background: #fff;
+    transition: transform 0.3s, box-shadow 0.3s;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+}
+
+.card-icon {
+    font-size: 40px;
+    margin-bottom: 15px;
+}
+
+.card-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: var(--dark-text);
+}
+
+/* Code Block */
+.code-block {
+    background: linear-gradient(135deg, #1e1e1e 0%, #2d2d2d 100%);
+    border-left: 5px solid var(--accent-color);
+    border-radius: 8px;
+    padding: 24px;
+    margin: 25px 0;
+    overflow-x: auto;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    position: relative;
+}
+
+.code-block code {
+    font-family: 'Fira Code', 'Courier New', monospace;
+    font-size: 13px;
+    color: #e0e0e0;
+    line-height: 1.7;
+    white-space: pre;
+    white-space: pre-wrap;
+    word-break: break-word;
+    display: block;
+    letter-spacing: 0.5px;
+}
+
+.code-block .code-label {
+    position: absolute;
+    top: 8px;
+    right: 12px;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 10px;
+    border-radius: 4px;
+    color: white;
+    font-family: 'Roboto', sans-serif;
+}
+
+.code-block .code-label.cli { background-color: var(--cli-color); border: 1px solid #30363d; }
+.code-block .code-label.bash { background-color: #27ae60; }
+.code-block .code-label.json { background-color: #e67e22; }
+.code-block .code-label.ts { background-color: var(--ts-color); }
+.code-block .code-label.tsx { background-color: #2b6cb0; }
+.code-block .code-label.css { background-color: #e44d26; }
+.code-block .code-label.env { background-color: #6f42c1; }
+.code-block .code-label.docker { background-color: var(--docker-color); }
+.code-block .code-label.output { background-color: #1e7e34; }
+.code-block .code-label.js { background-color: #f7df1e; color: #000; }
+
+/* Content List */
+.content-list {
+    margin: 20px 0 20px 40px;
+}
+
+.content-list li {
+    margin: 10px 0;
+    padding-left: 10px;
+}
+
+.content-list strong {
+    color: var(--primary-color);
+}
+
+/* Guide Steps */
+.guide-step {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    margin-bottom: 40px;
+    border-left: 5px solid var(--primary-color);
+}
+
+.guide-step-header {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    color: white;
+    padding: 25px 30px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.guide-step-header.nextjs { background: linear-gradient(135deg, #0a0a0a 0%, #333 100%); }
+.guide-step-header.react  { background: linear-gradient(135deg, #20232a 0%, #282c34 100%); }
+.guide-step-header.tailwind { background: linear-gradient(135deg, #0e7490 0%, var(--tailwind-color) 100%); }
+.guide-step-header.ts   { background: linear-gradient(135deg, #1a4b8c 0%, var(--ts-color) 100%); }
+.guide-step-header.docker { background: linear-gradient(135deg, #1565a0 0%, var(--docker-color) 100%); }
+.guide-step-header.test { background: linear-gradient(135deg, #1e7e34 0%, var(--success-color) 100%); }
+.guide-step-header.api  { background: linear-gradient(135deg, #6b21a8 0%, #a855f7 100%); }
+.guide-step-header.service { background: linear-gradient(135deg, #b45309 0%, #d97706 100%); }
+
+.guide-step-number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 55px;
+    height: 55px;
+    background-color: rgba(255,255,255,0.2);
+    border-radius: 50%;
+    font-size: 24px;
+    font-weight: 700;
+    flex-shrink: 0;
+    border: 2px solid rgba(255,255,255,0.4);
+}
+
+.guide-step-header-info h3 {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.guide-step-header-info p {
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+.guide-step-body {
+    padding: 30px;
+}
+
+/* Numbered Instructions */
+.instruction-list {
+    list-style: none;
+    padding: 0;
+    counter-reset: instruction;
+}
+
+.instruction-list li {
+    counter-increment: instruction;
+    padding: 14px 18px 14px 60px;
+    margin-bottom: 10px;
+    background-color: var(--light-bg);
+    border-radius: 8px;
+    border-left: 3px solid var(--visual-color);
+    position: relative;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+.instruction-list li::before {
+    content: counter(instruction);
+    position: absolute;
+    left: 16px;
+    top: 14px;
+    width: 28px;
+    height: 28px;
+    background-color: var(--visual-color);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.instruction-list li strong { color: var(--primary-color); }
+.instruction-list li code {
+    background-color: #e8e8e8;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 13px;
+    font-family: 'Fira Code', 'Courier New', monospace;
+}
+
+/* Info Box */
+.info-box {
+    padding: 20px 25px;
+    border-radius: 8px;
+    margin: 20px 0;
+}
+
+.info-box.warning {
+    background-color: #fff3cd;
+    border-left: 4px solid var(--warning-color);
+}
+
+.info-box.success {
+    background-color: #d4edda;
+    border-left: 4px solid var(--success-color);
+}
+
+.info-box.info {
+    background-color: #d1ecf1;
+    border-left: 4px solid var(--info-color);
+}
+
+.info-box.danger {
+    background-color: #f8d7da;
+    border-left: 4px solid var(--accent-color);
+}
+
+.info-box h4 {
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Tip callout */
+.tip {
+    background: linear-gradient(135deg, #e8f5e9 0%, #f1f8e9 100%);
+    border-left: 4px solid var(--success-color);
+    padding: 15px 20px;
+    border-radius: 0 8px 8px 0;
+    margin: 15px 0;
+    font-size: 14px;
+}
+
+.tip strong { color: var(--success-color); }
+
+/* Table */
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 14px;
+}
+
+.data-table thead th {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 12px 16px;
+    text-align: left;
+    font-weight: 600;
+}
+
+.data-table tbody td {
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.data-table tbody tr:nth-child(even) {
+    background-color: var(--light-bg);
+}
+
+.data-table tbody tr:hover {
+    background-color: #e9ecef;
+}
+
+/* Badge */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+    color: white;
+}
+
+.badge.green  { background-color: var(--success-color); }
+.badge.blue   { background-color: var(--info-color); }
+.badge.yellow { background-color: var(--warning-color); color: #333; }
+.badge.red    { background-color: var(--accent-color); }
+.badge.purple { background-color: var(--visual-color); }
+.badge.dark   { background-color: var(--github-color); }
+.badge.nextjs { background-color: var(--nextjs-color); }
+.badge.react  { background-color: #20232a; }
+.badge.tailwind { background-color: var(--tailwind-color); }
+.badge.ts  { background-color: var(--ts-color); }
+
+/* Verify box */
+.verify-box {
+    border: 2px solid var(--success-color);
+    border-radius: 10px;
+    padding: 20px 25px;
+    margin: 20px 0;
+    background: linear-gradient(135deg, #f0fff4 0%, #f7fff9 100%);
+}
+
+.verify-box h4 {
+    color: var(--success-color);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Architecture image */
+.arch-img {
+    width: 100%;
+    max-width: 920px;
+    display: block;
+    margin: 30px auto;
+    border-radius: 12px;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.12);
+    border: 1px solid var(--border-color);
+}
+
+/* Tree */
+.tree-block {
+    background: #fafbfc;
+    border: 1px solid var(--border-color);
+    border-left: 4px solid var(--warning-color);
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin: 20px 0;
+    font-family: 'Fira Code', 'Courier New', monospace;
+    font-size: 13px;
+    line-height: 1.8;
+    color: #2c3e50;
+    white-space: pre;
+    overflow-x: auto;
+}
+
+/* Footer */
+.footer {
+    background-color: var(--dark-text);
+    color: white;
+    padding: 40px 0;
+    margin-top: 60px;
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 40px;
+}
+
+.footer-section h3 {
+    margin-bottom: 15px;
+    color: var(--react-color);
+}
+
+.footer-section ul { list-style: none; }
+.footer-section ul li { margin: 8px 0; }
+.footer-section a { color: #ccc; text-decoration: none; transition: color 0.3s; }
+.footer-section a:hover { color: white; }
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    margin-top: 30px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .section-title { font-size: 24px; }
+    .main-nav ul { flex-direction: column; }
+    .cards-grid  { grid-template-columns: 1fr; }
+    .guide-step-header { flex-direction: column; text-align: center; }
+}
+    </style>
+</head>
+<body>
+
+<!-- ==================== HEADER ==================== -->
+<header class="main-header">
+    <div class="top-bar">
+        <div class="container">
+            <div class="brand-container">
+                <img src="https://raw.githubusercontent.com/code-corhuila/material-mineria-datos/b3725d694125ab35294ddfe415a327bc1445d32c/01-week/01-session/LOGO%20CORHUILA%20BLANCO%20PNG%20(2).png"
+                     alt="Logo Corhuila" style="max-width:120px; height:auto; margin-bottom:15px;">
+                <h1 class="brand-name">
+                    <i class="fab fa-react" style="color:var(--react-color);"></i>&nbsp; Guía: Frontend Next.js desde Cero
+                </h1>
+                <p class="brand-subtitle">
+                    Next.js 16 &bull; React 19 &bull; TypeScript &bull; Tailwind CSS v4 &bull; App Router &bull; Docker
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <nav class="main-nav">
+        <ul>
+            <li><a href="#intro" class="nav-link">Introducción</a></li>
+            <li><a href="#prerequisitos" class="nav-link">Prerrequisitos</a></li>
+            <li><a href="#paso1" class="nav-link">1. Crear Proyecto</a></li>
+            <li><a href="#paso2" class="nav-link">2. next.config.ts</a></li>
+            <li><a href="#paso3" class="nav-link">3. Variables .env</a></li>
+            <li><a href="#paso4" class="nav-link">4. global.d.ts</a></li>
+            <li><a href="#paso5" class="nav-link">5. Cliente HTTP</a></li>
+            <li><a href="#paso6" class="nav-link">6. Servicios</a></li>
+            <li><a href="#paso7" class="nav-link">7. Layout</a></li>
+            <li><a href="#paso8" class="nav-link">8. Compilar y probar</a></li>
+            <li><a href="#paso9" class="nav-link">9. Dockerfile</a></li>
+            <li><a href="#paso10" class="nav-link">10. Verificación</a></li>
+            <li><a href="#errores" class="nav-link">Errores Comunes</a></li>
+        </ul>
+    </nav>
+</header>
+
+<!-- ==================== MAIN ==================== -->
+<main class="main-content">
+<div class="container">
+
+<!-- ==================== INTRODUCCIÓN ==================== -->
+<section id="intro" class="section">
+    <h2 class="section-title"><i class="fas fa-rocket"></i> Introducción</h2>
+
+    <p>Esta es la <strong>Guía 2 de 2</strong>. En la guía anterior construiste el backend (NestJS + Prisma + PostgreSQL). Ahora vas a construir <strong>desde cero</strong> el frontend que se comunicará con esa API REST.</p>
+
+    <div class="info-box warning">
+        <h4><i class="fas fa-exclamation-triangle"></i> Requisito previo</h4>
+        <p>Debes haber completado la <strong>Guía 1 — Backend + Base de Datos</strong> antes de comenzar. El backend debe estar corriendo en <code>http://localhost:3001/api/v1</code> y la base de datos PostgreSQL activa en Docker.</p>
+    </div>
+
+    <div class="info-box info">
+        <h4><i class="fas fa-bullseye"></i> ¿Qué vas a construir?</h4>
+        <p>El <strong>frontend</strong> del Sistema de Gestión Académica: una aplicación Next.js con App Router, TypeScript, Tailwind CSS v4, un cliente HTTP centralizado, y una capa de 8 servicios que se conectan a la API del backend. Todo preparado para Docker.</p>
+    </div>
+
+    <h3 class="subsection-title">Arquitectura del Sistema</h3>
+    <p>En esta guía nos enfocamos en la capa <strong>Frontend (Next.js)</strong>, el <strong>cliente HTTP</strong> y los <strong>servicios</strong> que consumen la API REST:</p>
+
+    <img src="arquitectura-stack.svg" alt="Diagrama de Arquitectura — Next.js + NestJS + PostgreSQL" class="arch-img">
+
+    <div class="cards-grid">
+        <div class="card" style="border-left: 4px solid var(--nextjs-color);">
+            <div class="card-icon" style="color: var(--nextjs-color);">▲</div>
+            <h4 class="card-title">Next.js 16 — App Router</h4>
+            <p>Framework React con renderizado del servidor, rutas basadas en carpetas y soporte nativo para TypeScript. Corre en el puerto <strong>3000</strong>.</p>
+        </div>
+        <div class="card" style="border-left: 4px solid var(--react-color);">
+            <div class="card-icon" style="color: var(--react-color);"><i class="fab fa-react"></i></div>
+            <h4 class="card-title">React 19</h4>
+            <p>Librería de UI basada en componentes. Next.js se encarga de la configuración, tú solo escribes componentes <code>.tsx</code>.</p>
+        </div>
+        <div class="card" style="border-left: 4px solid var(--tailwind-color);">
+            <div class="card-icon" style="color: var(--tailwind-color);"><i class="fas fa-palette"></i></div>
+            <h4 class="card-title">Tailwind CSS v4</h4>
+            <p>Framework CSS de utilidades. En v4 se configura como plugin de PostCSS — sin archivo <code>tailwind.config</code> separado.</p>
+        </div>
+        <div class="card" style="border-left: 4px solid var(--ts-color);">
+            <div class="card-icon" style="color: var(--ts-color);">TS</div>
+            <h4 class="card-title">TypeScript 5</h4>
+            <p>Tipado estático para JavaScript. Interfaces, genéricos y DTOs tipados para la comunicación con la API.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== PRERREQUISITOS ==================== -->
+<section id="prerequisitos" class="section">
+    <h2 class="section-title"><i class="fas fa-clipboard-check"></i> Prerrequisitos</h2>
+
+    <p>Si completaste la Guía 1, ya tienes todo instalado. Solo necesitas verificar:</p>
+
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>Herramienta</th>
+                <th>Verificación</th>
+                <th>Estado</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Node.js v22 + npm v10</strong></td>
+                <td><code>node --version</code> / <code>npm --version</code></td>
+                <td><span class="badge green">Instalado en Guía 1</span></td>
+            </tr>
+            <tr>
+                <td><strong>Docker Desktop</strong></td>
+                <td><code>docker --version</code></td>
+                <td><span class="badge green">Instalado en Guía 1</span></td>
+            </tr>
+            <tr>
+                <td><strong>Backend corriendo</strong></td>
+                <td>Abrir <code>http://localhost:3001/api/v1</code> en el navegador</td>
+                <td><span class="badge red">Verificar ahora</span></td>
+            </tr>
+            <tr>
+                <td><strong>PostgreSQL en Docker</strong></td>
+                <td><code>docker ps</code> → contenedor <code>pg_dev</code> con STATUS: Up</td>
+                <td><span class="badge red">Verificar ahora</span></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="verify-box">
+        <h4><i class="fas fa-check-circle"></i> Checklist rápido</h4>
+        <div class="code-block" style="margin:10px 0 0 0;">
+            <span class="code-label cli">Terminal</span>
+            <code># 1. Verificar que PostgreSQL está corriendo
+docker ps                          # pg_dev → Up
+
+# 2. Verificar que el backend responde
+# (en PowerShell)
+Invoke-WebRequest -Uri "http://localhost:3001/api/v1" -UseBasicParsing | Select-Object StatusCode
+
+# Debe mostrar: StatusCode: 200
+
+# Si el backend no está corriendo, ir a la carpeta backend/ y ejecutar:
+# cd backend
+# npm run start:dev</code>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== PASO 1: CREAR PROYECTO ==================== -->
+<section id="paso1" class="section">
+    <h2 class="section-title"><i class="fas fa-plus-circle"></i> Paso 1 — Crear el Proyecto Next.js con la CLI</h2>
+
+    <div class="guide-step">
+        <div class="guide-step-header nextjs">
+            <div class="guide-step-number">1</div>
+            <div class="guide-step-header-info">
+                <h3>Generar el proyecto frontend con <code>create-next-app</code></h3>
+                <p>La CLI oficial de Next.js crea toda la estructura del proyecto automáticamente</p>
+            </div>
+        </div>
+        <div class="guide-step-body">
+            <p>Desde la <strong>raíz del proyecto</strong> (la misma carpeta donde está <code>backend/</code> y <code>docker-compose.yml</code>), ejecuta:</p>
+            <div class="code-block">
+                <span class="code-label cli">Terminal (raíz del proyecto)</span>
+                <code># Crear el proyecto Next.js dentro de la carpeta "frontend"
+npx create-next-app@latest frontend</code>
+            </div>
+
+            <p>La CLI te hará varias preguntas. Responde así:</p>
+
+            <table class="data-table">
+                <thead><tr><th>Pregunta</th><th>Respuesta</th></tr></thead>
+                <tbody>
+                    <tr><td>Would you like to use <strong>TypeScript</strong>?</td><td><strong>Yes</strong> ✅</td></tr>
+                    <tr><td>Would you like to use <strong>ESLint</strong>?</td><td><strong>Yes</strong> ✅</td></tr>
+                    <tr><td>Would you like to use <strong>Tailwind CSS</strong>?</td><td><strong>Yes</strong> ✅</td></tr>
+                    <tr><td>Would you like your code inside a <strong>src/</strong> directory?</td><td><strong>Yes</strong> ✅</td></tr>
+                    <tr><td>Would you like to use <strong>App Router</strong>? (recommended)</td><td><strong>Yes</strong> ✅</td></tr>
+                    <tr><td>Would you like to use <strong>Turbopack</strong> for next dev?</td><td><strong>Yes</strong> ✅</td></tr>
+                    <tr><td>Would you like to customize the import <strong>alias</strong> (@/*)?</td><td><strong>No</strong> (dejar el alias <code>@/*</code> por defecto)</td></tr>
+                </tbody>
+            </table>
+
+            <div class="info-box info">
+                <h4><i class="fas fa-info-circle"></i> ¿Qué hace <code>create-next-app</code>?</h4>
+                <p>Crea la carpeta <code>frontend/</code> con: <code>package.json</code> con las dependencias (Next.js, React, Tailwind, TypeScript), <code>tsconfig.json</code> configurado, <code>postcss.config.mjs</code> para Tailwind v4, la carpeta <code>src/app/</code> con el App Router, archivos CSS con Tailwind, y ya ejecuta <code>npm install</code> automáticamente.</p>
+            </div>
+
+            <h4 class="subsection-title">Estructura generada por la CLI</h4>
+            <div class="tree-block">frontend/
+├── .gitignore
+├── eslint.config.mjs
+├── next-env.d.ts
+├── next.config.ts
+├── package.json
+├── postcss.config.mjs
+├── README.md
+├── tsconfig.json
+├── public/
+│   ├── file.svg
+│   ├── globe.svg
+│   ├── next.svg
+│   ├── vercel.svg
+│   └── window.svg
+└── src/
+    └── app/
+        ├── favicon.ico
+        ├── globals.css
+        ├── layout.tsx        ← Layout raíz
+        └── page.tsx          ← Página principal</div>
+
+            <div class="verify-box">
+                <h4><i class="fas fa-check-circle"></i> Verificación rápida</h4>
+                <div class="code-block" style="margin:10px 0 0 0;">
+                    <span class="code-label cli">Terminal</span>
+                    <code># Entrar al frontend y verificar que funciona
+cd frontend
+npm run dev
+
+# Debe mostrar:
+#  ▲ Next.js 16.2.1
+#  - Local: http://localhost:3000
+# Abre http://localhost:3000 en el navegador — verás la página por defecto de Next.js
+# Presiona Ctrl+C para detenerlo</code>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== PASO 2: NEXT CONFIG ==================== -->
+<section id="paso2" class="section">
+    <h2 class="section-title"><i class="fas fa-cog"></i> Paso 2 — Configurar next.config.ts</h2>
+
+    <div class="guide-step">
+        <div class="guide-step-header nextjs">
+            <div class="guide-step-number">2</div>
+            <div class="guide-step-header-info">
+                <h3>Agregar <code>output: "standalone"</code> para Docker</h3>
+                <p>Genera un build optimizado con todo lo necesario para ejecutar sin node_modules</p>
+            </div>
+        </div>
+        <div class="guide-step-body">
+            <p>Abre <code>frontend/next.config.ts</code> y reemplaza <strong>todo su contenido</strong> con:</p>
+            <div class="code-block">
+                <span class="code-label ts">frontend/next.config.ts</span>
+                <code>import type { NextConfig } from "next";
+
+const nextConfig: NextConfig = {
+  output: "standalone", // Necesario para Docker — genera un build auto-contenido
+};
+
+export default nextConfig;</code>
+            </div>
+
+            <div class="info-box info">
+                <h4><i class="fas fa-info-circle"></i> ¿Qué hace <code>output: "standalone"</code>?</h4>
+                <p>Cuando ejecutas <code>npm run build</code>, Next.js genera una carpeta <code>.next/standalone/</code> que incluye un <code>server.js</code> y <strong>solo las dependencias necesarias</strong>. Esto permite crear imágenes Docker mucho más livianas sin necesidad de copiar todo <code>node_modules/</code>.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== PASO 3: VARIABLES DE ENTORNO ==================== -->
+<section id="paso3" class="section">
+    <h2 class="section-title"><i class="fas fa-key"></i> Paso 3 — Crear la Variable de Entorno</h2>
+
+    <div class="guide-step">
+        <div class="guide-step-header" style="background: linear-gradient(135deg, #4c1d95 0%, #7c3aed 100%);">
+            <div class="guide-step-number">3</div>
+            <div class="guide-step-header-info">
+                <h3>Crear <code>.env.local</code> con la URL del backend</h3>
+                <p>Configurar la dirección donde el frontend se conectará a la API</p>
+            </div>
+        </div>
+        <div class="guide-step-body">
+            <p>Crea el archivo <code>frontend/.env.local</code> con este contenido:</p>
+            <div class="code-block">
+                <span class="code-label env">frontend/.env.local</span>
+                <code>NEXT_PUBLIC_API_URL=http://localhost:3001/api/v1</code>
+            </div>
+
+            <div class="info-box warning">
+                <h4><i class="fas fa-exclamation-triangle"></i> ¿Por qué <code>NEXT_PUBLIC_</code>?</h4>
+                <p>En Next.js, <strong>solo las variables que empiezan con <code>NEXT_PUBLIC_</code></strong> son accesibles desde el navegador (código del cliente). Las variables sin ese prefijo solo están disponibles en el servidor (API routes, Server Components). Como nuestro cliente HTTP se ejecuta en el navegador, <strong>necesita el prefijo</strong>.</p>
+            </div>
+
+            <div class="tip">
+                <strong><i class="fas fa-lightbulb"></i> Tip:</strong> El archivo <code>.env.local</code> ya está incluido en el <code>.gitignore</code> que generó <code>create-next-app</code>. Nunca se sube a Git.
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== PASO 4: GLOBAL.D.TS ==================== -->
+<section id="paso4" class="section">
+    <h2 class="section-title"><i class="fas fa-file-code"></i> Paso 4 — Crear el Archivo de Tipos Globales</h2>
+
+    <div class="guide-step">
+        <div class="guide-step-header ts">
+            <div class="guide-step-number">4</div>
+            <div class="guide-step-header-info">
+                <h3>Crear <code>src/types/global.d.ts</code></h3>
+                <p>Archivo de declaraciones para que TypeScript reconozca las variables de entorno de Node</p>
+            </div>
+        </div>
+        <div class="guide-step-body">
+            <p>Crea la carpeta <code>frontend/src/types/</code> y dentro crea el archivo <code>global.d.ts</code>:</p>
+            <div class="code-block">
+                <span class="code-label ts">frontend/src/types/global.d.ts</span>
+                <code>/// &lt;reference types="node" /&gt;</code>
+            </div>
+
+            <div class="info-box info">
+                <h4><i class="fas fa-info-circle"></i> ¿Para qué sirve?</h4>
+                <p>Esta línea le dice a TypeScript que incluya los tipos de Node.js (como <code>process.env</code>). Sin ella, TypeScript puede lanzar el error <code>Cannot find name 'process'</code> cuando el cliente HTTP intenta leer <code>process.env.NEXT_PUBLIC_API_URL</code>.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== PASO 5: CLIENTE HTTP ==================== -->
+<section id="paso5" class="section">
+    <h2 class="section-title"><i class="fas fa-network-wired"></i> Paso 5 — Crear el Cliente HTTP Centralizado</h2>
+
+    <div class="guide-step">
+        <div class="guide-step-header api">
+            <div class="guide-step-number">5</div>
+            <div class="guide-step-header-info">
+                <h3>Crear <code>src/lib/api.ts</code> — Cliente HTTP con Fetch</h3>
+                <p>Un módulo que encapsula todas las peticiones HTTP a la API del backend</p>
+            </div>
+        </div>
+        <div class="guide-step-body">
+            <p>Crea la carpeta <code>frontend/src/lib/</code> y dentro crea <code>api.ts</code>:</p>
+            <div class="code-block">
+                <span class="code-label ts">frontend/src/lib/api.ts</span>
+                <code>// ============================================================
+// lib/api.ts — Cliente HTTP centralizado
+// Base URL configurable desde variable de entorno
+// ============================================================
+
+const BASE_URL =
+  process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3001/api/v1";
+
+type HttpMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
+
+interface ApiResponse&lt;T&gt; {
+  statusCode: number;
+  message: string;
+  data: T;
+}
+
+async function request&lt;T&gt;(
+  method: HttpMethod,
+  path: string,
+  body?: unknown
+): Promise&lt;T&gt; {
+  const options: RequestInit = {
+    method,
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  if (body !== undefined) {
+    options.body = JSON.stringify(body);
+  }
+
+  const res = await fetch(`${BASE_URL}${path}`, options);
+
+  if (!res.ok) {
+    const error = await res.json().catch(() =&gt; ({}));
+    const messages: string[] = error.message ?? ["Error desconocido"];
+    throw new ApiError(res.status, messages);
+  }
+
+  const json: ApiResponse&lt;T&gt; = await res.json();
+  return json.data;
+}
+
+export class ApiError extends Error {
+  constructor(
+    public readonly status: number,
+    public readonly messages: string[]
+  ) {
+    super(messages.join(", "));
+    this.name = "ApiError";
+  }
+}
+
+export const api = {
+  get: &lt;T&gt;(path: string) =&gt; request&lt;T&gt;("GET", path),
+  post: &lt;T&gt;(path: string, body: unknown) =&gt; request&lt;T&gt;("POST", path, body),
+  put: &lt;T&gt;(path: string, body: unknown) =&gt; request&lt;T&gt;("PUT", path, body),
+  patch: &lt;T&gt;(path: string, body: unknown) =&gt; request&lt;T&gt;("PATCH", path, body),
+  delete: &lt;T&gt;(path: string) =&gt; request&lt;T&gt;("DELETE", path),
+};</code>
+            </div>
+
+            <div class="info-box info">
+                <h4><i class="fas fa-info-circle"></i> ¿Cómo funciona este cliente?</h4>
+                <ul class="content-list">
+                    <li><strong><code>BASE_URL</code></strong> — Lee la URL de la variable de entorno <code>NEXT_PUBLIC_API_URL</code>. Si no existe, usa <code>localhost:3001</code> como fallback.</li>
+                    <li><strong><code>request&lt;T&gt;</code></strong> — Función genérica que acepta cualquier tipo. TypeScript infiere el tipo de retorno según lo que declares al llamarla.</li>
+                    <li><strong><code>ApiResponse&lt;T&gt;</code></strong> — Coincide con el formato que devuelve el backend: <code>{ statusCode, message, data }</code>. La función extrae solo <code>data</code>.</li>
+                    <li><strong><code>ApiError</code></strong> — Clase de error personalizada con el status HTTP y los mensajes. Útil para mostrar errores en la UI.</li>
+                    <li><strong><code>api</code></strong> — Objeto con 5 métodos: <code>get</code>, <code>post</code>, <code>put</code>, <code>patch</code>, <code>delete</code>. Cada servicio los usará.</li>
+                </ul>
+            </div>
+
+            <div class="tip">
+                <strong><i class="fas fa-lightbulb"></i> ¿Por qué no usar Axios?</strong> Next.js mejora la función nativa <code>fetch()</code> con caché y revalidación automática. Usar <code>fetch</code> directamente aprovecha esas optimizaciones.
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== PASO 6: SERVICIOS ==================== -->
+<section id="paso6" class="section">
+    <h2 class="section-title"><i class="fas fa-layer-group"></i> Paso 6 — Crear los 8 Servicios de Entidades</h2>
+
+    <p>Cada servicio encapsula las llamadas HTTP de una entidad específica. Crea la carpeta <code>frontend/src/services/</code> y dentro crea los siguientes 9 archivos (8 servicios + 1 barrel export):</p>
+
+    <!-- Servicio 1: Programas -->
+    <div class="guide-step">
+        <div class="guide-step-header service">
+            <div class="guide-step-number">6A</div>
+            <div class="guide-step-header-info">
+                <h3>programas.service.ts — Programas Académicos</h3>
+                <p>CRUD completo para la entidad ProgramaAcademico</p>
+            </div>
+        </div>
+        <div class="guide-step-body">
+            <div class="code-block">
+                <span class="code-label ts">frontend/src/services/programas.service.ts</span>
+                <code>import { api } from "@/lib/api";
+
+export interface ProgramaAcademico {
+  id: number;
+  nombre: string;
+  codigo: string;
+  facultad: string;
+  duracionSemestres: number;
+}
+
+export type CreateProgramaDto = Omit&lt;ProgramaAcademico, "id"&gt;;
+export type UpdateProgramaDto = Partial&lt;CreateProgramaDto&gt;;
+
+export const programasService = {
+  findAll: () =&gt; api.get&lt;ProgramaAcademico[]&gt;("/programa-academico"),
+  findOne: (id: number) =&gt; api.get&lt;ProgramaAcademico&gt;(`/programa-academico/${id}`),
+  create: (data: CreateProgramaDto) =&gt;
+    api.post&lt;ProgramaAcademico&gt;("/programa-academico", data),
+  update: (id: number, data: UpdateProgramaDto) =&gt;
+    api.put&lt;ProgramaAcademico&gt;(`/programa-academico/${id}`, data),
+  remove: (id: number) =&gt; api.delete&lt;void&gt;(`/programa-academico/${id}`),
+};</code>
+            </div>
+
+            <div class="info-box info">
+                <h4><i class="fas fa-info-circle"></i> Patrón de cada servicio</h4>
+                <ul class="content-list">
+                    <li><strong><code>interface</code></strong> — Describe la forma del objeto que devuelve la API (coincide con el modelo Prisma)</li>
+                    <li><strong><code>CreateDto</code></strong> — <code>Omit&lt;Entidad, "id"&gt;</code> elimina el campo <code>id</code> (lo genera la BD automáticamente)</li>
+                    <li><strong><code>UpdateDto</code></strong> — <code>Partial&lt;CreateDto&gt;</code> hace todos los campos opcionales (actualizaciones parciales)</li>
+                    <li><strong><code>service</code></strong> — Objeto con los métodos CRUD que llaman al cliente HTTP</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Servicio 2: Estudiantes -->
+    <div class="guide-step">
+        <div class="guide-step-header service">
+            <div class="guide-step-number">6B</div>
+            <div class="guide-step-header-info">
+                <h3>estudiantes.service.ts — Estudiantes</h3>
+                <p>CRUD con relación al programa académico</p>
+            </div>
+        </div>
+        <div class="guide-step-body">
+            <div class="code-block">
+                <span class="code-label ts">frontend/src/services/estudiantes.service.ts</span>
+                <code>import { api } from "@/lib/api";
+
+export interface Estudiante {
+  id: number;
+  nombres: string;
+  apellidos: string;
+  codigoEstudiantil: string;
+  documentoIdentidad: string;
+  correoInstitucional: string;
+  fechaNacimiento: string;
+  programaAcademicoId: number;
+  programaAcademico?: { id: number; nombre: string };
+}
+
+export type CreateEstudianteDto = Omit&lt;Estudiante, "id" | "programaAcademico"&gt;;
+export type UpdateEstudianteDto = Partial&lt;CreateEstudianteDto&gt;;
+
+export const estudiantesService = {
+  findAll: () =&gt; api.get&lt;Estudiante[]&gt;("/estudiante"),
+  findOne: (id: number) =&gt; api.get&lt;Estudiante&gt;(`/estudiante/${id}`),
+  create: (data: CreateEstudianteDto) =&gt;
+    api.post&lt;Estudiante&gt;("/estudiante", data),
+  update: (id: number, data: UpdateEstudianteDto) =&gt;
+    api.put&lt;Estudiante&gt;(`/estudiante/${id}`, data),
+  remove: (id: number) =&gt; api.delete&lt;void&gt;(`/estudiante/${id}`),
+};</code>
+            </div>
+        </div>
+    </div>
+
+    <!-- Servicio 3: Docentes -->
+    <div class="guide-step">
+        <div class="guide-step-header service">
+            <div class="guide-step-number">6C</div>
+            <div class="guide-step-header-info">
+                <h3>docentes.service.ts — Docentes</h3>
+                <p>CRUD con campo opcional teléfono</p>
+            </div>
+        </div>
+        <div class="guide-step-body">
+            <div class="code-block">
+                <span class="code-label ts">frontend/src/services/docentes.service.ts</span>
+                <code>import { api } from "@/lib/api";
+
+export interface Docente {
+  id: number;
+  nombres: string;
+  apellidos: string;
+  documentoIdentidad: string;
+  tituloProfesional: string;
+  especialidad: string;
+  correoInstitucional: string;
+  telefono?: string;
+}
+
+export type CreateDocenteDto = Omit&lt;Docente, "id"&gt;;
+export type UpdateDocenteDto = Partial&lt;CreateDocenteDto&gt;;
+
+export const docentesService = {
+  findAll: () =&gt; api.get&lt;Docente[]&gt;("/docente"),
+  findOne: (id: number) =&gt; api.get&lt;Docente&gt;(`/docente/${id}`),
+  create: (data: CreateDocenteDto) =&gt;
+    api.post&lt;Docente&gt;("/docente", data),
+  update: (id: number, data: UpdateDocenteDto) =&gt;
+    api.put&lt;Docente&gt;(`/docente/${id}`, data),
+  remove: (id: number) =&gt; api.delete&lt;void&gt;(`/docente/${id}`),
+};</code>
+            </div>
+        </div>
+    </div>
+
+    <!-- Servicio 4: Asignaturas -->
+    <div class="guide-step">
+        <div class="guide-step-header service">
+            <div class="guide-step-number">6D</div>
+            <div class="guide-step-header-info">
+                <h3>asignaturas.service.ts — Asignaturas</h3>
+                <p>CRUD con filtro opcional por programa académico</p>
+            </div>
+        </div>
+        <div class="guide-step-body">
+            <div class="code-block">
+                <span class="code-label ts">frontend/src/services/asignaturas.service.ts</span>
+                <code>import { api } from "@/lib/api";
+
+export interface Asignatura {
+  id: number;
+  nombre: string;
+  codigo: string;
+  creditos: number;
+  programaAcademicoId: number;
+  programaAcademico?: { id: number; nombre: string };
+}
+
+export type CreateAsignaturaDto = Omit&lt;Asignatura, "id" | "programaAcademico"&gt;;
+export type UpdateAsignaturaDto = Partial&lt;CreateAsignaturaDto&gt;;
+
+export const asignaturasService = {
+  findAll: (programaId?: number) =&gt;
+    api.get&lt;Asignatura[]&gt;(
+      programaId ? `/asignatura?programaId=${programaId}` : "/asignatura"
+    ),
+  findOne: (id: number) =&gt; api.get&lt;Asignatura&gt;(`/asignatura/${id}`),
+  create: (data: CreateAsignaturaDto) =&gt;
+    api.post&lt;Asignatura&gt;("/asignatura", data),
+  update: (id: number, data: UpdateAsignaturaDto) =&gt;
+    api.put&lt;Asignatura&gt;(`/asignatura/${id}`, data),
+  remove: (id: number) =&gt; api.delete&lt;void&gt;(`/asignatura/${id}`),
+};</code>
+            </div>
+        </div>
+    </div>
+
+    <!-- Servicio 5: Periodos -->
+    <div class="guide-step">
+        <div class="guide-step-header service">
+            <div class="guide-step-number">6E</div>
+            <div class="guide-step-header-info">
+                <h3>periodos.service.ts — Períodos Académicos</h3>
+                <p>CRUD con campo booleano activo</p>
+            </div>
+        </div>
+        <div class="guide-step-body">
+            <div class="code-block">
+                <span class="code-label ts">frontend/src/services/periodos.service.ts</span>
+                <code>import { api } from "@/lib/api";
+
+export interface PeriodoAcademico {
+  id: number;
+  nombre: string;
+  fechaInicio: string;
+  fechaFin: string;
+  activo: boolean;
+}
+
+export type CreatePeriodoDto = Omit&lt;PeriodoAcademico, "id"&gt;;
+export type UpdatePeriodoDto = Partial&lt;CreatePeriodoDto&gt;;
+
+export const periodosService = {
+  findAll: () =&gt; api.get&lt;PeriodoAcademico[]&gt;("/periodo-academico"),
+  findOne: (id: number) =&gt;
+    api.get&lt;PeriodoAcademico&gt;(`/periodo-academico/${id}`),
+  create: (data: CreatePeriodoDto) =&gt;
+    api.post&lt;PeriodoAcademico&gt;("/periodo-academico", data),
+  update: (id: number, data: UpdatePeriodoDto) =&gt;
+    api.put&lt;PeriodoAcademico&gt;(`/periodo-academico/${id}`, data),
+  remove: (id: number) =&gt; api.delete&lt;void&gt;(`/periodo-academico/${id}`),
+};</code>
+            </div>
+        </div>
+    </div>
+
+    <!-- Servicio 6: Asignaciones -->
+    <div class="guide-step">
+        <div class="guide-step-header service">
+            <div class="guide-step-number">6F</div>
+            <div class="guide-step-header-info">
+                <h3>asignaciones.service.ts — Asignaciones Docente</h3>
+                <p>Relación ternaria: docente + asignatura + período</p>
+            </div>
+        </div>
+        <div class="guide-step-body">
+            <div class="code-block">
+                <span class="code-label ts">frontend/src/services/asignaciones.service.ts</span>
+                <code>import { api } from "@/lib/api";
+
+export interface AsignacionDocente {
+  id: number;
+  docenteId: number;
+  asignaturaId: number;
+  periodoAcademicoId: number;
+  docente?: { id: number; nombres: string; apellidos: string };
+  asignatura?: { id: number; nombre: string; codigo: string };
+  periodoAcademico?: { id: number; nombre: string };
+}
+
+export type CreateAsignacionDto = Omit&lt;
+  AsignacionDocente,
+  "id" | "docente" | "asignatura" | "periodoAcademico"
+&gt;;
+
+export const asignacionesService = {
+  findAll: (periodoId?: number) =&gt;
+    api.get&lt;AsignacionDocente[]&gt;(
+      periodoId
+        ? `/asignacion-docente?periodoId=${periodoId}`
+        : "/asignacion-docente"
+    ),
+  findOne: (id: number) =&gt;
+    api.get&lt;AsignacionDocente&gt;(`/asignacion-docente/${id}`),
+  create: (data: CreateAsignacionDto) =&gt;
+    api.post&lt;AsignacionDocente&gt;("/asignacion-docente", data),
+  remove: (id: number) =&gt;
+    api.delete&lt;void&gt;(`/asignacion-docente/${id}`),
+};</code>
+            </div>
+        </div>
+    </div>
+
+    <!-- Servicio 7: Matrículas -->
+    <div class="guide-step">
+        <div class="guide-step-header service">
+            <div class="guide-step-number">6G</div>
+            <div class="guide-step-header-info">
+                <h3>matriculas.service.ts — Matrículas</h3>
+                <p>Relación estudiante + asignación docente con calificación opcional</p>
+            </div>
+        </div>
+        <div class="guide-step-body">
+            <div class="code-block">
+                <span class="code-label ts">frontend/src/services/matriculas.service.ts</span>
+                <code>import { api } from "@/lib/api";
+
+export interface Matricula {
+  id: number;
+  estudianteId: number;
+  asignacionDocenteId: number;
+  fechaInscripcion: string;
+  estudiante?: { id: number; nombres: string; apellidos: string };
+  asignacionDocente?: {
+    id: number;
+    asignatura?: { nombre: string };
+    periodoAcademico?: { nombre: string };
+  };
+  calificacion?: { notaDefinitiva: number };
+}
+
+export type CreateMatriculaDto = {
+  estudianteId: number;
+  asignacionDocenteId: number;
+};
+
+export const matriculasService = {
+  findAll: () =&gt; api.get&lt;Matricula[]&gt;("/matricula"),
+  findByEstudiante: (estudianteId: number) =&gt;
+    api.get&lt;Matricula[]&gt;(`/matricula?estudianteId=${estudianteId}`),
+  findOne: (id: number) =&gt; api.get&lt;Matricula&gt;(`/matricula/${id}`),
+  create: (data: CreateMatriculaDto) =&gt;
+    api.post&lt;Matricula&gt;("/matricula", data),
+  remove: (id: number) =&gt; api.delete&lt;void&gt;(`/matricula/${id}`),
+};</code>
+            </div>
+        </div>
+    </div>
+
+    <!-- Servicio 8: Calificaciones -->
+    <div class="guide-step">
+        <div class="guide-step-header service">
+            <div class="guide-step-number">6H</div>
+            <div class="guide-step-header-info">
+                <h3>calificaciones.service.ts — Calificaciones</h3>
+                <p>Notas parciales + nota definitiva, asociada a una matrícula</p>
+            </div>
+        </div>
+        <div class="guide-step-body">
+            <div class="code-block">
+                <span class="code-label ts">frontend/src/services/calificaciones.service.ts</span>
+                <code>import { api } from "@/lib/api";
+
+export interface Calificacion {
+  id: number;
+  matriculaId: number;
+  nota1: number;
+  nota2: number;
+  nota3: number;
+  notaDefinitiva: number;
+}
+
+export type CreateCalificacionDto = {
+  matriculaId: number;
+  nota1: number;
+  nota2: number;
+  nota3: number;
+};
+
+export type UpdateCalificacionDto = Partial&lt;
+  Omit&lt;CreateCalificacionDto, "matriculaId"&gt;
+&gt;;
+
+export const calificacionesService = {
+  findByMatricula: (matriculaId: number) =&gt;
+    api.get&lt;Calificacion&gt;(`/calificacion/${matriculaId}`),
+  findByAsignacion: (asignacionId: number) =&gt;
+    api.get&lt;Calificacion[]&gt;(`/calificacion?asignacionId=${asignacionId}`),
+  create: (data: CreateCalificacionDto) =&gt;
+    api.post&lt;Calificacion&gt;("/calificacion", data),
+  update: (id: number, data: UpdateCalificacionDto) =&gt;
+    api.put&lt;Calificacion&gt;(`/calificacion/${id}`, data),
+};</code>
+            </div>
+        </div>
+    </div>
+
+    <!-- Barrel export -->
+    <div class="guide-step">
+        <div class="guide-step-header service">
+            <div class="guide-step-number">6I</div>
+            <div class="guide-step-header-info">
+                <h3>index.ts — Barrel Export</h3>
+                <p>Re-exporta todos los servicios desde un solo punto de entrada</p>
+            </div>
+        </div>
+        <div class="guide-step-body">
+            <p>Crea <code>frontend/src/services/index.ts</code>:</p>
+            <div class="code-block">
+                <span class="code-label ts">frontend/src/services/index.ts</span>
+                <code>// services/index.ts — Re-exports de todos los servicios
+export * from "./programas.service";
+export * from "./estudiantes.service";
+export * from "./docentes.service";
+export * from "./asignaturas.service";
+export * from "./periodos.service";
+export * from "./asignaciones.service";
+export * from "./matriculas.service";
+export * from "./calificaciones.service";</code>
+            </div>
+
+            <div class="info-box info">
+                <h4><i class="fas fa-info-circle"></i> ¿Qué es un barrel export?</h4>
+                <p>En vez de importar cada servicio desde su archivo individual, el barrel export permite importar todo desde un solo punto:</p>
+                <div class="code-block" style="margin:10px 0 0 0;">
+                    <span class="code-label ts">Ejemplo de uso</span>
+                    <code>// ❌ Sin barrel — importaciones largas
+import { programasService } from "@/services/programas.service";
+import { estudiantesService } from "@/services/estudiantes.service";
+
+// ✅ Con barrel — todo desde un solo import
+import { programasService, estudiantesService } from "@/services";</code>
+                </div>
+            </div>
+
+            <h4 class="subsection-title">Estructura de la carpeta services/</h4>
+            <div class="tree-block">frontend/src/services/
+├── index.ts                    ← Barrel export
+├── programas.service.ts        ← ProgramaAcademico
+├── estudiantes.service.ts      ← Estudiante
+├── docentes.service.ts         ← Docente
+├── asignaturas.service.ts      ← Asignatura
+├── periodos.service.ts         ← PeriodoAcademico
+├── asignaciones.service.ts     ← AsignacionDocente
+├── matriculas.service.ts       ← Matricula
+└── calificaciones.service.ts   ← Calificacion</div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== PASO 7: LAYOUT ==================== -->
+<section id="paso7" class="section">
+    <h2 class="section-title"><i class="fas fa-columns"></i> Paso 7 — Personalizar el Layout</h2>
+
+    <div class="guide-step">
+        <div class="guide-step-header react">
+            <div class="guide-step-number">7</div>
+            <div class="guide-step-header-info">
+                <h3>Ajustar <code>src/app/layout.tsx</code></h3>
+                <p>Configurar fuentes, clases globales y metadata del proyecto</p>
+            </div>
+        </div>
+        <div class="guide-step-body">
+            <p>Abre <code>frontend/src/app/layout.tsx</code> y reemplaza <strong>todo su contenido</strong> con:</p>
+            <div class="code-block">
+                <span class="code-label tsx">frontend/src/app/layout.tsx</span>
+                <code>import type { Metadata } from "next";
+import { Geist, Geist_Mono } from "next/font/google";
+import "./globals.css";
+
+const geistSans = Geist({
+  variable: "--font-geist-sans",
+  subsets: ["latin"],
+});
+
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
+
+export const metadata: Metadata = {
+  title: "Create Next App",
+  description: "Generated by create next app",
+};
+
+export default function RootLayout({
+  children,
+}: Readonly&lt;{
+  children: React.ReactNode;
+}&gt;) {
+  return (
+    &lt;html
+      lang="en"
+      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+    &gt;
+      &lt;body className="min-h-full flex flex-col"&gt;{children}&lt;/body&gt;
+    &lt;/html&gt;
+  );
+}</code>
+            </div>
+
+            <div class="info-box info">
+                <h4><i class="fas fa-info-circle"></i> ¿Qué hace este layout?</h4>
+                <ul class="content-list">
+                    <li><strong><code>Geist</code> y <code>Geist_Mono</code></strong> — Fuentes modernas de Vercel, cargadas con <code>next/font/google</code> para optimización automática</li>
+                    <li><strong><code>h-full antialiased</code></strong> — Clases de Tailwind para que el HTML ocupe toda la altura y suavice las fuentes</li>
+                    <li><strong><code>min-h-full flex flex-col</code></strong> — El body ocupa al menos toda la pantalla y usa flexbox vertical</li>
+                    <li><strong><code>metadata</code></strong> — Next.js usa esto para generar las etiquetas <code>&lt;title&gt;</code> y <code>&lt;meta description&gt;</code></li>
+                </ul>
+            </div>
+
+            <div class="tip">
+                <strong><i class="fas fa-lightbulb"></i> Tip:</strong> No toques <code>page.tsx</code> por ahora — la página por defecto de Next.js sirve para verificar que todo funciona. Más adelante la reemplazarás con tu propia UI.
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== PASO 8: COMPILAR Y PROBAR ==================== -->
+<section id="paso8" class="section">
+    <h2 class="section-title"><i class="fas fa-play"></i> Paso 8 — Compilar y Probar el Frontend</h2>
+
+    <div class="guide-step">
+        <div class="guide-step-header test">
+            <div class="guide-step-number">8A</div>
+            <div class="guide-step-header-info">
+                <h3>Compilar el proyecto</h3>
+                <p>Verificar que TypeScript compila sin errores y que el build de producción funciona</p>
+            </div>
+        </div>
+        <div class="guide-step-body">
+            <div class="code-block">
+                <span class="code-label cli">Terminal (dentro de frontend/)</span>
+                <code># Compilar para producción
+npm run build</code>
+            </div>
+            <div class="code-block">
+                <span class="code-label output">Salida esperada ✔</span>
+                <code>   ▲ Next.js 16.2.1
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully
+ ✓ Linting and checking validity of types
+ ✓ Collecting page data
+ ✓ Generating static pages (5/5)
+ ✓ Collecting build traces
+ ✓ Finalizing page optimization
+
+Route (app)                    Size    First Load JS
+┌ ○ /                          ...     ...
+└ ○ /_not-found                ...     ...
+
+○  (Static)  prerendered as static content</code>
+            </div>
+            <div class="tip">
+                <strong><i class="fas fa-lightbulb"></i> Tip:</strong> Si <code>npm run build</code> falla con errores de TypeScript, revisa que los archivos <code>api.ts</code>, <code>global.d.ts</code> y los servicios estén exactamente como se muestran en esta guía.
+            </div>
+        </div>
+    </div>
+
+    <div class="guide-step">
+        <div class="guide-step-header test">
+            <div class="guide-step-number">8B</div>
+            <div class="guide-step-header-info">
+                <h3>Iniciar en modo desarrollo</h3>
+                <p>Levantar el servidor de desarrollo con hot reload</p>
+            </div>
+        </div>
+        <div class="guide-step-body">
+            <div class="code-block">
+                <span class="code-label cli">Terminal (dentro de frontend/)</span>
+                <code># Iniciar en modo desarrollo
+npm run dev</code>
+            </div>
+            <div class="code-block">
+                <span class="code-label output">Salida esperada ✔</span>
+                <code>   ▲ Next.js 16.2.1 (Turbopack)
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.x.x:3000
+
+ ✓ Starting...
+ ✓ Ready in 1.5s</code>
+            </div>
+
+            <div class="verify-box">
+                <h4><i class="fas fa-check-circle"></i> Verificación</h4>
+                <ol class="instruction-list">
+                    <li>Abre <strong><a href="http://localhost:3000" target="_blank">http://localhost:3000</a></strong> en el navegador</li>
+                    <li>Debes ver la página por defecto de <strong>Next.js</strong> con el logo y los botones "Deploy Now" y "Documentation"</li>
+                    <li>Abre las <strong>DevTools</strong> del navegador (F12) → pestaña <strong>Console</strong>: no debe haber errores rojos</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== PASO 9: DOCKERFILE ==================== -->
+<section id="paso9" class="section">
+    <h2 class="section-title"><i class="fab fa-docker"></i> Paso 9 — Crear el Dockerfile del Frontend</h2>
+
+    <div class="guide-step">
+        <div class="guide-step-header docker">
+            <div class="guide-step-number">9</div>
+            <div class="guide-step-header-info">
+                <h3>Crear el Dockerfile multi-stage para producción</h3>
+                <p>Imagen optimizada que usa el build standalone de Next.js</p>
+            </div>
+        </div>
+        <div class="guide-step-body">
+            <p>Crea el archivo <code>frontend/Dockerfile</code>:</p>
+            <div class="code-block">
+                <span class="code-label docker">frontend/Dockerfile</span>
+                <code># ============================================================
+# Dockerfile — Frontend Next.js
+# ============================================================
+
+# --- Build stage ---
+FROM node:22-alpine AS builder
+
+WORKDIR /app
+
+COPY package*.json ./
+RUN npm ci
+
+COPY . .
+RUN npm run build
+
+# --- Production stage ---
+FROM node:22-alpine AS production
+
+WORKDIR /app
+
+ENV NODE_ENV=production
+
+COPY --from=builder /app/.next/standalone ./
+COPY --from=builder /app/.next/static ./.next/static
+COPY --from=builder /app/public ./public
+
+EXPOSE 3000
+
+CMD ["node", "server.js"]</code>
+            </div>
+
+            <div class="info-box info">
+                <h4><i class="fas fa-info-circle"></i> ¿Cómo funciona?</h4>
+                <ul class="content-list">
+                    <li><strong>Stage 1 (builder)</strong> — Instala dependencias, ejecuta <code>npm run build</code>. Gracias a <code>output: "standalone"</code>, genera <code>.next/standalone/</code> con <code>server.js</code> incluido</li>
+                    <li><strong>Stage 2 (production)</strong> — Solo copia: <code>standalone/</code> (servidor + dependencias mínimas), <code>.next/static/</code> (CSS/JS estáticos) y <code>public/</code> (imágenes, SVGs). Sin <code>node_modules/</code> completo</li>
+                    <li><strong><code>node server.js</code></strong> — El server.js generado por Next.js standalone levanta el servidor en el puerto 3000</li>
+                </ul>
+            </div>
+
+            <div class="info-box warning">
+                <h4><i class="fas fa-exclamation-triangle"></i> Importante: <code>output: "standalone"</code> es obligatorio</h4>
+                <p>Si no tienes <code>output: "standalone"</code> en <code>next.config.ts</code> (Paso 2), el build no genera <code>.next/standalone/</code> y el Dockerfile fallará con <em>"COPY failed: file not found"</em>.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== PASO 10: VERIFICACIÓN FINAL ==================== -->
+<section id="paso10" class="section">
+    <h2 class="section-title"><i class="fas fa-clipboard-check"></i> Paso 10 — Verificación Final</h2>
+
+    <div class="guide-step">
+        <div class="guide-step-header test">
+            <div class="guide-step-number">10</div>
+            <div class="guide-step-header-info">
+                <h3>Checklist completo del frontend</h3>
+                <p>Verifica que todo está en su lugar antes de continuar</p>
+            </div>
+        </div>
+        <div class="guide-step-body">
+
+            <h4 class="subsection-title">Estructura final del proyecto</h4>
+            <div class="tree-block">gestion-academica-sistema-avanzada/
+├── .gitignore
+├── .env.example
+├── docker-compose.yml
+├── backend/                     ← Guía 1
+│   ├── ...
+│   └── (todo el backend)
+└── frontend/                    ← Guía 2 (esta guía)
+    ├── .env.local
+    ├── .gitignore
+    ├── Dockerfile
+    ├── eslint.config.mjs
+    ├── next-env.d.ts
+    ├── next.config.ts
+    ├── package.json
+    ├── postcss.config.mjs
+    ├── tsconfig.json
+    ├── public/
+    │   ├── next.svg
+    │   └── vercel.svg
+    └── src/
+        ├── app/
+        │   ├── favicon.ico
+        │   ├── globals.css
+        │   ├── layout.tsx
+        │   └── page.tsx
+        ├── lib/
+        │   └── api.ts              ← Cliente HTTP
+        ├── services/
+        │   ├── index.ts            ← Barrel export
+        │   ├── programas.service.ts
+        │   ├── estudiantes.service.ts
+        │   ├── docentes.service.ts
+        │   ├── asignaturas.service.ts
+        │   ├── periodos.service.ts
+        │   ├── asignaciones.service.ts
+        │   ├── matriculas.service.ts
+        │   └── calificaciones.service.ts
+        └── types/
+            └── global.d.ts</div>
+
+            <div class="verify-box">
+                <h4><i class="fas fa-check-circle"></i> Checklist de verificación</h4>
+                <ul class="content-list">
+                    <li>✅ <code>npm run build</code> — compila <strong>sin errores</strong></li>
+                    <li>✅ <code>npm run dev</code> — muestra <em>"Ready in Xs"</em> y abre en <code>http://localhost:3000</code></li>
+                    <li>✅ <strong><a href="http://localhost:3000" target="_blank">http://localhost:3000</a></strong> — carga la página de Next.js sin errores en consola</li>
+                    <li>✅ <code>.env.local</code> — contiene <code>NEXT_PUBLIC_API_URL=http://localhost:3001/api/v1</code></li>
+                    <li>✅ <code>src/lib/api.ts</code> — existe y exporta <code>api</code> y <code>ApiError</code></li>
+                    <li>✅ <code>src/services/</code> — 8 archivos de servicio + 1 index.ts (9 archivos total)</li>
+                    <li>✅ <code>src/types/global.d.ts</code> — existe con la referencia a Node</li>
+                    <li>✅ <code>next.config.ts</code> — tiene <code>output: "standalone"</code></li>
+                    <li>✅ <code>Dockerfile</code> — existe y copia standalone + static + public</li>
+                    <li>✅ La estructura de carpetas coincide con el árbol anterior</li>
+                </ul>
+            </div>
+
+            <div class="info-box success">
+                <h4><i class="fas fa-check-circle"></i> ¡Frontend listo!</h4>
+                <p>Tienes el frontend completamente configurado con: App Router, TypeScript, Tailwind CSS v4, un cliente HTTP centralizado, 8 servicios tipados y un Dockerfile para producción. El siguiente paso natural es <strong>crear las páginas y componentes</strong> de la UI para cada entidad (formularios, tablas, navegación), que se desarrollarán en próximas sesiones.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== ERRORES COMUNES ==================== -->
+<section id="errores" class="section">
+    <h2 class="section-title"><i class="fas fa-bug"></i> Errores Comunes y Soluciones</h2>
+
+    <p>Errores que puedes encontrar durante la creación del frontend y cómo resolverlos:</p>
+
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th style="width:30%;">Error</th>
+                <th style="width:30%;">Causa</th>
+                <th style="width:40%;">Solución</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><code>Cannot find name 'process'</code></td>
+                <td>Falta el archivo <code>global.d.ts</code></td>
+                <td>Crear <code>src/types/global.d.ts</code> con <code>/// &lt;reference types="node" /&gt;</code></td>
+            </tr>
+            <tr>
+                <td><code>Module not found: Can't resolve '@/lib/api'</code></td>
+                <td>El archivo <code>api.ts</code> no existe o el alias <code>@/*</code> no está configurado</td>
+                <td>Verificar que <code>src/lib/api.ts</code> existe y que <code>tsconfig.json</code> tiene <code>"paths": { "@/*": ["./src/*"] }</code></td>
+            </tr>
+            <tr>
+                <td>La variable <code>NEXT_PUBLIC_API_URL</code> es <code>undefined</code></td>
+                <td>Falta el prefijo <code>NEXT_PUBLIC_</code> o el archivo <code>.env.local</code> no existe</td>
+                <td>Verificar que el archivo se llama <code>.env.local</code> (no <code>.env</code>) y que la variable empieza con <code>NEXT_PUBLIC_</code>. Reiniciar <code>npm run dev</code> después de crear/modificar el archivo</td>
+            </tr>
+            <tr>
+                <td><code>CORS: Access-Control-Allow-Origin</code></td>
+                <td>El backend no tiene CORS habilitado</td>
+                <td>Verificar que <code>main.ts</code> del backend tiene <code>app.enableCors()</code> (esto ya se hizo en la Guía 1)</td>
+            </tr>
+            <tr>
+                <td><code>EADDRINUSE :::3000</code></td>
+                <td>Puerto 3000 ocupado por otro proceso</td>
+                <td>Cerrar el proceso anterior o ejecutar: <code>npx next dev -p 3001</code> (aunque mejor cerrar lo que ocupa el puerto)</td>
+            </tr>
+            <tr>
+                <td><code>COPY failed: file not found in build context</code> (Docker)</td>
+                <td>El build standalone no se generó</td>
+                <td>Verificar que <code>next.config.ts</code> tiene <code>output: "standalone"</code> y ejecutar <code>npm run build</code> antes del build de Docker</td>
+            </tr>
+            <tr>
+                <td><code>fetch failed</code> o <code>Network Error</code></td>
+                <td>El backend no está corriendo</td>
+                <td>Verificar con <code>Invoke-WebRequest http://localhost:3001/api/v1</code>. Si falla, ir a <code>backend/</code> y ejecutar <code>npm run start:dev</code></td>
+            </tr>
+            <tr>
+                <td>Cambios en <code>.env.local</code> no se reflejan</td>
+                <td>Next.js cachea las variables de entorno al iniciar</td>
+                <td>Detener el servidor (<code>Ctrl+C</code>) y reiniciar: <code>npm run dev</code></td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+</div><!-- /container -->
+</main>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="footer">
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3><i class="fas fa-layer-group"></i> Tecnologías</h3>
+                <ul>
+                    <li><a href="https://nextjs.org" target="_blank" rel="noopener noreferrer">Next.js — nextjs.org</a></li>
+                    <li><a href="https://react.dev" target="_blank" rel="noopener noreferrer">React — react.dev</a></li>
+                    <li><a href="https://tailwindcss.com" target="_blank" rel="noopener noreferrer">Tailwind CSS — tailwindcss.com</a></li>
+                    <li><a href="https://www.typescriptlang.org" target="_blank" rel="noopener noreferrer">TypeScript — typescriptlang.org</a></li>
+                    <li><a href="https://www.docker.com" target="_blank" rel="noopener noreferrer">Docker — docker.com</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3><i class="fas fa-book"></i> Documentación</h3>
+                <ul>
+                    <li><a href="https://nextjs.org/docs" target="_blank" rel="noopener noreferrer">Next.js Docs</a></li>
+                    <li><a href="https://nextjs.org/docs/app" target="_blank" rel="noopener noreferrer">App Router Guide</a></li>
+                    <li><a href="https://tailwindcss.com/docs" target="_blank" rel="noopener noreferrer">Tailwind CSS Docs</a></li>
+                    <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API" target="_blank" rel="noopener noreferrer">Fetch API — MDN</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3><i class="fas fa-university"></i> Curso</h3>
+                <ul>
+                    <li>Programación Avanzada</li>
+                    <li>Semana 5 — Sesión 1</li>
+                    <li>Guía 2 de 2: Frontend</li>
+                    <li>CORHUILA · 2026</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Programación Avanzada — CORHUILA. Material educativo de libre uso.</p>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // Smooth scroll + active nav
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', function(e) {
+            const href = this.getAttribute('href');
+            if (href.startsWith('#')) {
+                e.preventDefault();
+                const target = document.querySelector(href);
+                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                this.classList.add('active');
+            }
+        });
+    });
+
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-link');
+    window.addEventListener('scroll', () => {
+        let current = '';
+        sections.forEach(s => { if (window.scrollY >= s.offsetTop - 80) current = s.id; });
+        navLinks.forEach(l => {
+            l.classList.remove('active');
+            if (l.getAttribute('href') === '#' + current) l.classList.add('active');
+        });
+    });
+</script>
+</body>
+</html>

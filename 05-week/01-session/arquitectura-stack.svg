@@ -1,0 +1,205 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 620" width="920" height="620" font-family="'Segoe UI', Arial, sans-serif">
+  <!-- Background -->
+  <defs>
+    <linearGradient id="headerGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e3c72;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2a5298;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="frontendGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#0070f3;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0050c8;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="backendGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#e0234e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#aa0035;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="dbGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#336791;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1a4d6b;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="prismaGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#2d3748;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1a202c;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="dockerGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#e8f4ff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#d1ebff;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="browserGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#48bb78;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2f855a;stop-opacity:1" />
+    </linearGradient>
+    <filter id="shadow" x="-8%" y="-8%" width="116%" height="116%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="rgba(0,0,0,0.15)"/>
+    </filter>
+    <marker id="arrowBlue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#3498db"/>
+    </marker>
+    <marker id="arrowGrey" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#95a5a6"/>
+    </marker>
+    <marker id="arrowWhite" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#2d3748"/>
+    </marker>
+  </defs>
+
+  <!-- Page background -->
+  <rect width="920" height="620" fill="#f8f9fa" rx="12"/>
+
+  <!-- Header Banner -->
+  <rect x="0" y="0" width="920" height="80" fill="url(#headerGrad)" rx="12"/>
+  <rect x="0" y="60" width="920" height="20" fill="url(#headerGrad)"/>
+
+  <text x="460" y="32" text-anchor="middle" fill="white" font-size="20" font-weight="700" letter-spacing="0.5">Arquitectura del Sistema de Gestión Académica</text>
+  <text x="460" y="58" text-anchor="middle" fill="rgba(255,255,255,0.85)" font-size="13">NestJS · Next.js · PostgreSQL · Prisma ORM · Docker · Node.js v22</text>
+
+  <!-- ===== DOCKER COMPOSE BOX ===== -->
+  <rect x="30" y="100" width="860" height="390" fill="url(#dockerGrad)" rx="14" stroke="#2496ed" stroke-width="2.5" stroke-dasharray="8,4" filter="url(#shadow)"/>
+  <rect x="30" y="100" width="190" height="28" fill="#2496ed" rx="14"/>
+  <rect x="105" y="113" width="115" height="15" fill="#2496ed"/>
+  <text x="45" y="119" fill="white" font-size="13" font-weight="700">🐳  Docker Compose</text>
+  <text x="460" y="475" text-anchor="middle" fill="#2496ed" font-size="11" font-style="italic">gestion_academica_net  —  red interna bridge</text>
+
+  <!-- ===== BROWSER BOX ===== -->
+  <rect x="55" y="135" width="150" height="120" rx="10" fill="url(#browserGrad)" filter="url(#shadow)"/>
+  <text x="130" y="165" text-anchor="middle" fill="white" font-size="26">🌐</text>
+  <text x="130" y="192" text-anchor="middle" fill="white" font-size="14" font-weight="700">Navegador</text>
+  <text x="130" y="210" text-anchor="middle" fill="rgba(255,255,255,0.9)" font-size="11">localhost:3000</text>
+  <rect x="75" y="220" width="110" height="22" rx="5" fill="rgba(255,255,255,0.2)"/>
+  <text x="130" y="235" text-anchor="middle" fill="white" font-size="10" font-weight="600">HTTP Requests</text>
+
+  <!-- Arrow Browser → Frontend -->
+  <line x1="205" y1="195" x2="268" y2="195" stroke="#3498db" stroke-width="2.5" marker-end="url(#arrowBlue)"/>
+  <text x="236" y="188" text-anchor="middle" fill="#2980b9" font-size="10" font-weight="600">fetch()</text>
+
+  <!-- ===== FRONTEND BOX ===== -->
+  <rect x="270" y="135" width="170" height="120" rx="10" fill="url(#frontendGrad)" filter="url(#shadow)"/>
+  <text x="355" y="162" text-anchor="middle" fill="white" font-size="12" font-weight="700" letter-spacing="0.5">FRONTEND</text>
+  <text x="355" y="180" text-anchor="middle" fill="rgba(255,255,255,0.95)" font-size="22">▲</text>
+  <text x="355" y="205" text-anchor="middle" fill="white" font-size="13" font-weight="700">Next.js 16</text>
+  <text x="355" y="222" text-anchor="middle" fill="rgba(255,255,255,0.85)" font-size="10">TypeScript · Tailwind CSS</text>
+  <text x="355" y="237" text-anchor="middle" fill="rgba(255,255,255,0.85)" font-size="10">App Router · port 3000</text>
+
+  <!-- Frontend Tech Pills -->
+  <rect x="280" y="265" width="65" height="18" rx="9" fill="rgba(0,112,243,0.35)"/>
+  <text x="312" y="278" text-anchor="middle" fill="white" font-size="9" font-weight="600">src/app/</text>
+  <rect x="355" y="265" width="75" height="18" rx="9" fill="rgba(0,112,243,0.35)"/>
+  <text x="392" y="278" text-anchor="middle" fill="white" font-size="9" font-weight="600">src/services/</text>
+
+  <!-- Arrow Frontend → Backend -->
+  <line x1="440" y1="195" x2="508" y2="195" stroke="#3498db" stroke-width="2.5" marker-end="url(#arrowBlue)"/>
+  <text x="474" y="188" text-anchor="middle" fill="#2980b9" font-size="10" font-weight="600">REST API</text>
+  <text x="474" y="209" text-anchor="middle" fill="#7f8c8d" font-size="9">/api/v1</text>
+
+  <!-- ===== BACKEND BOX ===== -->
+  <rect x="510" y="135" width="170" height="120" rx="10" fill="url(#backendGrad)" filter="url(#shadow)"/>
+  <text x="595" y="162" text-anchor="middle" fill="white" font-size="12" font-weight="700" letter-spacing="0.5">BACKEND</text>
+  <text x="595" y="185" text-anchor="middle" fill="rgba(255,255,255,0.95)" font-size="24">🐦</text>
+  <text x="595" y="208" text-anchor="middle" fill="white" font-size="13" font-weight="700">NestJS 10</text>
+  <text x="595" y="224" text-anchor="middle" fill="rgba(255,255,255,0.85)" font-size="10">TypeScript · REST API</text>
+  <text x="595" y="239" text-anchor="middle" fill="rgba(255,255,255,0.85)" font-size="10">ValidationPipe · port 3001</text>
+
+  <!-- Backend Tech Pills -->
+  <rect x="520" y="265" width="60" height="18" rx="9" fill="rgba(224,35,78,0.35)"/>
+  <text x="550" y="278" text-anchor="middle" fill="white" font-size="9" font-weight="600">8 Módulos</text>
+  <rect x="590" y="265" width="80" height="18" rx="9" fill="rgba(224,35,78,0.35)"/>
+  <text x="630" y="278" text-anchor="middle" fill="white" font-size="9" font-weight="600">class-validator</text>
+
+  <!-- Arrow Backend → Prisma -->
+  <line x1="595" y1="255" x2="595" y2="296" stroke="#2d3748" stroke-width="2.5" marker-end="url(#arrowWhite)"/>
+
+  <!-- ===== PRISMA BOX ===== -->
+  <rect x="510" y="298" width="170" height="90" rx="10" fill="url(#prismaGrad)" filter="url(#shadow)"/>
+  <text x="595" y="322" text-anchor="middle" fill="white" font-size="12" font-weight="700" letter-spacing="0.5">PRISMA ORM 7</text>
+  <text x="595" y="345" text-anchor="middle" fill="rgba(255,255,255,0.9)" font-size="11">Schema · Migrations</text>
+  <text x="595" y="362" text-anchor="middle" fill="rgba(255,255,255,0.75)" font-size="10">PrismaPg Adapter</text>
+  <text x="595" y="377" text-anchor="middle" fill="rgba(255,255,255,0.75)" font-size="10">generated/prisma</text>
+
+  <!-- Arrow Prisma → DB -->
+  <line x1="680" y1="343" x2="738" y2="343" stroke="#336791" stroke-width="2.5" marker-end="url(#arrowBlue)"/>
+  <text x="709" y="336" text-anchor="middle" fill="#336791" font-size="9" font-weight="600">SQL</text>
+
+  <!-- ===== DATABASE BOX ===== -->
+  <rect x="740" y="300" width="120" height="120" rx="10" fill="url(#dbGrad)" filter="url(#shadow)"/>
+  <text x="800" y="325" text-anchor="middle" fill="white" font-size="12" font-weight="700" letter-spacing="0.5">DATABASE</text>
+  <text x="800" y="348" text-anchor="middle" fill="white" font-size="22">🐘</text>
+  <text x="800" y="373" text-anchor="middle" fill="white" font-size="12" font-weight="700">PostgreSQL 16</text>
+  <text x="800" y="389" text-anchor="middle" fill="rgba(255,255,255,0.85)" font-size="10">port 5432</text>
+  <text x="800" y="405" text-anchor="middle" fill="rgba(255,255,255,0.85)" font-size="10">8 tablas</text>
+
+  <!-- ===== VOLUME badge ===== -->
+  <rect x="740" y="432" width="120" height="36" rx="8" fill="rgba(51,103,145,0.2)" stroke="#336791" stroke-width="1.5"/>
+  <text x="800" y="448" text-anchor="middle" fill="#336791" font-size="10" font-weight="700">📦 Volume</text>
+  <text x="800" y="462" text-anchor="middle" fill="#5d8aa8" font-size="9">postgres_data</text>
+  <line x1="800" y1="420" x2="800" y2="432" stroke="#336791" stroke-width="1.5" stroke-dasharray="3,2"/>
+
+  <!-- ===== 8 ENTITIES LIST ===== -->
+  <rect x="55" y="295" width="390" height="155" rx="10" fill="white" stroke="#e0e0e0" stroke-width="1.5" filter="url(#shadow)"/>
+  <rect x="55" y="295" width="390" height="30" rx="10" fill="#1e3c72"/>
+  <rect x="55" y="313" width="390" height="12" fill="#1e3c72"/>
+  <text x="250" y="316" text-anchor="middle" fill="white" font-size="13" font-weight="700">📐  Entidades del Modelo de Datos (Prisma Schema)</text>
+
+  <!-- Entity columns -->
+  <text x="80" y="346" fill="#e0234e" font-size="11" font-weight="700">ProgramaAcademico</text>
+  <text x="80" y="364" fill="#2c3e50" font-size="10">→ Gestión de programas</text>
+  <text x="80" y="384" fill="#e0234e" font-size="11" font-weight="700">Estudiante</text>
+  <text x="80" y="402" fill="#2c3e50" font-size="10">→ Datos del estudiante</text>
+  <text x="80" y="422" fill="#e0234e" font-size="11" font-weight="700">Docente</text>
+  <text x="80" y="440" fill="#2c3e50" font-size="10">→ Datos del docente</text>
+
+  <text x="215" y="346" fill="#e0234e" font-size="11" font-weight="700">Asignatura</text>
+  <text x="215" y="364" fill="#2c3e50" font-size="10">→ Materias del programa</text>
+  <text x="215" y="384" fill="#e0234e" font-size="11" font-weight="700">PeriodoAcademico</text>
+  <text x="215" y="402" fill="#2c3e50" font-size="10">→ Semestres y períodos</text>
+  <text x="215" y="422" fill="#e0234e" font-size="11" font-weight="700">AsignacionDocente</text>
+  <text x="215" y="440" fill="#2c3e50" font-size="10">→ Docente+Asig+Período</text>
+
+  <text x="340" y="346" fill="#e0234e" font-size="11" font-weight="700">Matricula</text>
+  <text x="340" y="364" fill="#2c3e50" font-size="10">→ Inscripciones</text>
+  <text x="340" y="384" fill="#e0234e" font-size="11" font-weight="700">Calificacion</text>
+  <text x="340" y="402" fill="#2c3e50" font-size="10">→ Notas del estudiante</text>
+
+  <!-- Dividers in entity box -->
+  <line x1="205" y1="330" x2="205" y2="450" stroke="#e0e0e0" stroke-width="1"/>
+  <line x1="330" y1="330" x2="330" y2="450" stroke="#e0e0e0" stroke-width="1"/>
+
+  <!-- ===== VERSIONS FOOTER ===== -->
+  <rect x="30" y="500" width="860" height="100" rx="12" fill="white" stroke="#e0e0e0" stroke-width="1.5"/>
+  <text x="460" y="524" text-anchor="middle" fill="#1e3c72" font-size="13" font-weight="700">🔧  Stack de Versiones Utilizado</text>
+
+  <!-- Version Badges -->
+  <rect x="55" y="535" width="95" height="48" rx="8" fill="#f0f4ff" stroke="#1e3c72" stroke-width="1.5"/>
+  <text x="102" y="556" text-anchor="middle" fill="#1e3c72" font-size="10" font-weight="700">Node.js</text>
+  <text x="102" y="572" text-anchor="middle" fill="#2a5298" font-size="13" font-weight="700">v22.21.0</text>
+
+  <rect x="165" y="535" width="95" height="48" rx="8" fill="#fff8f0" stroke="#f39c12" stroke-width="1.5"/>
+  <text x="212" y="556" text-anchor="middle" fill="#856404" font-size="10" font-weight="700">npm</text>
+  <text x="212" y="572" text-anchor="middle" fill="#b7791f" font-size="13" font-weight="700">v10.9.0</text>
+
+  <rect x="275" y="535" width="95" height="48" rx="8" fill="#fff0f3" stroke="#e0234e" stroke-width="1.5"/>
+  <text x="322" y="556" text-anchor="middle" fill="#c01a3a" font-size="10" font-weight="700">NestJS</text>
+  <text x="322" y="572" text-anchor="middle" fill="#e0234e" font-size="13" font-weight="700">v10</text>
+
+  <rect x="385" y="535" width="95" height="48" rx="8" fill="#f0f7ff" stroke="#0070f3" stroke-width="1.5"/>
+  <text x="432" y="556" text-anchor="middle" fill="#0050c8" font-size="10" font-weight="700">Next.js</text>
+  <text x="432" y="572" text-anchor="middle" fill="#0070f3" font-size="13" font-weight="700">v16.2.1</text>
+
+  <rect x="495" y="535" width="95" height="48" rx="8" fill="#f5f0ff" stroke="#6f42c1" stroke-width="1.5"/>
+  <text x="542" y="556" text-anchor="middle" fill="#5a3494" font-size="10" font-weight="700">Prisma ORM</text>
+  <text x="542" y="572" text-anchor="middle" fill="#6f42c1" font-size="13" font-weight="700">v7.5.0</text>
+
+  <rect x="605" y="535" width="95" height="48" rx="8" fill="#f0f8ff" stroke="#336791" stroke-width="1.5"/>
+  <text x="652" y="556" text-anchor="middle" fill="#1a4d6b" font-size="10" font-weight="700">PostgreSQL</text>
+  <text x="652" y="572" text-anchor="middle" fill="#336791" font-size="13" font-weight="700">v16</text>
+
+  <rect x="715" y="535" width="95" height="48" rx="8" fill="#e8f5ff" stroke="#2496ed" stroke-width="1.5"/>
+  <text x="762" y="556" text-anchor="middle" fill="#1a6ea8" font-size="10" font-weight="700">Docker</text>
+  <text x="762" y="572" text-anchor="middle" fill="#2496ed" font-size="13" font-weight="700">v29.2.1</text>
+
+  <rect x="825" y="535" width="50" height="48" rx="8" fill="#f0fff4" stroke="#27ae60" stroke-width="1.5"/>
+  <text x="850" y="556" text-anchor="middle" fill="#1e7e34" font-size="9" font-weight="700">TypeScript</text>
+  <text x="850" y="572" text-anchor="middle" fill="#27ae60" font-size="12" font-weight="700">v5.9</text>
+
+  <!-- Copyright -->
+  <text x="460" y="596" text-anchor="middle" fill="#95a5a6" font-size="10">Programación Avanzada · CORHUILA · 2026</text>
+</svg>

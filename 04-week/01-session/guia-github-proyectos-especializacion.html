@@ -1,0 +1,2165 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía GitHub: Repositorio, Issues, Tablero Kanban y Releases | Especialización en Ingeniería de Software</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+    <style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-color: #1e3c72;
+    --secondary-color: #2a5298;
+    --accent-color: #ff6b6b;
+    --light-bg: #f8f9fa;
+    --dark-text: #2c3e50;
+    --border-color: #e0e0e0;
+    --success-color: #27ae60;
+    --warning-color: #f39c12;
+    --info-color: #3498db;
+    --github-color: #24292e;
+    --cli-color: #0d1117;
+    --visual-color: #6f42c1;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.6;
+    color: var(--dark-text);
+    background-color: #fff;
+}
+
+/* Header */
+.main-header {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    color: white;
+    padding: 0;
+}
+
+.top-bar {
+    background-color: rgba(0, 0, 0, 0.1);
+    padding: 20px 0;
+    text-align: center;
+}
+
+.brand-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.brand-name {
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin: 10px 0;
+}
+
+.brand-subtitle {
+    font-size: 14px;
+    font-weight: 300;
+    opacity: 0.9;
+}
+
+.main-nav {
+    background-color: rgba(0, 0, 0, 0.2);
+    padding: 15px 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.main-nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.main-nav a {
+    color: white;
+    text-decoration: none;
+    padding: 12px 20px;
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background-color 0.3s;
+    border-bottom: 3px solid transparent;
+}
+
+.main-nav a:hover,
+.main-nav a.active {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-bottom-color: var(--accent-color);
+}
+
+/* Container */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Main Content */
+.main-content {
+    min-height: 100vh;
+    padding: 40px 0;
+}
+
+.section {
+    margin: 60px 0;
+    padding: 40px 0;
+    border-top: 1px solid var(--border-color);
+}
+
+.section:first-child {
+    border-top: none;
+}
+
+.section-title {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 30px;
+    color: var(--primary-color);
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.section-title i {
+    font-size: 36px;
+    color: var(--accent-color);
+}
+
+.subsection-title {
+    font-size: 20px;
+    font-weight: 600;
+    margin-top: 30px;
+    margin-bottom: 15px;
+    color: var(--secondary-color);
+}
+
+/* Cards */
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    margin: 30px 0;
+}
+
+.card {
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 25px;
+    background: #fff;
+    transition: transform 0.3s, box-shadow 0.3s;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.card-icon {
+    font-size: 40px;
+    margin-bottom: 15px;
+}
+
+.card-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: var(--dark-text);
+}
+
+/* Code Block */
+.code-block {
+    background: linear-gradient(135deg, #1e1e1e 0%, #2d2d2d 100%);
+    border-left: 5px solid var(--accent-color);
+    border-radius: 8px;
+    padding: 24px;
+    margin: 25px 0;
+    overflow-x: auto;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    position: relative;
+}
+
+.code-block code {
+    font-family: 'Fira Code', 'Courier New', monospace;
+    font-size: 13px;
+    color: #e0e0e0;
+    line-height: 1.7;
+    white-space: pre;
+    white-space: pre-wrap;
+    word-break: break-word;
+    display: block;
+    letter-spacing: 0.5px;
+}
+
+.code-block .code-label {
+    position: absolute;
+    top: 8px;
+    right: 12px;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 10px;
+    border-radius: 4px;
+    color: white;
+    font-family: 'Roboto', sans-serif;
+}
+
+.code-block .code-label.cli {
+    background-color: var(--cli-color);
+    border: 1px solid #30363d;
+}
+
+.code-block .code-label.bash {
+    background-color: #27ae60;
+}
+
+/* Content List */
+.content-list {
+    margin: 20px 0 20px 40px;
+}
+
+.content-list li {
+    margin: 10px 0;
+    padding-left: 10px;
+}
+
+.content-list strong {
+    color: var(--primary-color);
+}
+
+/* Steps */
+.steps-container {
+    margin: 40px 0;
+}
+
+.step {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 30px;
+    padding: 20px;
+    background-color: var(--light-bg);
+    border-radius: 8px;
+    border-left: 4px solid var(--primary-color);
+}
+
+.step-number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    background-color: var(--primary-color);
+    color: white;
+    border-radius: 50%;
+    font-size: 24px;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+.step-content h3 {
+    color: var(--primary-color);
+    margin-bottom: 10px;
+}
+
+.step-content p {
+    color: var(--dark-text);
+    margin-bottom: 10px;
+}
+
+/* Info Box */
+.info-box {
+    padding: 20px 25px;
+    border-radius: 8px;
+    margin: 20px 0;
+}
+
+.info-box.warning {
+    background-color: #fff3cd;
+    border-left: 4px solid var(--warning-color);
+}
+
+.info-box.success {
+    background-color: #d4edda;
+    border-left: 4px solid var(--success-color);
+}
+
+.info-box.info {
+    background-color: #d1ecf1;
+    border-left: 4px solid var(--info-color);
+}
+
+.info-box h4 {
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Method Tabs */
+.method-tabs {
+    display: flex;
+    gap: 0;
+    margin-top: 25px;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.method-tab {
+    padding: 12px 24px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    border: 2px solid transparent;
+    border-bottom: none;
+    border-radius: 8px 8px 0 0;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: var(--light-bg);
+    color: #666;
+}
+
+.method-tab:hover {
+    background-color: #e9ecef;
+}
+
+.method-tab.active {
+    border-color: var(--border-color);
+    border-bottom-color: white;
+    background-color: white;
+    color: var(--primary-color);
+    margin-bottom: -2px;
+}
+
+.method-tab.cli-tab.active {
+    color: var(--cli-color);
+}
+
+.method-tab.visual-tab.active {
+    color: var(--visual-color);
+}
+
+.method-content {
+    display: none;
+    padding: 25px 0;
+}
+
+.method-content.active {
+    display: block;
+}
+
+/* Dual Panel */
+.dual-panel {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin: 20px 0;
+}
+
+.panel {
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.panel-header {
+    padding: 12px 18px;
+    font-weight: 600;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: white;
+}
+
+.panel-header.cli {
+    background-color: var(--cli-color);
+}
+
+.panel-header.visual {
+    background-color: var(--visual-color);
+}
+
+.panel-body {
+    padding: 18px;
+}
+
+/* Step Card (within section) */
+.guide-step {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin-bottom: 40px;
+    border-left: 5px solid var(--primary-color);
+}
+
+.guide-step-header {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    color: white;
+    padding: 25px 30px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.guide-step-number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 55px;
+    height: 55px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    font-size: 24px;
+    font-weight: 700;
+    flex-shrink: 0;
+    border: 2px solid rgba(255, 255, 255, 0.4);
+}
+
+.guide-step-header-info h3 {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.guide-step-header-info p {
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+.guide-step-body {
+    padding: 30px;
+}
+
+/* Numbered Instructions */
+.instruction-list {
+    list-style: none;
+    padding: 0;
+    counter-reset: instruction;
+}
+
+.instruction-list li {
+    counter-increment: instruction;
+    padding: 14px 18px 14px 60px;
+    margin-bottom: 10px;
+    background-color: var(--light-bg);
+    border-radius: 8px;
+    border-left: 3px solid var(--visual-color);
+    position: relative;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+.instruction-list li::before {
+    content: counter(instruction);
+    position: absolute;
+    left: 16px;
+    top: 14px;
+    width: 28px;
+    height: 28px;
+    background-color: var(--visual-color);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.instruction-list li strong {
+    color: var(--primary-color);
+}
+
+.instruction-list li code {
+    background-color: #e8e8e8;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 13px;
+    font-family: 'Fira Code', 'Courier New', monospace;
+}
+
+/* Table */
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 14px;
+}
+
+.data-table thead th {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 12px 16px;
+    text-align: left;
+    font-weight: 600;
+}
+
+.data-table tbody td {
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.data-table tbody tr:nth-child(even) {
+    background-color: var(--light-bg);
+}
+
+.data-table tbody tr:hover {
+    background-color: #e9ecef;
+}
+
+/* Badge */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+    color: white;
+}
+
+.badge.green { background-color: var(--success-color); }
+.badge.blue { background-color: var(--info-color); }
+.badge.yellow { background-color: var(--warning-color); }
+.badge.red { background-color: var(--accent-color); }
+.badge.purple { background-color: var(--visual-color); }
+.badge.dark { background-color: var(--github-color); }
+
+/* Tip callout */
+.tip {
+    background: linear-gradient(135deg, #e8f5e9 0%, #f1f8e9 100%);
+    border-left: 4px solid var(--success-color);
+    padding: 15px 20px;
+    border-radius: 0 8px 8px 0;
+    margin: 15px 0;
+    font-size: 14px;
+}
+
+.tip strong {
+    color: var(--success-color);
+}
+
+/* Accordion */
+.accordion-item {
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    margin-bottom: 10px;
+    overflow: hidden;
+}
+
+.accordion-header {
+    background-color: var(--light-bg);
+    padding: 18px 20px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 600;
+    color: var(--primary-color);
+    transition: background-color 0.3s;
+}
+
+.accordion-header:hover {
+    background-color: #e9ecef;
+}
+
+.accordion-header i.chevron {
+    transition: transform 0.3s;
+    font-size: 14px;
+}
+
+.accordion-header.open i.chevron {
+    transform: rotate(180deg);
+}
+
+.accordion-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+    padding: 0 20px;
+}
+
+.accordion-body.open {
+    max-height: 5000px;
+    padding: 20px;
+}
+
+/* Footer */
+.footer {
+    background-color: var(--dark-text);
+    color: white;
+    padding: 40px 0;
+    margin-top: 60px;
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 40px;
+}
+
+.footer-section h3 {
+    margin-bottom: 15px;
+    color: var(--accent-color);
+}
+
+.footer-section ul {
+    list-style: none;
+}
+
+.footer-section ul li {
+    margin: 8px 0;
+}
+
+.footer-section a {
+    color: #ccc;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.footer-section a:hover {
+    color: white;
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin-top: 30px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .section-title {
+        font-size: 24px;
+    }
+
+    .main-nav ul {
+        flex-direction: column;
+    }
+
+    .main-nav a {
+        padding: 10px 15px;
+    }
+
+    .cards-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .dual-panel {
+        grid-template-columns: 1fr;
+    }
+
+    .step {
+        flex-direction: column;
+    }
+
+    .step-number {
+        align-self: flex-start;
+    }
+
+    .guide-step-header {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .method-tabs {
+        flex-direction: column;
+    }
+}
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="main-header">
+        <div class="top-bar">
+            <div class="container">
+                <div class="brand-container">
+                    <img src="https://raw.githubusercontent.com/code-corhuila/material-mineria-datos/b3725d694125ab35294ddfe415a327bc1445d32c/01-week/01-session/LOGO%20CORHUILA%20BLANCO%20PNG%20(2).png" alt="Logo Corhuila" class="logo-corhuila" style="max-width: 120px; height: auto; margin-bottom: 15px;">
+                    <h1 class="brand-name">
+                        <i class="fab fa-github"></i> Guía de GitHub para Proyectos
+                    </h1>
+                    <p class="brand-subtitle">Repositorio &bull; Issues &bull; Milestones &bull; Labels &bull; Tablero Kanban &bull; Releases</p>
+                </div>
+            </div>
+        </div>
+
+        <nav class="main-nav">
+            <ul>
+                <li><a href="#introduccion" class="nav-link">Introducción</a></li>
+                <li><a href="#prerequisitos" class="nav-link">Prerrequisitos</a></li>
+                <li><a href="#paso1" class="nav-link">1. Repositorio</a></li>
+                <li><a href="#paso2" class="nav-link">2. Labels</a></li>
+                <li><a href="#paso3" class="nav-link">3. Milestones</a></li>
+                <li><a href="#paso4" class="nav-link">4. Issues / HUs</a></li>
+                <li><a href="#paso5" class="nav-link">5. Tablero Kanban</a></li>
+                <li><a href="#paso6" class="nav-link">6. Releases</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+
+            <!-- ==================== INTRODUCCIÓN ==================== -->
+            <section id="introduccion" class="section">
+                <h2 class="section-title">
+                    <i class="fas fa-rocket"></i> Introducción
+                </h2>
+
+                <p>Esta guía te enseña paso a paso cómo configurar un proyecto completo en GitHub con gestión ágil: repositorio, etiquetas, milestones (sprints), historias de usuario como issues, tablero Kanban y plan de releases. Cada paso incluye <strong>dos formas</strong> de hacerlo:</p>
+
+                <div class="cards-grid">
+                    <div class="card">
+                        <div class="card-icon" style="color: var(--cli-color);"><i class="fas fa-terminal"></i></div>
+                        <h4 class="card-title">Por Código (GitHub CLI)</h4>
+                        <p>Usando <strong>gh</strong> (GitHub CLI) desde la terminal. Ideal para automatizar y repetir procesos de forma rápida. Aprenderás comandos que te dan superpoderes.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon" style="color: var(--visual-color);"><i class="fas fa-mouse-pointer"></i></div>
+                        <h4 class="card-title">Visual (Interfaz Web de GitHub)</h4>
+                        <p>Usando la interfaz gráfica de <strong>github.com</strong>. Ideal cuando estás aprendiendo y quieres ver cada paso de forma visual e intuitiva.</p>
+                    </div>
+                </div>
+
+                <div class="info-box info">
+                    <h4><i class="fas fa-bullseye"></i> Objetivo</h4>
+                    <p>Al finalizar esta guía, tendrás un repositorio profesional con: 5 etiquetas personalizadas, 5 milestones (sprints), 11 historias de usuario como issues, un tablero Kanban para seguimiento visual y un plan de releases definido. Todo organizado como lo haría un equipo de desarrollo real.</p>
+                </div>
+
+                <div class="info-box warning">
+                    <h4><i class="fas fa-exclamation-triangle"></i> Importante</h4>
+                    <p>Esta guía corresponde al <strong>proyecto guiado por el docente: Sistema de Gestión Académica</strong> del curso de Especialización en Ingeniería de Software. Tú debes adaptar los nombres, las historias de usuario y las entidades a <strong>tu proyecto específico</strong>.</p>
+                </div>
+            </section>
+
+            <!-- ==================== PRERREQUISITOS ==================== -->
+            <section id="prerequisitos" class="section">
+                <h2 class="section-title">
+                    <i class="fas fa-clipboard-check"></i> Prerrequisitos
+                </h2>
+
+                <h3 class="subsection-title">Para ambos métodos</h3>
+                <ul class="content-list">
+                    <li>Tener una <strong>cuenta en GitHub</strong> (<a href="https://github.com/signup" target="_blank" rel="noopener noreferrer">github.com/signup</a>).</li>
+                    <li>Tener <strong>Git</strong> instalado en tu computadora (<a href="https://git-scm.com/downloads" target="_blank" rel="noopener noreferrer">git-scm.com/downloads</a>).</li>
+                    <li>Tener definido el <strong>plan del proyecto</strong> con: historias de usuario, sprints y releases.</li>
+                </ul>
+
+                <h3 class="subsection-title">Solo para el método por código (CLI)</h3>
+                <ul class="content-list">
+                    <li>Instalar <strong>GitHub CLI (gh)</strong> desde <a href="https://cli.github.com/" target="_blank" rel="noopener noreferrer">cli.github.com</a>.</li>
+                    <li>Autenticarse ejecutando <code>gh auth login</code> en la terminal.</li>
+                </ul>
+
+                <div class="code-block">
+                    <span class="code-label cli">Terminal</span>
+                    <code># Verificar instalación de GitHub CLI
+gh --version
+
+# Autenticarse (seguir los pasos interactivos)
+gh auth login
+
+# Verificar autenticación
+gh auth status</code>
+                </div>
+
+                <div class="tip">
+                    <strong><i class="fas fa-lightbulb"></i> Tip:</strong> Al ejecutar <code>gh auth login</code>, selecciona <strong>GitHub.com</strong>, protocolo <strong>HTTPS</strong> y autenticación con <strong>navegador web</strong>. Es la forma más sencilla.
+                </div>
+            </section>
+
+            <!-- ==================== PASO 1: REPOSITORIO ==================== -->
+            <section id="paso1" class="section">
+                <h2 class="section-title">
+                    <i class="fas fa-folder-plus"></i> Paso 1 — Crear el Repositorio
+                </h2>
+
+                <p>El repositorio es el centro de tu proyecto. Aquí vivirá el código fuente, los issues, el tablero Kanban y toda la documentación.</p>
+
+                <!-- Tabs -->
+                <div class="method-tabs" data-group="repo">
+                    <div class="method-tab cli-tab active" data-target="repo-cli">
+                        <i class="fas fa-terminal"></i> Por Código (CLI)
+                    </div>
+                    <div class="method-tab visual-tab" data-target="repo-visual">
+                        <i class="fas fa-mouse-pointer"></i> Visual (GitHub Web)
+                    </div>
+                </div>
+
+                <!-- CLI Content -->
+                <div id="repo-cli" class="method-content active">
+                    <div class="code-block">
+                        <span class="code-label cli">Terminal</span>
+                        <code># 1. Crear una carpeta para el proyecto
+mkdir gestion-academica-sistema
+cd gestion-academica-sistema
+
+# 2. Inicializar Git
+git init
+
+# 3. Crear un README.md inicial
+echo "# Sistema de Gestión Académica" > README.md
+echo "" >> README.md
+echo "Proyecto full-stack con NestJS + Next.js + PostgreSQL + Docker + Prisma" >> README.md
+
+# 4. Hacer el primer commit
+git add .
+git commit -m "feat: initial commit - project setup"
+
+# 5. Crear el repositorio en GitHub y subir el código
+gh repo create gestion-academica-sistema --public --source=. --push --description "Sistema de Gestión Académica - NestJS + Next.js + PostgreSQL + Docker + Prisma"</code>
+                    </div>
+
+                    <div class="tip">
+                        <strong><i class="fas fa-lightbulb"></i> Tip:</strong> El flag <code>--public</code> crea un repositorio público. Si quieres uno privado, usa <code>--private</code>. El flag <code>--source=.</code> indica que el código está en la carpeta actual.
+                    </div>
+
+                    <p style="margin-top: 15px;">Verifica que se creó correctamente:</p>
+                    <div class="code-block">
+                        <span class="code-label cli">Terminal</span>
+                        <code># Abrir el repositorio en el navegador
+gh repo view --web</code>
+                    </div>
+                </div>
+
+                <!-- Visual Content -->
+                <div id="repo-visual" class="method-content">
+                    <ol class="instruction-list">
+                        <li>Ve a <strong><a href="https://github.com/new" target="_blank" rel="noopener noreferrer">github.com/new</a></strong> (o haz clic en el botón <strong>"+"</strong> en la esquina superior derecha y selecciona <strong>"New repository"</strong>).</li>
+                        <li>En <strong>"Repository name"</strong> escribe: <code>gestion-academica-sistema</code> (usa el nombre de tu proyecto, sin espacios, con guiones).</li>
+                        <li>En <strong>"Description"</strong> escribe una descripción breve: <em>"Sistema de Gestión Académica - NestJS + Next.js + PostgreSQL + Docker + Prisma"</em>.</li>
+                        <li>Selecciona <strong>"Public"</strong> para que sea visible (o "Private" si lo prefieres).</li>
+                        <li>Marca la casilla <strong>"Add a README file"</strong> para que se cree automáticamente.</li>
+                        <li>En <strong>"Add .gitignore"</strong>, selecciona la plantilla <strong>"Node"</strong>.</li>
+                        <li>Haz clic en el botón verde <strong>"Create repository"</strong>.</li>
+                        <li>Para clonar el repositorio en tu computadora, copia la URL y ejecuta en la terminal: <code>git clone https://github.com/TU_USUARIO/gestion-academica-sistema.git</code></li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- ==================== PASO 2: LABELS ==================== -->
+            <section id="paso2" class="section">
+                <h2 class="section-title">
+                    <i class="fas fa-tags"></i> Paso 2 — Crear Etiquetas (Labels)
+                </h2>
+
+                <p>Las etiquetas permiten categorizar y filtrar los issues. Vamos a crear etiquetas específicas para organizar las historias de usuario del proyecto.</p>
+
+                <h3 class="subsection-title">Etiquetas a crear</h3>
+
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Etiqueta</th>
+                            <th>Color</th>
+                            <th>Descripción</th>
+                            <th>Uso</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="badge purple">user-story</span></td>
+                            <td><code>#6f42c1</code></td>
+                            <td>Historia de usuario</td>
+                            <td>Todas las HUs</td>
+                        </tr>
+                        <tr>
+                            <td><span class="badge blue">backend</span></td>
+                            <td><code>#0075ca</code></td>
+                            <td>Tareas de backend / API</td>
+                            <td>HUs con desarrollo en NestJS</td>
+                        </tr>
+                        <tr>
+                            <td><span class="badge green">frontend</span></td>
+                            <td><code>#27ae60</code></td>
+                            <td>Tareas de frontend / UI</td>
+                            <td>HUs con desarrollo en Next.js</td>
+                        </tr>
+                        <tr>
+                            <td><span class="badge dark">infraestructura</span></td>
+                            <td><code>#24292e</code></td>
+                            <td>Docker, Prisma, configuración</td>
+                            <td>HU-11 (Docker + despliegue)</td>
+                        </tr>
+                        <tr>
+                            <td><span class="badge yellow">cross-cutting</span></td>
+                            <td><code>#f39c12</code></td>
+                            <td>Módulo transversal / compartido</td>
+                            <td>HU-09 (Common Module)</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!-- Tabs -->
+                <div class="method-tabs" data-group="labels">
+                    <div class="method-tab cli-tab active" data-target="labels-cli">
+                        <i class="fas fa-terminal"></i> Por Código (CLI)
+                    </div>
+                    <div class="method-tab visual-tab" data-target="labels-visual">
+                        <i class="fas fa-mouse-pointer"></i> Visual (GitHub Web)
+                    </div>
+                </div>
+
+                <!-- CLI Content -->
+                <div id="labels-cli" class="method-content active">
+                    <div class="code-block">
+                        <span class="code-label cli">Terminal</span>
+                        <code># Navegar al directorio del repositorio clonado
+cd gestion-academica-sistema
+
+# Crear las 5 etiquetas personalizadas
+gh label create "user-story"       --color "6f42c1" --description "Historia de usuario"
+gh label create "backend"          --color "0075ca" --description "Tareas de backend / API"
+gh label create "frontend"         --color "27ae60" --description "Tareas de frontend / UI"
+gh label create "infraestructura"  --color "24292e" --description "Docker, Prisma, configuración"
+gh label create "cross-cutting"    --color "f39c12" --description "Módulo transversal / compartido"</code>
+                    </div>
+
+                    <p style="margin-top: 15px;">Verifica que se crearon correctamente:</p>
+                    <div class="code-block">
+                        <span class="code-label cli">Terminal</span>
+                        <code># Listar todas las etiquetas del repositorio
+gh label list</code>
+                    </div>
+                </div>
+
+                <!-- Visual Content -->
+                <div id="labels-visual" class="method-content">
+                    <ol class="instruction-list">
+                        <li>Ve a tu repositorio en GitHub y haz clic en la pestaña <strong>"Issues"</strong>.</li>
+                        <li>Haz clic en <strong>"Labels"</strong> (junto al botón "New issue", aparece un enlace).</li>
+                        <li>Haz clic en el botón <strong>"New label"</strong> (verde, arriba a la derecha).</li>
+                        <li>En <strong>"Label name"</strong> escribe: <code>user-story</code></li>
+                        <li>En <strong>"Description"</strong> escribe: <code>Historia de usuario</code></li>
+                        <li>En <strong>"Color"</strong> escribe el código: <code>#6f42c1</code> (o haz clic en el cuadro de color y pégalo).</li>
+                        <li>Haz clic en <strong>"Create label"</strong>.</li>
+                        <li>Repite los pasos 3-7 para cada etiqueta de la tabla anterior (<code>backend</code>, <code>frontend</code>, <code>infraestructura</code>, <code>cross-cutting</code>).</li>
+                    </ol>
+                    <div class="tip">
+                        <strong><i class="fas fa-lightbulb"></i> Tip:</strong> GitHub incluye etiquetas por defecto (bug, enhancement, etc.). Puedes dejarlas o eliminarlas si no las necesitas.
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==================== PASO 3: MILESTONES ==================== -->
+            <section id="paso3" class="section">
+                <h2 class="section-title">
+                    <i class="fas fa-flag"></i> Paso 3 — Crear Milestones (Sprints)
+                </h2>
+
+                <p>Los Milestones representan los <strong>sprints</strong> del proyecto. Agrupan issues con una fecha de vencimiento, lo que permite medir el progreso de cada iteración.</p>
+
+                <h3 class="subsection-title">Milestones a crear</h3>
+
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Milestone</th>
+                            <th>Fecha Límite</th>
+                            <th>Release</th>
+                            <th>Descripción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Sprint 1</strong> — Infraestructura y entidades base</td>
+                            <td>2026-03-29</td>
+                            <td><span class="badge blue">R1</span></td>
+                            <td>Docker, Prisma, Estudiante, Docente, Programa</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Sprint 2</strong> — Entidades académicas y cross-cutting</td>
+                            <td>2026-04-10</td>
+                            <td><span class="badge blue">R1</span></td>
+                            <td>Asignatura, Período, Asignación, Common Module</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Sprint 3</strong> — Matrícula, Calificaciones y Frontend base</td>
+                            <td>2026-04-17</td>
+                            <td><span class="badge blue">R1</span></td>
+                            <td>Matrícula, Calificación, Common Module, Frontend base</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Sprint 4</strong> — Frontend avanzado e integración</td>
+                            <td>2026-05-08</td>
+                            <td><span class="badge green">R2</span></td>
+                            <td>Formularios complejos, navegación, layout</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Sprint 5</strong> — Cierre y despliegue</td>
+                            <td>2026-05-22</td>
+                            <td><span class="badge green">R2</span></td>
+                            <td>Integración de flujos, pruebas, Docker, documentación</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!-- Tabs -->
+                <div class="method-tabs" data-group="milestones">
+                    <div class="method-tab cli-tab active" data-target="milestones-cli">
+                        <i class="fas fa-terminal"></i> Por Código (CLI)
+                    </div>
+                    <div class="method-tab visual-tab" data-target="milestones-visual">
+                        <i class="fas fa-mouse-pointer"></i> Visual (GitHub Web)
+                    </div>
+                </div>
+
+                <!-- CLI Content -->
+                <div id="milestones-cli" class="method-content active">
+                    <div class="code-block">
+                        <span class="code-label cli">Terminal</span>
+                        <code># Crear los 5 milestones (sprints) con sus fechas límite
+# Formato de fecha: YYYY-MM-DDT00:00:00Z
+
+gh api repos/{owner}/{repo}/milestones -f title="Sprint 1 — Infraestructura y entidades base" -f due_on="2026-03-29T00:00:00Z" -f description="Docker Compose, Prisma schema, migraciones, CRUD de Estudiante, Docente y ProgramaAcademico. Festivo: Mar 23 (San José)"
+
+gh api repos/{owner}/{repo}/milestones -f title="Sprint 2 — Entidades académicas y cross-cutting" -f due_on="2026-04-10T00:00:00Z" -f description="CRUD de Asignatura, PeriodoAcademico, AsignacionDocente. Common module (Filters, Pipes, Interceptors). Festivos: Abr 2-3 (Semana Santa)"
+
+gh api repos/{owner}/{repo}/milestones -f title="Sprint 3 — Matrícula, Calificaciones y Frontend base" -f due_on="2026-04-17T00:00:00Z" -f description="Módulos de Matricula y Calificacion con lógica de negocio. Common Module (entrega formal). Frontend: estructura Next.js, listados y formularios de entidades base"
+
+gh api repos/{owner}/{repo}/milestones -f title="Sprint 4 — Frontend avanzado e integración" -f due_on="2026-05-08T00:00:00Z" -f description="Formularios con relaciones (selects dinámicos), páginas de detalle, navegación completa, estados de carga y error. Festivo: May 1 (Día del Trabajo)"
+
+gh api repos/{owner}/{repo}/milestones -f title="Sprint 5 — Cierre y despliegue" -f due_on="2026-05-22T00:00:00Z" -f description="Integración de flujos completos (matricular → calificar), pruebas de integración, despliegue con Docker Compose, documentación README. Festivo: May 18 (Ascensión)"</code>
+                    </div>
+
+                    <div class="info-box warning">
+                        <h4><i class="fas fa-exclamation-triangle"></i> Nota importante</h4>
+                        <p>Reemplaza <code>{owner}</code> por tu usuario de GitHub y <code>{repo}</code> por el nombre del repositorio. Ejemplo: <code>repos/juanperez/gestion-academica-sistema/milestones</code></p>
+                    </div>
+
+                    <p style="margin-top: 15px;">Verifica que se crearon:</p>
+                    <div class="code-block">
+                        <span class="code-label cli">Terminal</span>
+                        <code># Listar todos los milestones
+gh api repos/{owner}/{repo}/milestones --jq '.[].title'</code>
+                    </div>
+                </div>
+
+                <!-- Visual Content -->
+                <div id="milestones-visual" class="method-content">
+                    <ol class="instruction-list">
+                        <li>Ve a tu repositorio → pestaña <strong>"Issues"</strong> → clic en <strong>"Milestones"</strong> (enlace junto a "Labels").</li>
+                        <li>Haz clic en <strong>"New milestone"</strong> (botón verde arriba a la derecha).</li>
+                        <li>En <strong>"Title"</strong> escribe: <code>Sprint 1 — Infraestructura y entidades base</code></li>
+                        <li>En <strong>"Due date"</strong> selecciona: <code>03/29/2026</code> (29 de marzo de 2026).</li>
+                        <li>En <strong>"Description"</strong> escribe: <em>"Docker Compose, Prisma schema, migraciones, CRUD de Estudiante, Docente y ProgramaAcademico. Festivo: Mar 23 (San José)"</em></li>
+                        <li>Haz clic en <strong>"Create milestone"</strong>.</li>
+                        <li>Repite los pasos 2-6 para cada Sprint de la tabla anterior (Sprint 2, 3, 4 y 5) con sus respectivas fechas y descripciones.</li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- ==================== PASO 4: ISSUES (HUs) ==================== -->
+            <section id="paso4" class="section">
+                <h2 class="section-title">
+                    <i class="fas fa-list-check"></i> Paso 4 — Crear Issues (Historias de Usuario)
+                </h2>
+
+                <p>Cada <strong>Historia de Usuario (HU)</strong> se documenta como un <strong>Issue</strong> en GitHub. Esto permite rastrear el progreso, asignar responsables y vincular los issues al tablero Kanban.</p>
+
+                <h3 class="subsection-title">Formato de una Historia de Usuario</h3>
+
+                <div class="info-box info">
+                    <h4><i class="fas fa-file-alt"></i> Estructura estándar de una HU</h4>
+                    <p>Cada issue debe contener: título descriptivo, narrativa (Como... quiero... para...), criterios de aceptación (checkboxes) y tareas técnicas.</p>
+                </div>
+
+                <div class="code-block">
+                    <span class="code-label bash">Markdown del Issue</span>
+                    <code>## HU-01 — Gestión de Estudiantes
+
+**Como** administrador académico,
+**quiero** registrar, consultar, editar y eliminar estudiantes,
+**para** mantener actualizada la información de los estudiantes.
+
+### Criterios de Aceptación
+
+- [ ] Se puede crear un estudiante con: nombres, apellidos, código estudiantil, documento, correo institucional, fecha de nacimiento y programa.
+- [ ] El código estudiantil y documento son únicos.
+- [ ] El correo institucional debe tener formato válido.
+- [ ] Se puede consultar la lista con paginación.
+- [ ] Se puede consultar un estudiante por ID con datos completos.
+- [ ] Se puede editar la información.
+- [ ] Se puede eliminar un estudiante sin matrículas asociadas.
+- [ ] Si se intenta eliminar con matrículas, retorna error descriptivo.
+
+### Tareas Técnicas
+
+- Backend: CreateEstudianteDto, UpdateEstudianteDto con class-validator
+- Backend: EstudianteRepository (Prisma queries)
+- Backend: EstudianteService (lógica de negocio + validaciones)
+- Backend: EstudianteController (endpoints GET, GET/:id, POST, PUT/:id, DELETE/:id)
+- Frontend: Página de listado /estudiantes
+- Frontend: Formulario de creación /estudiantes/new
+- Frontend: Página de detalle /estudiantes/[id]</code>
+                </div>
+
+                <h3 class="subsection-title">Historias de Usuario del proyecto</h3>
+
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Historia de Usuario</th>
+                            <th>Sprint</th>
+                            <th>Labels</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>1</td><td>HU-01 — Gestión de Estudiantes</td><td>Sprint 1</td><td><span class="badge purple">user-story</span> <span class="badge blue">backend</span> <span class="badge green">frontend</span></td></tr>
+                        <tr><td>2</td><td>HU-02 — Gestión de Docentes</td><td>Sprint 1</td><td><span class="badge purple">user-story</span> <span class="badge blue">backend</span> <span class="badge green">frontend</span></td></tr>
+                        <tr><td>3</td><td>HU-03 — Gestión de Programas Académicos</td><td>Sprint 1</td><td><span class="badge purple">user-story</span> <span class="badge blue">backend</span> <span class="badge green">frontend</span></td></tr>
+                        <tr><td>4</td><td>HU-04 — Gestión de Asignaturas</td><td>Sprint 2</td><td><span class="badge purple">user-story</span> <span class="badge blue">backend</span> <span class="badge green">frontend</span></td></tr>
+                        <tr><td>5</td><td>HU-05 — Gestión de Períodos Académicos</td><td>Sprint 2</td><td><span class="badge purple">user-story</span> <span class="badge blue">backend</span> <span class="badge green">frontend</span></td></tr>
+                        <tr><td>6</td><td>HU-06 — Asignación Docente-Asignatura</td><td>Sprint 2</td><td><span class="badge purple">user-story</span> <span class="badge blue">backend</span> <span class="badge green">frontend</span></td></tr>
+                        <tr><td>7</td><td>HU-07 — Matrícula de Estudiantes</td><td>Sprint 3</td><td><span class="badge purple">user-story</span> <span class="badge blue">backend</span> <span class="badge green">frontend</span></td></tr>
+                        <tr><td>8</td><td>HU-08 — Registro de Calificaciones</td><td>Sprint 3</td><td><span class="badge purple">user-story</span> <span class="badge blue">backend</span> <span class="badge green">frontend</span></td></tr>
+                        <tr><td>9</td><td>HU-09 — Common Module (Filters, Pipes)</td><td>Sprint 3</td><td><span class="badge purple">user-story</span> <span class="badge yellow">cross-cutting</span></td></tr>
+                        <tr><td>10</td><td>HU-10 — Frontend: Listados, Formularios y Navegación</td><td>Sprint 4</td><td><span class="badge purple">user-story</span> <span class="badge green">frontend</span></td></tr>
+                        <tr><td>11</td><td>HU-11 — Integración Final y Despliegue con Docker</td><td>Sprint 5</td><td><span class="badge purple">user-story</span> <span class="badge dark">infraestructura</span></td></tr>
+                    </tbody>
+                </table>
+
+                <!-- Tabs -->
+                <div class="method-tabs" data-group="issues">
+                    <div class="method-tab cli-tab active" data-target="issues-cli">
+                        <i class="fas fa-terminal"></i> Por Código (CLI)
+                    </div>
+                    <div class="method-tab visual-tab" data-target="issues-visual">
+                        <i class="fas fa-mouse-pointer"></i> Visual (GitHub Web)
+                    </div>
+                </div>
+
+                <!-- CLI Content -->
+                <div id="issues-cli" class="method-content active">
+                    <h4 style="margin-bottom: 15px; color: var(--primary-color);">Crear un Issue con cuerpo en Markdown</h4>
+
+                    <p>Primero, crea un archivo <code>.md</code> con el contenido de la HU y luego usa <code>gh issue create</code>:</p>
+
+                    <div class="code-block">
+                        <span class="code-label cli">Terminal</span>
+                        <code># Paso 1: Crear un archivo temporal con el cuerpo de la HU
+# Puedes usar cualquier editor o echo/cat
+
+# Paso 2: Crear el issue desde el archivo
+gh issue create \
+  --title "HU-01 — Gestión de Estudiantes" \
+  --body-file hu-01.md \
+  --label "user-story,backend,frontend" \
+  --milestone "Sprint 1 — Infraestructura y entidades base"</code>
+                    </div>
+
+                    <div class="info-box info">
+                        <h4><i class="fas fa-info-circle"></i> Alternativa: cuerpo inline</h4>
+                        <p>Para issues con cuerpo breve, puedes usar <code>--body</code> directamente:</p>
+                    </div>
+
+                    <div class="code-block">
+                        <span class="code-label cli">Terminal</span>
+                        <code># Crear issue con cuerpo inline (para HUs simples)
+gh issue create \
+  --title "HU-02 — Gestión de Docentes" \
+  --body "**Como** administrador académico,
+**quiero** registrar, consultar, editar y eliminar docentes,
+**para** tener un registro centralizado del cuerpo docente.
+
+### Criterios de Aceptación
+- [ ] Se puede crear un docente con: nombres, apellidos, documento, título, especialidad, correo y teléfono.
+- [ ] El documento y correo son únicos.
+- [ ] Se puede consultar, editar y eliminar docentes.
+
+### Tareas Técnicas
+- Backend: DTOs, Repository, Service, Controller del módulo Docente
+- Frontend: Listado, formulario y detalle de docentes" \
+  --label "user-story,backend,frontend" \
+  --milestone "Sprint 1 — Infraestructura y entidades base"</code>
+                    </div>
+
+                    <h4 style="margin-top: 25px; margin-bottom: 15px; color: var(--primary-color);">Crear múltiples issues de forma eficiente</h4>
+
+                    <p>Si tienes muchos issues, puedes crear un script que los genere todos:</p>
+
+                    <div class="code-block">
+                        <span class="code-label bash">Script: crear-issues.sh</span>
+                        <code>#!/bin/bash
+# Script para crear todos los issues del proyecto
+# Ejecutar: bash crear-issues.sh
+
+# Sprint 1
+gh issue create --title "HU-01 — Gestión de Estudiantes" \
+  --body-file issues/hu-01.md \
+  --label "user-story,backend,frontend" \
+  --milestone "Sprint 1 — Infraestructura y entidades base"
+
+gh issue create --title "HU-02 — Gestión de Docentes" \
+  --body-file issues/hu-02.md \
+  --label "user-story,backend,frontend" \
+  --milestone "Sprint 1 — Infraestructura y entidades base"
+
+gh issue create --title "HU-03 — Gestión de Programas Académicos" \
+  --body-file issues/hu-03.md \
+  --label "user-story,backend,frontend" \
+  --milestone "Sprint 1 — Infraestructura y entidades base"
+
+# Sprint 2
+gh issue create --title "HU-04 — Gestión de Asignaturas" \
+  --body-file issues/hu-04.md \
+  --label "user-story,backend,frontend" \
+  --milestone "Sprint 2 — Entidades académicas y cross-cutting"
+
+gh issue create --title "HU-05 — Gestión de Períodos Académicos" \
+  --body-file issues/hu-05.md \
+  --label "user-story,backend,frontend" \
+  --milestone "Sprint 2 — Entidades académicas y cross-cutting"
+
+gh issue create --title "HU-06 — Asignación Docente-Asignatura" \
+  --body-file issues/hu-06.md \
+  --label "user-story,backend,frontend" \
+  --milestone "Sprint 2 — Entidades académicas y cross-cutting"
+
+# Sprint 3
+gh issue create --title "HU-07 — Matrícula de Estudiantes" \
+  --body-file issues/hu-07.md \
+  --label "user-story,backend,frontend" \
+  --milestone "Sprint 3 — Matrícula, Calificaciones y Frontend base"
+
+gh issue create --title "HU-08 — Registro de Calificaciones" \
+  --body-file issues/hu-08.md \
+  --label "user-story,backend,frontend" \
+  --milestone "Sprint 3 — Matrícula, Calificaciones y Frontend base"
+
+gh issue create --title "HU-09 — Common Module (Filters, Pipes)" \
+  --body-file issues/hu-09.md \
+  --label "user-story,cross-cutting" \
+  --milestone "Sprint 3 — Matrícula, Calificaciones y Frontend base"
+
+# Sprint 4
+gh issue create --title "HU-10 — Frontend: Listados, Formularios y Navegación" \
+  --body-file issues/hu-10.md \
+  --label "user-story,frontend" \
+  --milestone "Sprint 4 — Frontend avanzado e integración"
+
+# Sprint 5
+gh issue create --title "HU-11 — Integración Final y Despliegue con Docker" \
+  --body-file issues/hu-11.md \
+  --label "user-story,infraestructura" \
+  --milestone "Sprint 5 — Cierre y despliegue"
+
+echo "✅ Todos los issues creados exitosamente"</code>
+                    </div>
+
+                    <p style="margin-top: 15px;">Verifica los issues creados:</p>
+                    <div class="code-block">
+                        <span class="code-label cli">Terminal</span>
+                        <code># Listar todos los issues del repositorio
+gh issue list --state all
+
+# Ver un issue específico
+gh issue view 1</code>
+                    </div>
+                </div>
+
+                <!-- Visual Content -->
+                <div id="issues-visual" class="method-content">
+                    <ol class="instruction-list">
+                        <li>Ve a tu repositorio → pestaña <strong>"Issues"</strong> → clic en <strong>"New issue"</strong> (botón verde).</li>
+                        <li>En <strong>"Title"</strong> escribe: <code>HU-01 — Gestión de Estudiantes</code></li>
+                        <li>En el campo de <strong>"Description"</strong> (que acepta Markdown), pega el contenido de la HU con la narrativa, criterios de aceptación y tareas técnicas.</li>
+                        <li>En el panel lateral derecho, haz clic en <strong>"Labels"</strong> y selecciona: <code>user-story</code>, <code>backend</code>, <code>frontend</code>.</li>
+                        <li>En <strong>"Milestone"</strong>, selecciona: <code>Sprint 1 — Infraestructura y entidades base</code>.</li>
+                        <li>Opcionalmente, en <strong>"Assignees"</strong> asigna a los integrantes del equipo responsables de esa HU.</li>
+                        <li>Haz clic en <strong>"Submit new issue"</strong>.</li>
+                        <li>Repite los pasos 1-7 para cada una de las 11 Historias de Usuario, asignando los labels y milestones correctos según la tabla.</li>
+                    </ol>
+
+                    <div class="tip">
+                        <strong><i class="fas fa-lightbulb"></i> Tip:</strong> Al escribir la descripción del issue, usa el formato Markdown. Los checkboxes se crean con <code>- [ ]</code> y se convierten en casillas interactivas que puedes marcar cuando completes cada criterio. Ejemplo:
+                    </div>
+
+                    <div class="code-block">
+                        <span class="code-label bash">Markdown</span>
+                        <code>### Criterios de Aceptación
+- [ ] Se puede crear un estudiante con todos los campos
+- [ ] El código estudiantil es único
+- [ ] Se puede consultar con paginación
+- [x] Este criterio ya está completado ✅</code>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==================== PASO 5: TABLERO KANBAN ==================== -->
+            <section id="paso5" class="section">
+                <h2 class="section-title">
+                    <i class="fas fa-columns"></i> Paso 5 — Crear el Tablero Kanban (GitHub Projects)
+                </h2>
+
+                <p>El tablero Kanban permite visualizar el progreso del proyecto con columnas (<strong>Todo</strong>, <strong>In Progress</strong>, <strong>Done</strong>). GitHub Projects V2 permite crear vistas con campos personalizados como Sprint, Release y Prioridad.</p>
+
+                <div class="info-box info">
+                    <h4><i class="fas fa-info-circle"></i> ¿Qué es GitHub Projects V2?</h4>
+                    <p>Es la herramienta de gestión de proyectos integrada en GitHub. Funciona como un tablero Kanban avanzado donde puedes agregar issues, asignar campos personalizados (Sprint, Release, Prioridad), crear múltiples vistas (Board, Table) y filtrar/agrupar por cualquier campo.</p>
+                </div>
+
+                <h3 class="subsection-title">5.1 — Crear el Proyecto</h3>
+
+                <!-- Tabs -->
+                <div class="method-tabs" data-group="project-create">
+                    <div class="method-tab cli-tab active" data-target="project-create-cli">
+                        <i class="fas fa-terminal"></i> Por Código (CLI)
+                    </div>
+                    <div class="method-tab visual-tab" data-target="project-create-visual">
+                        <i class="fas fa-mouse-pointer"></i> Visual (GitHub Web)
+                    </div>
+                </div>
+
+                <!-- CLI Content -->
+                <div id="project-create-cli" class="method-content active">
+                    <div class="code-block">
+                        <span class="code-label cli">Terminal</span>
+                        <code># Crear un nuevo proyecto de GitHub (Projects V2)
+gh project create --owner TU_USUARIO --title "Gestión Académica — Kanban" --format json</code>
+                    </div>
+
+                    <p style="margin-top: 15px;">Si el comando anterior no funciona, utiliza la API de GraphQL:</p>
+
+                    <div class="code-block">
+                        <span class="code-label cli">Terminal</span>
+                        <code># Alternativa: Crear proyecto via GraphQL API
+# 1. Obtener tu userId
+gh api graphql -f query='query { viewer { id login } }'
+
+# 2. Crear el proyecto (reemplaza USER_ID con el id obtenido)
+gh api graphql -f query='
+  mutation {
+    createProjectV2(input: {
+      ownerId: "USER_ID",
+      title: "Gestión Académica — Kanban"
+    }) {
+      projectV2 {
+        id
+        number
+        url
+      }
+    }
+  }
+'</code>
+                    </div>
+
+                    <div class="tip">
+                        <strong><i class="fas fa-lightbulb"></i> Tip:</strong> Anota el <code>number</code> del proyecto (ej: <code>1</code>). Lo usarás en todos los comandos siguientes para referirte al proyecto.
+                    </div>
+                </div>
+
+                <!-- Visual Content -->
+                <div id="project-create-visual" class="method-content">
+                    <ol class="instruction-list">
+                        <li>Ve a <strong><a href="https://github.com" target="_blank" rel="noopener noreferrer">github.com</a></strong> → haz clic en tu foto de perfil → <strong>"Your projects"</strong>.</li>
+                        <li>Haz clic en el botón verde <strong>"New project"</strong>.</li>
+                        <li>Selecciona la plantilla <strong>"Board"</strong> (tablero Kanban) y haz clic en <strong>"Create project"</strong>.</li>
+                        <li>Se abrirá el proyecto. Haz clic en el nombre del proyecto (arriba) y cámbialo a: <strong>"Gestión Académica — Kanban"</strong>.</li>
+                        <li>El tablero se crea con 3 columnas por defecto: <strong>Todo</strong>, <strong>In Progress</strong> y <strong>Done</strong>.</li>
+                    </ol>
+                </div>
+
+                <h3 class="subsection-title">5.2 — Agregar Issues al Tablero</h3>
+
+                <!-- Tabs -->
+                <div class="method-tabs" data-group="project-items">
+                    <div class="method-tab cli-tab active" data-target="project-items-cli">
+                        <i class="fas fa-terminal"></i> Por Código (CLI)
+                    </div>
+                    <div class="method-tab visual-tab" data-target="project-items-visual">
+                        <i class="fas fa-mouse-pointer"></i> Visual (GitHub Web)
+                    </div>
+                </div>
+
+                <!-- CLI Content -->
+                <div id="project-items-cli" class="method-content active">
+                    <div class="code-block">
+                        <span class="code-label cli">Terminal</span>
+                        <code># Agregar cada issue al proyecto (PROJECT_NUMBER = número del proyecto creado)
+# Reemplaza TU_USUARIO y PROJECT_NUMBER
+
+# Agregar issues #1 al #11
+gh project item-add PROJECT_NUMBER --owner TU_USUARIO --url https://github.com/TU_USUARIO/gestion-academica-sistema/issues/1
+gh project item-add PROJECT_NUMBER --owner TU_USUARIO --url https://github.com/TU_USUARIO/gestion-academica-sistema/issues/2
+gh project item-add PROJECT_NUMBER --owner TU_USUARIO --url https://github.com/TU_USUARIO/gestion-academica-sistema/issues/3
+# ... repetir hasta el issue #11</code>
+                    </div>
+
+                    <h4 style="margin-top: 20px; color: var(--primary-color);">Agregar todos de golpe con un bucle (Bash)</h4>
+
+                    <div class="code-block">
+                        <span class="code-label bash">Bash / Git Bash</span>
+                        <code># Agregar issues #1 al #11 con un bucle
+for i in $(seq 1 11); do
+  gh project item-add PROJECT_NUMBER \
+    --owner TU_USUARIO \
+    --url https://github.com/TU_USUARIO/gestion-academica-sistema/issues/$i
+done</code>
+                    </div>
+
+                    <h4 style="margin-top: 20px; color: var(--primary-color);">Agregar todos de golpe con un bucle (PowerShell)</h4>
+
+                    <div class="code-block">
+                        <span class="code-label cli">PowerShell</span>
+                        <code># Agregar issues #1 al #11 con un bucle en PowerShell
+for ($i = 1; $i -le 11; $i++) {
+  gh project item-add PROJECT_NUMBER `
+    --owner TU_USUARIO `
+    --url "https://github.com/TU_USUARIO/gestion-academica-sistema/issues/$i"
+}</code>
+                    </div>
+                </div>
+
+                <!-- Visual Content -->
+                <div id="project-items-visual" class="method-content">
+                    <ol class="instruction-list">
+                        <li>Abre tu proyecto en <strong>github.com</strong> → Tu perfil → <strong>"Your projects"</strong> → selecciona el proyecto creado.</li>
+                        <li>En la parte inferior de la columna <strong>"Todo"</strong>, haz clic en <strong>"+ Add item"</strong>.</li>
+                        <li>En el campo de búsqueda que aparece, escribe <strong>"#"</strong> seguido del nombre de tu repositorio. Ejemplo: <code>#gestion-academica-sistema</code>.</li>
+                        <li>Aparecerán tus issues. Haz clic en <strong>"HU-01 — Gestión de Estudiantes"</strong> para agregarlo al tablero.</li>
+                        <li>Repite el paso anterior para cada issue (HU-01 a HU-11).</li>
+                        <li>Todos los issues se agregarán a la columna <strong>"Todo"</strong> inicialmente.</li>
+                    </ol>
+                    <div class="tip">
+                        <strong><i class="fas fa-lightbulb"></i> Tip:</strong> Puedes arrastrar y soltar los issues entre columnas (<strong>Todo → In Progress → Done</strong>) conforme avances en el desarrollo. Esto es la esencia del Kanban.
+                    </div>
+                </div>
+
+                <h3 class="subsection-title">5.3 — Crear Campos Personalizados</h3>
+
+                <p>Para organizar el tablero por Sprint y Release, necesitas crear campos "Single Select" personalizados.</p>
+
+                <!-- Tabs -->
+                <div class="method-tabs" data-group="project-fields">
+                    <div class="method-tab cli-tab active" data-target="project-fields-cli">
+                        <i class="fas fa-terminal"></i> Por Código (CLI)
+                    </div>
+                    <div class="method-tab visual-tab" data-target="project-fields-visual">
+                        <i class="fas fa-mouse-pointer"></i> Visual (GitHub Web)
+                    </div>
+                </div>
+
+                <!-- CLI Content -->
+                <div id="project-fields-cli" class="method-content active">
+                    <div class="code-block">
+                        <span class="code-label cli">Terminal</span>
+                        <code># Crear campo "Sprint" tipo Single Select con 5 opciones
+gh project field-create PROJECT_NUMBER \
+  --owner TU_USUARIO \
+  --name "Sprint" \
+  --data-type "SINGLE_SELECT" \
+  --single-select-options "Sprint 1,Sprint 2,Sprint 3,Sprint 4,Sprint 5"
+
+# Crear campo "Release" tipo Single Select con 2 opciones
+gh project field-create PROJECT_NUMBER \
+  --owner TU_USUARIO \
+  --name "Release" \
+  --data-type "SINGLE_SELECT" \
+  --single-select-options "Release 1 (2° Corte),Release 2 (3° Corte)"
+
+# Crear campo "Prioridad" tipo Single Select con 3 opciones
+gh project field-create PROJECT_NUMBER \
+  --owner TU_USUARIO \
+  --name "Prioridad" \
+  --data-type "SINGLE_SELECT" \
+  --single-select-options "Alta,Media,Baja"</code>
+                    </div>
+                </div>
+
+                <!-- Visual Content -->
+                <div id="project-fields-visual" class="method-content">
+                    <ol class="instruction-list">
+                        <li>En tu tablero del proyecto, haz clic en el botón <strong>"+"</strong> en la cabecera de la tabla (al final de las columnas visibles), o en el menú <strong>"⚙️ Settings"</strong> del proyecto.</li>
+                        <li>Selecciona <strong>"+ New field"</strong>.</li>
+                        <li>En <strong>"Field name"</strong> escribe: <code>Sprint</code></li>
+                        <li>En <strong>"Field type"</strong> selecciona: <strong>"Single select"</strong>.</li>
+                        <li>Agrega las opciones una por una haciendo clic en <strong>"+ Add option"</strong>: <code>Sprint 1</code>, <code>Sprint 2</code>, <code>Sprint 3</code>, <code>Sprint 4</code>, <code>Sprint 5</code>.</li>
+                        <li>Haz clic en <strong>"Save"</strong>.</li>
+                        <li>Repite los pasos 2-6 para crear el campo <strong>"Release"</strong> con opciones: <code>Release 1 (2° Corte)</code> y <code>Release 2 (3° Corte)</code>.</li>
+                        <li>Opcionalmente, crea el campo <strong>"Prioridad"</strong> con opciones: <code>Alta</code>, <code>Media</code>, <code>Baja</code>.</li>
+                    </ol>
+                </div>
+
+                <h3 class="subsection-title">5.4 — Asignar valores de Sprint y Release a cada Issue</h3>
+
+                <!-- Tabs -->
+                <div class="method-tabs" data-group="project-assign">
+                    <div class="method-tab cli-tab active" data-target="project-assign-cli">
+                        <i class="fas fa-terminal"></i> Por Código (CLI)
+                    </div>
+                    <div class="method-tab visual-tab" data-target="project-assign-visual">
+                        <i class="fas fa-mouse-pointer"></i> Visual (GitHub Web)
+                    </div>
+                </div>
+
+                <!-- CLI Content -->
+                <div id="project-assign-cli" class="method-content active">
+                    <p>Para asignar Sprint y Release a cada item, necesitas los IDs del campo y de las opciones. Sigue estos pasos:</p>
+
+                    <div class="code-block">
+                        <span class="code-label cli">Terminal</span>
+                        <code># 1. Obtener los IDs de los campos personalizados
+gh project field-list PROJECT_NUMBER --owner TU_USUARIO --format json
+
+# 2. Obtener los IDs de los items del proyecto
+gh project item-list PROJECT_NUMBER --owner TU_USUARIO --format json</code>
+                    </div>
+
+                    <p style="margin-top: 15px;">Con los IDs obtenidos, asigna los valores:</p>
+
+                    <div class="code-block">
+                        <span class="code-label cli">Terminal</span>
+                        <code># Asignar Sprint a un item
+# Reemplaza: ITEM_ID, FIELD_ID, OPTION_ID con los valores reales
+
+gh project item-edit \
+  --project-id PROJECT_ID \
+  --id ITEM_ID \
+  --field-id FIELD_ID \
+  --single-select-option-id OPTION_ID
+
+# Ejemplo: Asignar "Sprint 1" al issue HU-01
+gh project item-edit \
+  --project-id PVT_xxxxxxxxxxxx \
+  --id PVTI_xxxxxxxxxxxx \
+  --field-id PVTSSF_xxxxxxxxxxxx \
+  --single-select-option-id abc12345</code>
+                    </div>
+
+                    <div class="info-box warning">
+                        <h4><i class="fas fa-exclamation-triangle"></i> Los IDs cambian en cada proyecto</h4>
+                        <p>Los IDs de campos (<code>PVTSSF_</code>), items (<code>PVTI_</code>), opciones y el proyecto (<code>PVT_</code>) son únicos. Debes obtenerlos con los comandos de arriba para tu proyecto específico. No copies los del ejemplo.</p>
+                    </div>
+                </div>
+
+                <!-- Visual Content -->
+                <div id="project-assign-visual" class="method-content">
+                    <ol class="instruction-list">
+                        <li>En tu tablero del proyecto, cambia a la vista <strong>"Table"</strong> (ícono de tabla arriba a la izquierda). Esto te permite ver los campos en columnas.</li>
+                        <li>Verás tus issues con las columnas de campos. Localiza la columna <strong>"Sprint"</strong>.</li>
+                        <li>Para cada issue, haz clic en la celda de la columna <strong>"Sprint"</strong> y selecciona el sprint correspondiente (ej: HU-01 → Sprint 1).</li>
+                        <li>Repite para la columna <strong>"Release"</strong>: asigna <code>Release 1 (2° Corte)</code> a las HU-01 a HU-09, y <code>Release 2 (3° Corte)</code> a las HU-10 y HU-11.</li>
+                        <li>Opcionalmente, asigna la <strong>"Prioridad"</strong> a cada issue.</li>
+                    </ol>
+
+                    <h4 style="margin-top: 25px; color: var(--primary-color);">Asignación rápida (tabla de referencia)</h4>
+
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Issues</th>
+                                <th>Sprint</th>
+                                <th>Release</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>HU-01, HU-02, HU-03</td><td>Sprint 1</td><td>Release 1 (2° Corte)</td></tr>
+                            <tr><td>HU-04, HU-05, HU-06</td><td>Sprint 2</td><td>Release 1 (2° Corte)</td></tr>
+                            <tr><td>HU-07, HU-08, HU-09</td><td>Sprint 3</td><td>Release 1 (2° Corte)</td></tr>
+                            <tr><td>HU-10</td><td>Sprint 4</td><td>Release 2 (3° Corte)</td></tr>
+                            <tr><td>HU-11</td><td>Sprint 5</td><td>Release 2 (3° Corte)</td></tr>
+                        </tbody>
+                    </table>
+
+                    <div class="tip">
+                        <strong><i class="fas fa-lightbulb"></i> Tip:</strong> Para agrupar el tablero por Sprint, ve a la vista <strong>"Board"</strong>, haz clic en <strong>"Group by"</strong> y selecciona <strong>"Sprint"</strong>. Así verás una columna por sprint con los issues correspondientes.
+                    </div>
+                </div>
+
+                <h3 class="subsection-title">5.5 — Configurar la Vista del Tablero</h3>
+
+                <p>Puedes crear múltiples vistas del tablero para diferentes perspectivas del proyecto:</p>
+
+                <div class="cards-grid">
+                    <div class="card">
+                        <div class="card-icon" style="color: var(--info-color);"><i class="fas fa-th-large"></i></div>
+                        <h4 class="card-title">Vista Board (Kanban)</h4>
+                        <p>La vista por defecto. Columnas: <strong>Todo → In Progress → Done</strong>. Agrupa por <strong>"Sprint"</strong> para ver las tareas de cada iteración.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon" style="color: var(--success-color);"><i class="fas fa-table"></i></div>
+                        <h4 class="card-title">Vista Table</h4>
+                        <p>Muestra todos los issues en tabla con sus campos personalizados. Ideal para asignar Sprint, Release y Prioridad rápidamente.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon" style="color: var(--warning-color);"><i class="fas fa-road"></i></div>
+                        <h4 class="card-title">Vista Roadmap</h4>
+                        <p>Muestra los issues en una línea de tiempo. Ideal para ver el progreso general del proyecto con las fechas de cada sprint.</p>
+                    </div>
+                </div>
+
+                <div class="info-box success">
+                    <h4><i class="fas fa-check-circle"></i> Configuración recomendada del tablero</h4>
+                    <ul class="content-list">
+                        <li><strong>Vista 1 — "Kanban por Sprint":</strong> Board view, Group by: Sprint → Así ves las HUs organizadas por sprint.</li>
+                        <li><strong>Vista 2 — "Por Release":</strong> Board view, Filter: Release = "Release 1 (2° Corte)" → Así ves solo lo del segundo corte.</li>
+                        <li><strong>Vista 3 — "Tabla General":</strong> Table view, sin filtros → Para editar campos rápidamente.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- ==================== PASO 6: RELEASES ==================== -->
+            <section id="paso6" class="section">
+                <h2 class="section-title">
+                    <i class="fas fa-box-open"></i> Paso 6 — Plan de Releases
+                </h2>
+
+                <p>Un <strong>Release</strong> marca una entrega formal del producto. En tu proyecto, habrá 2 releases alineadas con los cortes académicos.</p>
+
+                <!-- Release 1 -->
+                <div class="guide-step" style="border-left-color: var(--info-color);">
+                    <div class="guide-step-header" style="background: linear-gradient(135deg, #0075ca 0%, #004085 100%);">
+                        <div class="guide-step-number">R1</div>
+                        <div class="guide-step-header-info">
+                            <h3>Release 1 — Segundo Corte: Backend y Frontend Base</h3>
+                            <p><i class="fas fa-calendar-alt"></i> Cierre: 17 de Abril de 2026 &bull; Sprints 1, 2 y 3</p>
+                        </div>
+                    </div>
+                    <div class="guide-step-body">
+                        <p><strong>Objetivo:</strong> Entregar la API REST completa con arquitectura en capas (Controller → Service → Repository) y el frontend con vistas de CRUD para todas las entidades base.</p>
+
+                        <table class="data-table" style="margin-top: 20px;">
+                            <thead>
+                                <tr>
+                                    <th>Sprint</th>
+                                    <th>Período</th>
+                                    <th>HUs</th>
+                                    <th>Alcance</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Sprint 1</strong></td>
+                                    <td>Mar 16 → Mar 29</td>
+                                    <td>HU-01, HU-02, HU-03</td>
+                                    <td>Docker, Prisma, Estudiante, Docente, Programa</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Sprint 2</strong></td>
+                                    <td>Mar 30 → Abr 10</td>
+                                    <td>HU-04, HU-05, HU-06</td>
+                                    <td>Asignatura, Período, Asignación, Common Module</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Sprint 3</strong></td>
+                                    <td>Abr 13 → Abr 17</td>
+                                    <td>HU-07, HU-08, HU-09</td>
+                                    <td>Matrícula, Calificación, Common Module, Frontend base</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Release 2 -->
+                <div class="guide-step" style="border-left-color: var(--success-color);">
+                    <div class="guide-step-header" style="background: linear-gradient(135deg, #27ae60 0%, #1a7a42 100%);">
+                        <div class="guide-step-number">R2</div>
+                        <div class="guide-step-header-info">
+                            <h3>Release 2 — Tercer Corte: Integración y Despliegue</h3>
+                            <p><i class="fas fa-calendar-alt"></i> Cierre: 22 de Mayo de 2026 &bull; Sprints 4 y 5</p>
+                        </div>
+                    </div>
+                    <div class="guide-step-body">
+                        <p><strong>Objetivo:</strong> Integración completa frontend ↔ backend, formularios avanzados con relaciones, registro de calificaciones desde la interfaz y despliegue funcional con Docker.</p>
+
+                        <table class="data-table" style="margin-top: 20px;">
+                            <thead>
+                                <tr>
+                                    <th>Sprint</th>
+                                    <th>Período</th>
+                                    <th>HUs</th>
+                                    <th>Alcance</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Sprint 4</strong></td>
+                                    <td>Abr 20 → May 8</td>
+                                    <td>HU-10</td>
+                                    <td>Frontend listados, formularios, navegación, layout</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Sprint 5</strong></td>
+                                    <td>May 11 → May 22</td>
+                                    <td>HU-11</td>
+                                    <td>Integración de flujos, pruebas, Docker, documentación</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <h3 class="subsection-title">Crear Releases en GitHub</h3>
+
+                <!-- Tabs -->
+                <div class="method-tabs" data-group="releases">
+                    <div class="method-tab cli-tab active" data-target="releases-cli">
+                        <i class="fas fa-terminal"></i> Por Código (CLI)
+                    </div>
+                    <div class="method-tab visual-tab" data-target="releases-visual">
+                        <i class="fas fa-mouse-pointer"></i> Visual (GitHub Web)
+                    </div>
+                </div>
+
+                <!-- CLI Content -->
+                <div id="releases-cli" class="method-content active">
+                    <p>Los Releases de GitHub se crean sobre un <strong>tag</strong> de Git. Primero crea el tag y luego el release:</p>
+
+                    <div class="code-block">
+                        <span class="code-label cli">Terminal</span>
+                        <code># Cuando el Release 1 esté completo (Segundo Corte):
+
+# 1. Asegúrate de estar en la rama principal con todo actualizado
+git checkout main
+git pull
+
+# 2. Crear un tag de versión
+git tag -a v1.0.0 -m "Release 1: Backend + Frontend Base - Segundo Corte"
+git push origin v1.0.0
+
+# 3. Crear el release en GitHub
+gh release create v1.0.0 \
+  --title "Release 1 — Segundo Corte" \
+  --notes "## Release 1 — Backend y Frontend Base
+
+### Incluye:
+- API REST completa con arquitectura Controller → Service → Repository
+- CRUD de todas las entidades: Estudiante, Docente, Programa, Asignatura, Período, Asignación
+- Módulos de Matrícula y Calificación con lógica de negocio
+- Common Module: Filters, Interceptors, Pipes
+- Frontend base: estructura Next.js, listados y formularios
+- Docker Compose funcional
+
+### Sprints completados:
+- Sprint 1: Infraestructura y entidades base
+- Sprint 2: Entidades académicas y cross-cutting
+- Sprint 3: Matrícula, Calificaciones y Frontend base
+
+### HUs cerradas: HU-01 a HU-09"</code>
+                    </div>
+
+                    <div class="code-block">
+                        <span class="code-label cli">Terminal</span>
+                        <code># Cuando el Release 2 esté completo (Tercer Corte):
+
+git tag -a v2.0.0 -m "Release 2: Integración + Despliegue - Tercer Corte"
+git push origin v2.0.0
+
+gh release create v2.0.0 \
+  --title "Release 2 — Tercer Corte" \
+  --notes "## Release 2 — Integración y Despliegue
+
+### Incluye:
+- Frontend completo con formularios dinámicos y navegación
+- Layout responsivo con sidebar/navbar
+- Integración frontend ↔ backend completa
+- Flujos end-to-end: matricular → calificar → consultar notas
+- Despliegue funcional con Docker Compose
+- Documentación (README.md)
+
+### Sprints completados:
+- Sprint 4: Frontend avanzado e integración
+- Sprint 5: Cierre y despliegue
+
+### HUs cerradas: HU-10 a HU-11"</code>
+                    </div>
+                </div>
+
+                <!-- Visual Content -->
+                <div id="releases-visual" class="method-content">
+                    <ol class="instruction-list">
+                        <li>Ve a tu repositorio en GitHub → en el panel lateral derecho, haz clic en <strong>"Releases"</strong> (o ve a la URL: <code>github.com/TU_USUARIO/tu-repo/releases</code>).</li>
+                        <li>Haz clic en <strong>"Create a new release"</strong> (o <strong>"Draft a new release"</strong>).</li>
+                        <li>En <strong>"Choose a tag"</strong>, escribe <code>v1.0.0</code> y selecciona <strong>"Create new tag: v1.0.0 on publish"</strong>.</li>
+                        <li>En <strong>"Release title"</strong> escribe: <code>Release 1 — Segundo Corte</code></li>
+                        <li>En el campo de <strong>"Description"</strong>, escribe un resumen del release (qué se entrega, sprints completados, HUs cerradas). Puedes usar Markdown.</li>
+                        <li>Si es un release de prueba, marca <strong>"Set as a pre-release"</strong>. Si es definitivo, déjalo desmarcado.</li>
+                        <li>Haz clic en <strong>"Publish release"</strong>.</li>
+                        <li>Repite los pasos para el <strong>Release 2</strong> con el tag <code>v2.0.0</code> cuando completes el tercer corte.</li>
+                    </ol>
+
+                    <div class="tip">
+                        <strong><i class="fas fa-lightbulb"></i> Tip:</strong> Los releases de GitHub son como "fotografías" de tu código en un momento dado. Cualquier persona puede descargar el código fuente de cada release como un archivo ZIP o TAR.
+                    </div>
+                </div>
+
+                <h3 class="subsection-title">Cronograma Visual</h3>
+
+                <div class="code-block">
+                    <code>┌──────────────────────────────────────────────────────────────────────────────┐
+│                    SEGUNDO CORTE (Release 1) — Cierre: 17 Abr 2026          │
+│                          Backend y Frontend Base                             │
+├─────────────────────┬─────────────────────┬──────────────────────────────────┤
+│  Sprint 1           │    Sprint 2         │         Sprint 3                 │
+│  Mar 16 → Mar 29    │  Mar 30 → Abr 10    │   Abr 13 → Abr 17              │
+│                     │                     │                                  │
+│ • Docker            │ • Asignatura        │ • Matrícula                      │
+│ • Prisma            │ • Período           │ • Calificación                   │
+│ • Estudiante        │ • Asignación Doc    │ • Common Module                  │
+│ • Docente           │ • Common Module     │ • Frontend: listados y forms     │
+│ • Programa          │                     │                                  │
+│                     │ 🚫 Abr 2-3         │                                  │
+│ 🚫 Mar 23          │   (Semana Santa)    │                                  │
+│   (San José)        │                     │                                  │
+├─────────────────────┴─────────────────────┴──────────────────────────────────┤
+│                    TERCER CORTE (Release 2) — Cierre: 22 May 2026           │
+│                          Integración y Despliegue                            │
+├────────────────────────────────────┬─────────────────────────────────────────┤
+│        Sprint 4                    │          Sprint 5                       │
+│        Abr 20 → May 8             │          May 11 → May 22               │
+│                                    │                                         │
+│ • Frontend listados                │ • Integración de flujos                 │
+│ • Frontend formularios             │ • Pruebas de integración                │
+│ • Navegación y layout              │ • Docker Compose validación             │
+│ • Selects dinámicos                │ • README y documentación                │
+│                                    │                                         │
+│ 🚫 May 1                          │ 🚫 May 18                              │
+│   (Día del Trabajo)               │   (Día de la Ascensión)                │
+└────────────────────────────────────┴─────────────────────────────────────────┘</code>
+                </div>
+            </section>
+
+            <!-- ==================== RESUMEN FINAL ==================== -->
+            <section id="resumen" class="section">
+                <h2 class="section-title">
+                    <i class="fas fa-check-double"></i> Resumen y Checklist Final
+                </h2>
+
+                <div class="info-box success">
+                    <h4><i class="fas fa-clipboard-check"></i> Checklist de configuración del proyecto</h4>
+                    <ul class="content-list">
+                        <li><strong>Repositorio:</strong> Creado y clonado con README.md y .gitignore.</li>
+                        <li><strong>Labels (5):</strong> user-story, backend, frontend, infraestructura, cross-cutting.</li>
+                        <li><strong>Milestones (5):</strong> Sprint 1 a Sprint 5 con fechas de vencimiento.</li>
+                        <li><strong>Issues (11):</strong> HU-01 a HU-11 con narrativa, criterios de aceptación, tareas técnicas, labels y milestone asignados.</li>
+                        <li><strong>Proyecto (Kanban):</strong> Creado con campos Sprint, Release y Prioridad. Todos los issues agregados y clasificados.</li>
+                        <li><strong>Vistas del tablero:</strong> Kanban por Sprint, filtro por Release, tabla general.</li>
+                        <li><strong>Releases:</strong> Plan definido para v1.0.0 (2° Corte) y v2.0.0 (3° Corte).</li>
+                    </ul>
+                </div>
+
+                <h3 class="subsection-title">Flujo de Trabajo Diario</h3>
+
+                <div class="steps-container">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h3>Seleccionar una HU del Sprint actual</h3>
+                            <p>Ve al tablero Kanban → columna <strong>"Todo"</strong> → elige una HU del sprint actual y muévela a <strong>"In Progress"</strong>.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h3>Crear rama de trabajo</h3>
+                            <p>Crea una rama desde <code>main</code> con el nombre de la HU: <code>git checkout -b feature/HU-01-gestion-estudiantes</code></p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h3>Desarrollar y hacer commits</h3>
+                            <p>Implementa la HU (Backend + Frontend). Haz commits descriptivos: <code>git commit -m "feat(estudiante): add CRUD endpoints"</code></p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h3>Push y Pull Request</h3>
+                            <p>Sube la rama: <code>git push origin feature/HU-01-gestion-estudiantes</code>. Crea un Pull Request en GitHub vinculando el issue: <code>Closes #1</code>.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">5</div>
+                        <div class="step-content">
+                            <h3>Mover a Done</h3>
+                            <p>Al mergear el PR, mueve la HU a <strong>"Done"</strong> en el tablero Kanban. El issue se cierra automáticamente si usaste <code>Closes #N</code>.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 class="subsection-title">Referencia Rápida de Comandos CLI</h3>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span><i class="fas fa-terminal"></i> Repositorio</span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </div>
+                    <div class="accordion-body">
+                        <div class="code-block" style="margin-top: 0;">
+                            <code>gh repo create NOMBRE --public --source=. --push
+gh repo view --web
+gh repo clone USUARIO/NOMBRE</code>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span><i class="fas fa-tags"></i> Labels</span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </div>
+                    <div class="accordion-body">
+                        <div class="code-block" style="margin-top: 0;">
+                            <code>gh label create "nombre" --color "hex" --description "desc"
+gh label list
+gh label delete "nombre" --yes</code>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span><i class="fas fa-flag"></i> Milestones</span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </div>
+                    <div class="accordion-body">
+                        <div class="code-block" style="margin-top: 0;">
+                            <code>gh api repos/{owner}/{repo}/milestones -f title="Sprint N" -f due_on="YYYY-MM-DDT00:00:00Z" -f description="..."
+gh api repos/{owner}/{repo}/milestones --jq '.[].title'</code>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span><i class="fas fa-list-check"></i> Issues</span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </div>
+                    <div class="accordion-body">
+                        <div class="code-block" style="margin-top: 0;">
+                            <code>gh issue create --title "HU-XX" --body-file hu.md --label "l1,l2" --milestone "Sprint N"
+gh issue list --state all
+gh issue view NUMERO
+gh issue close NUMERO
+gh issue reopen NUMERO</code>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span><i class="fas fa-columns"></i> Projects</span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </div>
+                    <div class="accordion-body">
+                        <div class="code-block" style="margin-top: 0;">
+                            <code>gh project create --owner USUARIO --title "Nombre"
+gh project item-add NUM --owner USUARIO --url ISSUE_URL
+gh project field-create NUM --owner USUARIO --name "Campo" --data-type "SINGLE_SELECT" --single-select-options "Op1,Op2"
+gh project field-list NUM --owner USUARIO --format json
+gh project item-list NUM --owner USUARIO --format json
+gh project item-edit --project-id PVT_xx --id PVTI_xx --field-id PVTSSF_xx --single-select-option-id OPTION_ID
+gh project view NUM --owner USUARIO --web</code>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span><i class="fas fa-box-open"></i> Releases</span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </div>
+                    <div class="accordion-body">
+                        <div class="code-block" style="margin-top: 0;">
+                            <code>git tag -a v1.0.0 -m "Mensaje del tag"
+git push origin v1.0.0
+gh release create v1.0.0 --title "Release 1" --notes "Descripción"
+gh release list</code>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span><i class="fas fa-code-branch"></i> Git (ramas y commits)</span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </div>
+                    <div class="accordion-body">
+                        <div class="code-block" style="margin-top: 0;">
+                            <code>git checkout -b feature/HU-XX-descripcion
+git add .
+git commit -m "feat(modulo): descripción del cambio"
+git push origin feature/HU-XX-descripcion
+gh pr create --title "HU-XX: Descripción" --body "Closes #N"</code>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3><i class="fab fa-github"></i> Sobre Esta Guía</h3>
+                    <p>Guía paso a paso para configurar un proyecto en GitHub con gestión ágil para el curso de Especialización en Ingeniería de Software. Cubre repositorio, issues, milestones, tablero Kanban y releases.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Recursos</h3>
+                    <ul>
+                        <li><a href="https://docs.github.com/es/issues" target="_blank" rel="noopener noreferrer">GitHub Issues Docs</a></li>
+                        <li><a href="https://docs.github.com/es/issues/planning-and-tracking-with-projects" target="_blank" rel="noopener noreferrer">GitHub Projects Docs</a></li>
+                        <li><a href="https://cli.github.com/manual/" target="_blank" rel="noopener noreferrer">GitHub CLI Manual</a></li>
+                        <li><a href="https://docs.github.com/es/repositories/releasing-projects-on-github" target="_blank" rel="noopener noreferrer">GitHub Releases Docs</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Secciones</h3>
+                    <ul>
+                        <li><a href="#introduccion">Introducción</a></li>
+                        <li><a href="#prerequisitos">Prerrequisitos</a></li>
+                        <li><a href="#paso1">Repositorio</a></li>
+                        <li><a href="#paso2">Labels</a></li>
+                        <li><a href="#paso3">Milestones</a></li>
+                        <li><a href="#paso4">Issues / HUs</a></li>
+                        <li><a href="#paso5">Tablero Kanban</a></li>
+                        <li><a href="#paso6">Releases</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Especialización en Ingeniería de Software - CORHUILA. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Navegación suave
+            document.querySelectorAll('.nav-link').forEach(function(link) {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    var href = this.getAttribute('href');
+                    var target = document.querySelector(href);
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                });
+            });
+
+            // Marcar enlace activo en navegación
+            window.addEventListener('scroll', function() {
+                var sections = document.querySelectorAll('section[id]');
+                var navLinks = document.querySelectorAll('.nav-link');
+                var current = '';
+
+                sections.forEach(function(section) {
+                    var sectionTop = section.offsetTop;
+                    if (window.pageYOffset >= sectionTop - 200) {
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                navLinks.forEach(function(link) {
+                    link.classList.remove('active');
+                    var href = link.getAttribute('href');
+                    if (href && href.slice(1) === current) {
+                        link.classList.add('active');
+                    }
+                });
+            });
+
+            // Tabs de métodos (CLI / Visual)
+            document.querySelectorAll('.method-tab').forEach(function(tab) {
+                tab.addEventListener('click', function() {
+                    var group = this.closest('.method-tabs').getAttribute('data-group');
+                    var targetId = this.getAttribute('data-target');
+
+                    // Desactivar todos los tabs del grupo
+                    this.closest('.method-tabs').querySelectorAll('.method-tab').forEach(function(t) {
+                        t.classList.remove('active');
+                    });
+
+                    // Activar tab clickeado
+                    this.classList.add('active');
+
+                    // Ocultar todos los contenidos del grupo
+                    var section = this.closest('section');
+                    var allContents = section.querySelectorAll('.method-content');
+                    allContents.forEach(function(content) {
+                        // Solo ocultar los del mismo grupo de tabs
+                        var tabs = content.previousElementSibling;
+                        while (tabs && !tabs.classList.contains('method-tabs')) {
+                            tabs = tabs.previousElementSibling;
+                        }
+                        if (tabs && tabs.getAttribute('data-group') === group) {
+                            content.classList.remove('active');
+                        }
+                    });
+
+                    // Mostrar contenido seleccionado
+                    document.getElementById(targetId).classList.add('active');
+                });
+            });
+
+            // Animar elementos al entrar en vista
+            var observer = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.guide-step, .step, .card').forEach(function(el) {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(30px)';
+                el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(el);
+            });
+
+            console.log('Guía GitHub para Proyectos — Especialización en Ingeniería de Software cargada correctamente');
+        });
+
+        // Accordion toggle
+        function toggleAccordion(header) {
+            var body = header.nextElementSibling;
+            var isOpen = body.classList.contains('open');
+
+            // Cerrar todos los accordions
+            document.querySelectorAll('.accordion-body').forEach(function(b) {
+                b.classList.remove('open');
+            });
+            document.querySelectorAll('.accordion-header').forEach(function(h) {
+                h.classList.remove('open');
+            });
+
+            // Abrir el seleccionado si estaba cerrado
+            if (!isOpen) {
+                body.classList.add('open');
+                header.classList.add('open');
+            }
+        }
+    </script>
+</body>
+</html>
